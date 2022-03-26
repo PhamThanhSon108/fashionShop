@@ -12,14 +12,14 @@ const Header = () => {
   const { cartItems } = cart;
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
-
+  const {error} = userLogin
   const logoutHandler = () => {
     dispatch(logout());
+    history.push("/");
   };
-  
   const submitHandler = (e) => {
     e.preventDefault();
-    if (keyword.trim()) {
+    if (keyword.trim()&&keyword) {
       history.push(`/search/${keyword}`);
     } else {
       history.push("/");
