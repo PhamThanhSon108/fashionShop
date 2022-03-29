@@ -5,7 +5,6 @@ const Toast = () => {
   return (
     <div>
       <ToastContainer
-        position="bottom-right"
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
