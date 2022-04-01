@@ -42,7 +42,7 @@ const SingleProduct = ({ history, match }) => {
   }, [dispatch, productId, successCreateReview]);
 
   const AddToCartHandle = (e) => {
-    
+    console.log(product)
     e.preventDefault();
     if(userInfo){
     history.push(`/cart/${productId}?qty=${qty}`);

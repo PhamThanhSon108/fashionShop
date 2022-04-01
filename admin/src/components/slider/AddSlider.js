@@ -43,12 +43,11 @@ export default function AddSlider() {
                         <div className="col-xl-8 col-lg-8">
                             <div className="card mb-8 shadow-sm ">
                                 <div className="card-body">
-                                    {error && <Message variant="alert-danger">{error}</Message>}
-                                    {loading && <Loading />}
+                                    
                                     
                                     <div className="mb-8 d-flex">
                                         <label htmlFor="product_title" className="form-label">
-                                            Url banner
+                                                URL BANNER
                                         </label>
                                         <input
                                             type="text"
@@ -59,10 +58,13 @@ export default function AddSlider() {
                                             value={url}
                                             onChange={(e) => setUrl(e.target.value)}
                                         />
-                                        <button type="submit" className="btn btn-primary" >
+                                        <button type="submit" className="btn btn-primary" style={{minWidth: 100}} >
                                             ADD
                                         </button>
                                     </div>
+                                    <div></div>
+                                    {error && <Message variant="alert-danger">{error}</Message>}
+                                    {loading && <Loading />}
                                 </div>
                             </div>
                         </div>
