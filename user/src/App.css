@@ -40,8 +40,8 @@ textarea:focus {
   padding: 0;
 }
 .Announcement {
-  background-color: #1cb803;
-  padding: 10px 0px 6px 0px;
+  background-color: #ee2624;
+  padding: 15px 0;
 }
 .Announcement .col-md-6 p {
   color: white;
@@ -50,12 +50,20 @@ textarea:focus {
 }
 .Announcement .col-12 a {
   color: white;
-  margin-right: 2rem;
+  /* margin-right: 2rem; */
+  padding: 0 15px;
   font-size: 15px;
+}
+.Announcement .col-12 a:first-child{
+  padding-left: 0;
+}
+.Announcement .col-12 a:last-child{
+  padding-right: 0;
 }
 /* Header */
 .header {
   padding: 10px 0px 10px 0px;
+  border-bottom: 1.2px solid #ccc;
 }
 .navbar-brand img {
   width: 60%;
@@ -115,7 +123,9 @@ textarea:focus {
 .mobile-header {
   display: none;
 }
-
+/* .mobile-header .container{
+  display: flex;
+} */
 /* SHOP */
 .section {
   width: 100%;
@@ -156,9 +166,13 @@ textarea:focus {
   margin-bottom: 50px;
 }
 .border-product {
-  padding: 15px;
-  border: 1px solid #f3f3f3;
-  border-radius: 5px;
+  /* padding: 0px; */
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+.border-product:hover{
+  transform: translateY(-4px);
+  transition: linear 0.2s;
 }
 .shopBack {
   height: 250px;
@@ -166,6 +180,8 @@ textarea:focus {
   overflow: hidden;
   width: 100%;
   background-color: #f3fbf7;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
 }
 .shopBack img {
   width: 100%;
@@ -174,6 +190,17 @@ textarea:focus {
 }
 .shoptext {
   padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.shoptext p{
+  line-height: 1.2;
+  height: 38px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 .shoptext p a {
   color: #252525;
