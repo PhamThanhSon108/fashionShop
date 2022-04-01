@@ -19,6 +19,7 @@ import {
   orderListMyReducer,
   orderPayReducer,
 } from "./Reducers/OrderReducres";
+import { Sliderload } from "./Reducers/SliderReducer";
 
 const reducer = combineReducers({
   productList: productListReducer,
@@ -33,6 +34,7 @@ const reducer = combineReducers({
   orderDetails: orderDetailsReducer,
   orderPay: orderPayReducer,
   orderListMy: orderListMyReducer,
+  sliderLoad: Sliderload
 });
 
 const cartItemsFromLocalStorage = localStorage.getItem("cartItems")

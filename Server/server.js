@@ -6,6 +6,7 @@ import productRoute from "./Routes/ProductRoutes.js";
 import { errorHandler, notFound } from "./Middleware/Errors.js";
 import userRouter from "./Routes/UserRoutes.js";
 import orderRouter from "./Routes/orderRoutes.js";
+import SliderRouter from "./Routes/SliderRouter.js";
 
 dotenv.config();
 connectDatabase();
@@ -13,6 +14,7 @@ const app = express();
 app.use(express.json());
 
 // API
+app.use("/api/slider", SliderRouter)
 app.use("/api/import", ImportData);
 app.use("/api/products", productRoute);
 app.use("/api/users", userRouter);
