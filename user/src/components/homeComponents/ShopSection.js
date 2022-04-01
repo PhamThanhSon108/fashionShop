@@ -34,11 +34,10 @@ const ShopSection = (props) => {
                   <>
                     {products.map((product) => (
                       <div
-<<<<<<< HEAD
+
                         className="shop col-lg-3 col-md-4 col-sm-12"
-=======
-                        className="shop col-lg-3 col-md-6 col-sm-6"
->>>>>>> 52e12d3278f573cf9288ec7b4513e601ff85524e
+
+
                         key={product._id}
                       >
                         <div className="border-product">
