@@ -16,6 +16,8 @@ import {
 } from "../Constants/UserContants";
 import axios from "axios";
 import { ORDER_LIST_MY_RESET } from "../Constants/OrderConstants";
+import { addToCart, listCart } from "./cartActions";
+import { CART_LIST_MY_RESET } from "../Constants/CartConstants";
 
 // LOGIN
 export const login = (email, password) => async (dispatch) => {
@@ -34,7 +36,8 @@ export const login = (email, password) => async (dispatch) => {
       config
     );
     dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
-
+    dispatch(listCart())
+    console.log(data)
     localStorage.setItem("userInfo", JSON.stringify(data));
   } catch (error) {
     
@@ -54,6 +57,7 @@ export const logout = () => (dispatch) => {
   dispatch({ type: USER_LOGOUT });
   dispatch({ type: USER_DETAILS_RESET });
   dispatch({ type: ORDER_LIST_MY_RESET });
+  dispatch({ type: CART_LIST_MY_RESET });
 };
 
 // REGISTER

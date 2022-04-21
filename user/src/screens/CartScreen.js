@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Header from "./../components/Header";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, removefromcart } from "./../Redux/Actions/cartActions";
+import { addToCart, listCart, removefromcart } from "./../Redux/Actions/cartActions";
 
 const CartScreen = ({ match, location, history }) => {
   window.scrollTo(0, 0);
@@ -13,20 +13,30 @@ const CartScreen = ({ match, location, history }) => {
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
 
-  const total = cartItems.reduce((a, i) => a + i.qty * i.price, 0).toFixed(2);
+  const cartDel = useSelector((state) => state.cartDelete);
+  const {loading:loa, success: suc,mesage:mes} = cartDel;
 
+  const total = cartItems.reduce((a, i) => a + i.qty * i.price, 0).toFixed(2);
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
   useEffect(() => {
     if (productId) {
-      dispatch(addToCart(productId, qty));
+      dispatch(addToCart(productId, qty, userInfo._id));
     }
   }, [dispatch, productId, qty]);
 
   const checkOutHandler = () => {
     history.push("/login?redirect=shipping");
   };
+  useEffect(() => {
+      dispatch(listCart());
+  }, [dispatch,suc]);
 
   const removeFromCartHandle = (id) => {
+    console.log(id)
     dispatch(removefromcart(id));
+    console.log(mes)
+    console.log('vip')
   };
   return (
     <>
@@ -75,8 +85,8 @@ const CartScreen = ({ match, location, history }) => {
                   <h6>QUANTITY</h6>
                   <select
                     value={item.qty}
-                    onChange={(e) =>
-                      dispatch(addToCart(item.product, Number(e.target.value)))
+                    onChange={(e) => {
+                      dispatch(addToCart(item.product, e.target.value,userInfo._id))}
                     }
                   >
                     {[...Array(item.countInStock).keys()].map((x) => (

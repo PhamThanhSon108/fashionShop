@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../Redux/Actions/userActions";
+import { listCart } from "../Redux/Actions/cartActions";
 
 const Header = () => {
   const [keyword, setKeyword] = useState();
@@ -13,6 +14,7 @@ const Header = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
   const {error} = userLogin
+
   const logoutHandler = () => {
     dispatch(logout());
     history.push("/");
@@ -117,7 +119,7 @@ const Header = () => {
 
                   <Link to="/cart" className="cart-mobile-icon">
                     <i className="fas fa-shopping-bag"></i>
-                    <span className="badge">{cartItems.length}</span>
+                    <span className="badge">{cartItems?cartItems.length:0}</span>
                   </Link>
                 </div>
                 <div className="col-12 d-flex align-items-center">
@@ -193,7 +195,7 @@ const Header = () => {
 
                   <Link to="/cart">
                   <i className="fas fa-shopping-bag"></i>
-                  <span className="badge">{cartItems.length}</span>
+                  <span className="badge">{cartItems?cartItems.length:0}</span>
                 </Link>
               </div>
             </div>
