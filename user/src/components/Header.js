@@ -25,6 +25,23 @@ const Header = () => {
       history.push("/");
     }
   };
+  function avatarUser(){
+    const stringUser = userInfo.name;
+    const value = stringUser.slice(0,1);
+    return value
+  }
+  // xư lý lấy 1 phần kí tự từ chuổi username khi trả dữ liệu ra màn hình
+  function notiUser(){
+    let returnUser;
+    const valueUser = userInfo.name;
+    if(valueUser.length > 15){
+      const arrayUser = valueUser.split(" ");
+      returnUser = arrayUser[0];
+    }else{
+      returnUser = valueUser;
+    }
+    return returnUser
+  }
   return (
     <div>
       {/* Top Header */}
@@ -163,12 +180,16 @@ const Header = () => {
                   <div className="btn-group">
                     <button
                       type="button"
-                      className="name-button dropdown-toggle"
+                      className="name-button dropdown-toggle name-button__user"
                       data-toggle="dropdown"
                       aria-haspopup="true"
                       aria-expanded="false"
                     >
-                      Hi, {userInfo.name}
+                      <div className="name-button__div">
+                        <span className="name-button__span">{avatarUser()}</span>
+                      </div>
+                      <span className="name-button__p">{notiUser()}</span>
+                      {/* {userInfo.name} */}
                     </button>
                     <div className="dropdown-menu">
                       <Link className="dropdown-item" to="/profile">

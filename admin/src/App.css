@@ -25,11 +25,11 @@ a.disabled {
   pointer-events: none;
 }
 .btn-primary {
-  background-color: #4fa607 !important;
-  border: 1px solid #4fa607 !important;
+  background-color: #1cb803 !important;
+  border: 1px solid #ee2624 !important;
 }
 .Header-green {
-  background-color: #4fa607;
+  background-color: #e6a331;
 }
 /* .screen-overlay {
   width: 0%;
@@ -94,7 +94,7 @@ a.disabled {
 
 .img-avatar {
   border-radius: 100%;
-  border: 3px solid #fff;
+  border: 3px solid #e98318;
 }
 
 .img-xs,
@@ -109,6 +109,7 @@ a.disabled {
 .img-xs {
   width: 40px;
   height: 40px;
+  object-fit: scale-down;
 }
 
 .img-sm {
@@ -119,6 +120,7 @@ a.disabled {
 .img-md {
   width: 112px;
   height: 112px;
+  object-fit: scale-down;
 }
 
 .img-lg {
@@ -214,7 +216,7 @@ body.offcanvas-active {
 }
 .main-header .nav-link:hover {
   background-color: #e9ecef;
-  color: #4fa607;
+  color: #ee2624;
 }
 .main-header .col-search {
   flex-grow: 0.5;
@@ -228,7 +230,7 @@ body.offcanvas-active {
   border: 2px solid #eee;
 }
 .nav-item img.rounded-circle:hover {
-  border-color: #4fa607;
+  border-color: #ee2624;
 }
 
 .content-header {
@@ -315,7 +317,7 @@ body.aside-mini .menu-aside .menu-item.has-submenu .menu-link:after {
   font-size: 18px;
 }
 .menu-aside .active .icon {
-  color: #4fa607;
+  color: #ee2624;
 }
 .menu-aside .active {
   background-color: #ebf0fd;
@@ -412,7 +414,7 @@ a[class*="card"] {
   color: initial;
 }
 a[class*="card"]:hover .title {
-  color: #4fa607;
+  color: #18e718;
 }
 
 /* ITEM LIST */
@@ -450,7 +452,7 @@ a[class*="card"]:hover .title {
   margin-bottom: 5px;
 }
 .itemside a.title:hover {
-  color: #4fa607;
+  color: #ee2624;
 }
 
 a.itemside {
@@ -500,7 +502,7 @@ a.itemside:hover .title {
   text-decoration: none;
 }
 .card-product-grid a.title:hover {
-  color: #4fa607;
+  color: #ee2624;
 }
 .card-product-grid:hover {
   border-color: #adb5bd;
@@ -529,7 +531,7 @@ a.itemside:hover .title {
 .card-user .card-header {
   position: relative;
   height: 100px;
-  background-color: #c3f19d !important;
+  background-color: #9dd3f1 !important;
   text-align: center;
 }
 .card-user .img-avatar {
@@ -626,7 +628,7 @@ ul.row-sm {
   width: 7px;
   border-radius: 100%;
   height: 7px;
-  background: #4fa607;
+  background: #ee2624;
 }
 
 .list-check {
@@ -659,7 +661,7 @@ ul.row-sm {
 }
 .list-normal li:before {
   content: "•";
-  color: #4fa607;
+  color: #ee2624;
   display: inline-block;
   width: 1em;
   margin-left: -1em;
@@ -677,7 +679,7 @@ ul.row-sm {
   color: #141432;
 }
 .list-menu a:hover {
-  color: #4fa607;
+  color: #ee2624;
 }
 
 .cols-two {
@@ -828,7 +830,7 @@ ul.row-sm {
 
 .form-control:hover,
 .form-select:hover {
-  border-color: #4fa607;
+  border-color: #456610d0;
 }
 
 .btn-facebook {
