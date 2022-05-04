@@ -723,7 +723,7 @@ textarea:focus {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100%;
+
   width: 100%;
 }
 .slider-wrap{
@@ -744,6 +744,7 @@ textarea:focus {
   justify-content: center;
   position: relative;
 }
+
 .slider-list {
   /* min-width: 900px; */
   margin: 0 0 0 0;
@@ -797,6 +798,7 @@ textarea:focus {
 .slider-btn__next:hover {
   color: #0f4674 ;
 }
+
 .slider-item-img{
   height: 345px;
   max-width: 1150px;
@@ -859,4 +861,8 @@ textarea:focus {
 .setpass-noti span{
   color: red;
   cursor: pointer;
+}
+.slider-item-img {
+  transition: 0.1s ease-in;
+  min-width: 900px;
 }
