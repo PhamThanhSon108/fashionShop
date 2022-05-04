@@ -15,7 +15,6 @@ const HomeScreen = ({ match }) => {
       <Header />
       <Silder />
       <ShopSection keyword={keyword} pagenumber={pagenumber} />
-      <ShopSection keyword={keyword} pagenumber={pagenumber} />
 
       <CalltoActionSection />
       <ContactInfo />

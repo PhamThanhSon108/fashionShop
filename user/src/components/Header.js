@@ -28,7 +28,7 @@ const Header = () => {
       history.push("/");
     }
   };
-<<<<<<< HEAD
+  }
   function avatarUser(){
     const stringUser = userInfo.name;
     const value = stringUser.slice(0,1);
@@ -46,9 +46,7 @@ const Header = () => {
     }
     return returnUser
   }
-=======
-}
->>>>>>> 5b3f8fba44e25a4f08be43058432bb504f98abb4
+    
   return (
     <div>
       {/* Top Header */}
