@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { clearFromCart } from "../Redux/Actions/cartActions";
 import { createOrder } from "../Redux/Actions/OrderActions";
 import { ORDER_CREATE_RESET } from "../Redux/Constants/OrderConstants";
 import Header from "./../components/Header";
@@ -52,6 +53,7 @@ const PlaceOrderScreen = ({ history }) => {
         totalPrice: cart.totalPrice,
       })
     );
+    dispatch(clearFromCart(userInfo._id))
   };
 
   return (
@@ -173,7 +175,9 @@ const PlaceOrderScreen = ({ history }) => {
                 </tr>
               </tbody>
             </table>
-            {cart.cartItems.length === 0 ? null : (
+            {
+            cart.cartItems.length === 0 ? null : 
+            (
               <button type="submit" onClick={placeOrderHandler}>
                 PLACE ORDER
               </button>

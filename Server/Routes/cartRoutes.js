@@ -102,4 +102,20 @@ cartRoutes.post(
           }
     })
   );
+
+ cartRoutes.delete(
+    "/:id",
+    protect,
+    // admin,
+    asyncHandler(async (req, res) => {
+      const cart = await Cart.findOne({user:req.params.id});
+      if (cart) {
+        await cart.remove();
+        res.json({ message: "Cart deleted" });
+      } else {
+        res.status(404);
+        throw new Error("Product not Found");
+      }
+    })
+  );
   export default cartRoutes

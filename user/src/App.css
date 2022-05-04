@@ -687,7 +687,7 @@ textarea:focus {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100%;
+
   width: 100%;
 }
 .slider-wrap{
@@ -706,6 +706,7 @@ textarea:focus {
   justify-content: center;
   position: relative;
 }
+
 .slider-list {
   min-width: 900px;
   margin: 0 0 0 0;
@@ -738,6 +739,7 @@ textarea:focus {
   align-items: center;
   justify-content: center;
   min-width: 900px;
+  
 }
 .Announcement {
   padding-bottom: 10px;
@@ -759,4 +761,7 @@ textarea:focus {
 .slider-btn__next:hover {
   color: #0f4674 ;
 }
-
+.slider-item-img {
+  transition: 0.1s ease-in;
+  min-width: 900px;
+}
