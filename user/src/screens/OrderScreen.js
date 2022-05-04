@@ -216,19 +216,35 @@ const OrderScreen = ({ match }) => {
                     </tr>
                   </tbody>
                 </table>
-                {!order.isPaid && (
-                  <div className="col-12">
-                    {loadingPay && <Loading />}
-                    {!sdkReady ? (
-                      <Loading />
-                    ) : (
-                      <PayPalButton
-                        amount={order.totalPrice}
-                        onSuccess={successPaymentHandler}
-                      />
-                    )}
-                  </div>
-                )}
+                {
+                // !order.isPaid && (
+                //   <div className="col-12">
+                //     {loadingPay && <Loading />}
+                //     <span>Đang chờ giao hàng</span>
+                //     {
+                    
+                //     /* {!sdkReady ? (
+                //       <Loading />
+                //     ) : (
+                //       <PayPalButton
+                //         amount={order.totalPrice}
+                //         onSuccess={successPaymentHandler}
+                //       />
+                //     )} */}
+                //   </div>
+                // )
+                
+                 !order.isPaid &&(!order.isDelivered? <div className="col-12">
+                  {loadingPay && <Loading />}
+                  <span>Pending approval</span></div> : <div className="col-12">
+                  {loadingPay && <Loading />}
+                  <span>Chờ thanh toán</span></div>)
+                }
+                {
+                  order.isPaid &&( <div className="col-12">
+                  {loadingPay && <Loading />}
+                  <span>Đã thanh toán</span></div>)
+                }
               </div>
             </div>
           </>

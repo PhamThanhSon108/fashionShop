@@ -36,8 +36,11 @@ const PaymentScreen = ({ history }) => {
               <input
                 className="form-check-input"
                 type="radio"
+                checked
                 value={paymentMethod}
-                onChange={(e) => setPaymentMethod(e.target.value)}
+                onChange={(e) => {setPaymentMethod(e.target.value)
+                console.log(e.target.value)
+                }}
               />
               <label className="form-check-label">Payment in cash</label>
             </div>

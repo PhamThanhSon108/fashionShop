@@ -1,4 +1,5 @@
 import {
+  CART_CLEAR_SUCCESS,
   // CART_ADD_ITEM,
   // CART_CLEAR_ITEMS,
   CART_CREATE_FAIL,
@@ -87,6 +88,8 @@ export const DeleteCartReducer = (state = {}, action) => {
       return { loading: false, success: true, message: action.payload };
     case CART_DELETE_FAIL:
       return { loading: false, error: true };
+    case CART_CLEAR_SUCCESS:
+      return {loading: false, success: true}
     default:
       return state;
   }

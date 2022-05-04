@@ -21,12 +21,14 @@ const Header = () => {
   };
   const submitHandler = (e) => {
     e.preventDefault();
+    if(keyword!=undefined){
     if (keyword.trim()&&keyword) {
       history.push(`/search/${keyword}`);
     } else {
       history.push("/");
     }
   };
+}
   return (
     <div>
       {/* Top Header */}

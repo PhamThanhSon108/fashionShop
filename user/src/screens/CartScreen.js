@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Header from "./../components/Header";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, listCart, removefromcart } from "./../Redux/Actions/cartActions";
+import { addToCart, clearFromCart, listCart, removefromcart } from "./../Redux/Actions/cartActions";
 
 const CartScreen = ({ match, location, history }) => {
   window.scrollTo(0, 0);
@@ -14,9 +14,9 @@ const CartScreen = ({ match, location, history }) => {
   const { cartItems } = cart;
 
   const cartDel = useSelector((state) => state.cartDelete);
-  const {loading:loa, success: suc,mesage:mes} = cartDel;
+  const {loading:loa, success: suc, mesage:mes} = cartDel;
 
-  const total = cartItems.reduce((a, i) => a + i.qty * i.price, 0).toFixed(2);
+  const total =cartItems?cartItems.reduce((a, i) => a + i.qty * i.price, 0).toFixed(2):0;
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
   useEffect(() => {
