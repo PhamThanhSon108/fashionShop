@@ -18,6 +18,7 @@ userRouter.post(
         _id: user._id,
         name: user.name,
         email: user.email,
+        phone: user.phone,
         isAdmin: user.isAdmin,
         token: generateToken(user._id),
         createdAt: user.createdAt,
@@ -33,7 +34,7 @@ userRouter.post(
 userRouter.post(
   "/",
   asyncHandler(async (req, res) => {
-    const { name, email, password } = req.body;
+    const { name, email,phone, password } = req.body;
 
     const userExists = await User.findOne({ email });
 
@@ -45,6 +46,7 @@ userRouter.post(
     const user = await User.create({
       name,
       email,
+      phone,
       password,
     });
 
@@ -53,6 +55,7 @@ userRouter.post(
         _id: user._id,
         name: user.name,
         email: user.email,
+        phone: user.phone,
         isAdmin: user.isAdmin,
         token: generateToken(user._id),
       });
@@ -75,6 +78,7 @@ userRouter.get(
         _id: user._id,
         name: user.name,
         email: user.email,
+        phone: user.phone,
         isAdmin: user.isAdmin,
         createdAt: user.createdAt,
       });
@@ -95,14 +99,22 @@ userRouter.put(
     if (user) {
       user.name = req.body.name || user.name;
       user.email = req.body.email || user.email;
+      user.phone = req.body.phone || user.phone;
       if (req.body.password) {
-        user.password = req.body.password;
+        if(await user.matchPassword(req.body.oldPassword)) {
+          user.password = req.body.password;
+        }
+        else {
+          res.status(404);
+          throw new Error("Old Password is not correct!");
+        }
       }
       const updatedUser = await user.save();
       res.json({
         _id: updatedUser._id,
         name: updatedUser.name,
         email: updatedUser.email,
+        phone: updatedUser.phone,
         isAdmin: updatedUser.isAdmin,
         createdAt: updatedUser.createdAt,
         token: generateToken(updatedUser._id),

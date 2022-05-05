@@ -11,6 +11,7 @@ const Register = ({ location, history }) => {
   window.scrollTo(0, 0);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [cfpassword, setCfPassword] = useState("");
 
@@ -37,6 +38,10 @@ const Register = ({ location, history }) => {
      if(isEmpty(email)){
         msg.email = "Plesae input your email";
      }
+
+     if(isEmpty(phone)){
+      msg.phone = "Plesae input your phone";
+   }
 
      if(isEmpty(password)){
         msg.password = "Please input your password";
@@ -67,7 +72,7 @@ const Register = ({ location, history }) => {
     e.preventDefault();
     const isValid = validateAll()
     if(!isValid) return
-    dispatch(register(name, email, password));
+    dispatch(register(name, email,phone, password));
   };
 
   return (
@@ -91,6 +96,7 @@ const Register = ({ location, history }) => {
             }}
           />
           <p className="noti-validate">{checkValidate.name}</p>
+          
           <input
             type="email"
             placeholder="Email"
@@ -100,7 +106,19 @@ const Register = ({ location, history }) => {
               checkValidate.email = " "
             }}
           />
-          <p className="noti-validate">{checkValidate.email}</p>
+            <p className="noti-validate">{checkValidate.email}</p>
+
+          <input
+            type="text"
+            placeholder="Phone"
+            value={phone}
+            onChange={(e) => {
+              setPhone(e.target.value)
+              checkValidate.phone = " "
+            }}
+          />
+          <p className="noti-validate">{checkValidate.phone}</p>
+
           <input
             type="password"
             placeholder="Password"
@@ -111,6 +129,7 @@ const Register = ({ location, history }) => {
             }}
           />
           <p className="noti-validate">{checkValidate.password}</p>
+
           <input
             type="password"
             placeholder="Cfpassword"
@@ -121,6 +140,7 @@ const Register = ({ location, history }) => {
             }}
           />
           <p className="noti-validate">{checkValidate.cfpassword}</p>
+
           <button type="submit">Register</button>
           <p>
             <Link to={redirect ? `/login?redirect=${redirect}` : "/login"}>
