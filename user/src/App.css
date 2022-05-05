@@ -78,11 +78,14 @@ textarea:focus {
 }
 .search-button {
   width: 20%;
-  background-color: black;
+  background-color: #fb5533;
   color: white;
   border: 0;
   text-transform: uppercase;
   font-size: 12px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  width: 65px;
 }
 .submit-search{
   font-size: 20px;
@@ -746,7 +749,7 @@ textarea:focus {
 }
 
 .slider-list {
-  /* min-width: 900px; */
+  min-width: 900px;
   margin: 0 0 0 0;
   padding-left: 0;
   display: flex;
@@ -787,6 +790,7 @@ textarea:focus {
   position: absolute;
   left: 0;
   z-index: 1;
+  padding-left: 5px;
 }
 .slider-btn__next {
   color: #0f72c4;
@@ -794,6 +798,7 @@ textarea:focus {
   position: absolute;
   right: 0;
   z-index: 1;
+  padding-right: 5px;
 }
 .slider-btn__next:hover {
   color: #0f4674 ;
@@ -862,7 +867,7 @@ textarea:focus {
   color: red;
   cursor: pointer;
 }
-.slider-item-img {
+/* .slider-item-img {
   transition: 0.1s ease-in;
   min-width: 900px;
-}
+} */

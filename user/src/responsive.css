@@ -56,6 +56,7 @@
   }
   .slider-item-img{
     height: 280px;
+    width: 89%;
   }
 }
 @media (max-width: 768px) {
@@ -132,6 +133,7 @@
   }
   .slider-item-img{
     height: 280px;
+    width: 89%;
   }
 }
 @media (max-width: 767px){
@@ -192,6 +194,7 @@
   }
   .slider-item-img{
     height: 148px;
+    object-fit: scale-down;
   }
   .center{
     text-align: center;
@@ -215,6 +218,7 @@
   }
   .slider-item-img{
     height: 143px;
+    object-fit: scale-down;
   }
   .slider-img{
     width: 39%;
