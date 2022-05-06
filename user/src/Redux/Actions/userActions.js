@@ -37,7 +37,6 @@ export const login = (email, password) => async (dispatch) => {
     );
     dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
     dispatch(listCart())
-    console.log(data)
     localStorage.setItem("userInfo", JSON.stringify(data));
   } catch (error) {
     
@@ -61,7 +60,7 @@ export const logout = () => (dispatch) => {
 };
 
 // REGISTER
-export const register = (name, email, password) => async (dispatch) => {
+export const register = (name, email, phone, password) => async (dispatch) => {
   try {
     dispatch({ type: USER_REGISTER_REQUEST });
 
@@ -73,7 +72,7 @@ export const register = (name, email, password) => async (dispatch) => {
 
     const { data } = await axios.post(
       `/api/users`,
-      { name, email, password },
+      { name, email, phone, password },
       config
     );
     dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
@@ -139,6 +138,7 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.put(`/api/users/profile`, user, config);
+    console.log(data);
     dispatch({ type: USER_UPDATE_PROFILE_SUCCESS, payload: data });
     dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
 
