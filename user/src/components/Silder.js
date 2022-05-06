@@ -27,7 +27,9 @@ export default function Silder() {
     return () => clearInterval(interval);
   }, [currentIndex]);
 
-
+  // const staticSlider = () => {
+  //   return slider[currentIndex].url
+  // }
   const handleIndexNext = () => {
     if(currentIndex < slider.length-1) {
     setCurrentIndex((currentIndex)=>currentIndex+1)
@@ -72,7 +74,8 @@ export default function Silder() {
                   
                   }
                   <li className='slider-item'>
-                <img className='slider-item-img' src={slider[0]!=undefined?slider[currentIndex].url:'https://cf.shopee.vn/file/88ba643244f50aba0d_xxhdpi'} />
+                  {/* <img className='slider-item-img' src={staticSlider} /> */}
+                <img className='slider-item-img' src={slider && slider[0]!=undefined?slider[currentIndex].url:'https://cf.shopee.vn/file/88ba643244f50aba0d_xxhdpi'} />
               </li>
 
 

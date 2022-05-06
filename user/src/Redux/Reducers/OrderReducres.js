@@ -1,4 +1,8 @@
 import {
+  ORDER_ADDRESS_MY_FAIL,
+  ORDER_ADDRESS_MY_REQUEST,
+  ORDER_ADDRESS_MY_RESET,
+  ORDER_ADDRESS_MY_SUCCESS,
   ORDER_CREATE_FAIL,
   ORDER_CREATE_REQUEST,
   ORDER_CREATE_RESET,
@@ -76,6 +80,22 @@ export const orderListMyReducer = (state = { orders: [] }, action) => {
       return { loading: false, error: action.payload };
     case ORDER_LIST_MY_RESET:
       return { orders: [] };
+    default:
+      return state;
+  }
+};
+
+
+export const orderAddressMyReducer = (state = { orderAddress: {} }, action) => {
+  switch (action.type) {
+    case ORDER_ADDRESS_MY_REQUEST:
+      return { loading: true ,orderAddress: {}};
+    case ORDER_ADDRESS_MY_SUCCESS:
+      return { loading: false, orderAddress: action.payload };
+    case ORDER_ADDRESS_MY_FAIL:
+      return { loading: false, error: action.payload };
+    case ORDER_ADDRESS_MY_RESET:
+      return { orderAddress: {} };
     default:
       return state;
   }

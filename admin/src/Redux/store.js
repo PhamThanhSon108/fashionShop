@@ -13,6 +13,7 @@ import {
   orderDeliveredReducer,
   orderDetailsReducer,
   orderListReducer,
+  orderPaidReducer,
 } from "./Reducers/OrderReducres";
 import { sliderCreateReducer, sliderDeleteReducer, sliderListReducer } from "./Reducers/SliderListReducers";
 
@@ -27,6 +28,7 @@ const reducer = combineReducers({
   orderList: orderListReducer,
   orderDetails: orderDetailsReducer,
   orderDeliver: orderDeliveredReducer,
+  orderPaid: orderPaidReducer,
   sliderList: sliderListReducer,
   deleteSlider: sliderDeleteReducer,
   sliderCreate: sliderCreateReducer,

@@ -30,30 +30,34 @@ const OrderScreen = ({ match }) => {
       order.orderItems.reduce((acc, item) => acc + item.price * item.qty, 0)
     );
   }
-
+  useEffect(()=>{
+    dispatch(getOrderDetails(orderId));
+  },[])
   useEffect(() => {
-    const addPayPalScript = async () => {
-      const { data: clientId } = await axios.get("/api/config/paypal");
-      const script = document.createElement("script");
-      script.type = "text/javascript";
-      script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`;
-      script.async = true;
-      script.onload = () => {
-        setSdkReady(true);
-      };
-      document.body.appendChild(script);
-    };
+    // const addPayPalScript = async () => {
+    //   const { data: clientId } = await axios.get("/api/config/paypal");
+    //   const script = document.createElement("script");
+    //   script.type = "text/javascript";
+    //   script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`;
+    //   script.async = true;
+    //   script.onload = () => {
+    //     setSdkReady(true);
+    //   };
+    //   document.body.appendChild(script);
+    // };
     if (!order || successPay) {
       dispatch({ type: ORDER_PAY_RESET });
       dispatch(getOrderDetails(orderId));
-    } else if (!order.isPaid) {
-      if (!window.paypal) {
-        addPayPalScript();
-      } else {
-        setSdkReady(true);
-      }
-    }
-  }, [dispatch, orderId, successPay, order]);
+    } 
+    // else if (!order.isPaid) {
+      // if (!window.paypal) {
+      //   addPayPalScript();
+      // } else {
+      //   setSdkReady(true);
+      // }
+    // }
+  }, [dispatch, orderId, order]);
+  //[dispatch, orderId, successPay, order]);
 
   const successPaymentHandler = (paymentResult) => {
     dispatch(payOrder(orderId, paymentResult));
@@ -63,11 +67,13 @@ const OrderScreen = ({ match }) => {
     <>
       <Header />
       <div className="container">
-        {loading ? (
+        {
+        loading ? (
           <Loading />
         ) : error ? (
           <Message variant="alert-danger">{error}</Message>
-        ) : (
+        ) : 
+        (
           <>
             <div className="row  order-detail">
               <div className="col-lg-4 col-sm-4 mb-lg-4 mb-5 mb-sm-0">
@@ -238,12 +244,22 @@ const OrderScreen = ({ match }) => {
                   {loadingPay && <Loading />}
                   <span>Pending approval</span></div> : <div className="col-12">
                   {loadingPay && <Loading />}
-                  <span>Chờ thanh toán</span></div>)
+                  <div className="bg-danger p-2 col-12">
+                        <p className="text-white text-center text-sm-start">
+                          Not Paid
+                        </p>
+                      </div>
+                 </div>)
                 }
                 {
                   order.isPaid &&( <div className="col-12">
                   {loadingPay && <Loading />}
-                  <span>Đã thanh toán</span></div>)
+                  <div className="bg-success p-2 col-12">
+                        <p className="text-white text-center text-sm-start">
+                          Pay success
+                        </p>
+                      </div>
+                  </div>)
                 }
               </div>
             </div>

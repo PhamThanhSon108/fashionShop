@@ -41,6 +41,7 @@ const PlaceOrderScreen = ({ history }) => {
     }
   }, [history, dispatch, success, order]);
 
+
   const placeOrderHandler = () => {
     dispatch(
       createOrder({
@@ -89,7 +90,7 @@ const PlaceOrderScreen = ({ history }) => {
                 <h5>
                   <strong>Order info</strong>
                 </h5>
-                <p>Shipping: {cart.shippingAddress.country}</p>
+                <p>Shipping: {` ${cart.shippingAddress.country}`}</p>
                 <p>Pay method: {cart.paymentMethod}</p>
               </div>
             </div>
