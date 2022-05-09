@@ -23,40 +23,48 @@ export const cartReducer = (
 ) => {
   switch (action.type) {
     //LIST
-    case CART_LIST_REQUEST:
-      return { loading: true, cartItems: [] };
+    // case CART_LIST_REQUEST:
+    //   return { loading: true, cartItems: [] };
     case CART_LIST_SUCCESS:
       return { loading: false, cartItems: action.payload };
     case CART_LIST_FAIL:
       return { loading: false, error: action.payload };
-
+    // case CART_DELETE_SUCCESS:
+    //   const newCart = [...state.cartItems].map(cartItem => cartItem._id !== action.payload)
+    //   return { loading: false, successdelete: true, message: action.payload, cartItems: [...newCart] };
 
     //create
-    case CART_CREATE_REQUEST:
-      return { loading: true, cartItems: [] };
-    case CART_CREATE_SUCCESS:
-      const item = action.payload;
-      const existItem = state.cartItems.find((x) => x.product === item.product);
-      return {
-            ...state,
-            cartItems: [...action.payload],
-          };
-      // if (existItem) {
-      //   return {
-      //     ...state,
-      //     loading: false,
-      //     cartItems: state.cartItems.map((x) =>
-      //       x.product === existItem.product ? item : x
-      //     ),
-      //   };
-      // } else {
-      //   return {
-      //     ...state,
-      //     cartItems: [...state.cartItems, item],
-      //   };
-      // }
-    case CART_CREATE_FAIL:
-      return { loading: false, error: action.payload };
+    // case CART_CREATE_REQUEST:
+    //   return { loading: true, cartItems: [...state.cartItems] };
+    // case CART_CREATE_SUCCESS:
+    //   // const item = action.payload;
+    //   // const existItem = state.cartItems.find((x) => x.product === item.product);
+    //   return {
+    //         ...state,
+    //         cartItems: [...action.payload],
+    //       };
+    //   // if (existItem) {
+    //   //   return {
+    //   //     ...state,
+    //   //     loading: false,
+    //   //     cartItems: state.cartItems.map((x) =>
+    //   //       x.product === existItem.product ? item : x
+    //   //     ),
+    //   //   };
+    //   // } else {
+    //   //   return {
+    //   //     ...state,
+    //   //     cartItems: [...state.cartItems, item],
+    //   //   };
+    //   // }
+    // case CART_CREATE_FAIL:
+    //   return { loading: false, error: action.payload };
+
+
+
+
+
+
     case CART_SAVE_SHIPPING_ADDRESS:
       return {
         ...state,
@@ -73,7 +81,13 @@ export const cartReducer = (
     //     cartItems: [],
     //   };
     case CART_LIST_MY_RESET:
-        return { cartItems: [] };
+      return { cartItems: [] };
+
+    //test rerender
+    // case CART_DELETE_SUCCESS:
+    //   const newCart = [...state.cartItems].map(cartItem => cartItem._id !== action.payload)
+    //      return {loading: false, successdelete: true, message: action.payload, cartItems: newCart };
+
     default:
       return state;
   }
@@ -89,8 +103,29 @@ export const DeleteCartReducer = (state = {}, action) => {
     case CART_DELETE_FAIL:
       return { loading: false, error: true };
     case CART_CLEAR_SUCCESS:
-      return {loading: false, success: true}
+      return { loading: false, success: true }
     default:
       return state;
   }
 };
+
+
+
+export const CreateCartReducer = (state = {}, action) => {
+  switch (action.type) {
+    case CART_CREATE_REQUEST:
+      return { loading: true };
+    case CART_CREATE_SUCCESS:
+      return {
+        loading: false,
+        success: true
+      };
+    case CART_CREATE_FAIL:
+      return {
+        loading: false,
+        error: action.payload
+      };
+    default:
+      return state;
+  }
+}

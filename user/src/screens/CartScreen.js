@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "./../components/Header";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,29 +14,32 @@ const CartScreen = ({ match, location, history }) => {
   const { cartItems } = cart;
 
   const cartDel = useSelector((state) => state.cartDelete);
-  const {loading:loa, success: suc, mesage:mes} = cartDel;
+  const { loading: loa, success: suc, mesage: mes } = cartDel;
 
-  const total =cartItems?cartItems.reduce((a, i) => a + i.qty * i.price, 0).toFixed(2):0;
+  const cartCreate = useSelector(state => state.cartCreate);
+  const { loading: loadingCreate, success: successCreate } = cartCreate
+  const total = cartItems ? cartItems.reduce((a, i) => a + i.qty * i.price, 0).toFixed(2) : 0;
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
-  useEffect(() => {
-    if (productId) {
-      dispatch(addToCart(productId, qty, userInfo._id));
-    }
-  }, [dispatch, productId, qty]);
+  // useEffect(() => {
+  //   if (productId) {
+  //     console.log("1use")
+  //     // dispatch(addToCart(productId, qty, userInfo._id))
 
+  //   }
+
+  //   // }, [dispatch, productId, qty]);
+  // }, [dispatch, productId, qty]);
   const checkOutHandler = () => {
     history.push("/login?redirect=shipping");
   };
   useEffect(() => {
-      dispatch(listCart());
-  }, [dispatch,suc]);
+    dispatch(listCart());
+  }, [suc, successCreate]);
 
   const removeFromCartHandle = (id) => {
     console.log(id)
     dispatch(removefromcart(id));
-    console.log(mes)
-    console.log('vip')
   };
   return (
     <>
@@ -61,14 +64,17 @@ const CartScreen = ({ match, location, history }) => {
             <div className=" alert alert-info text-center mt-3">
               Total Cart Products
               <Link className="text-success mx-2" to="/cart">
-                ({cartItems.length})
+                ({cartItems?.length ?? 0})
               </Link>
             </div>
             {/* cartiterm */}
-            {cartItems.map((item) => (
+            {cartItems?.map((item) => (
               <div className="cart-iterm row">
                 <div
-                  onClick={() => removeFromCartHandle(item.product)}
+                  onClick={() => {
+
+                    removeFromCartHandle(item.product)
+                  }}
                   className="remove-button d-flex justify-content-center align-items-center"
                 >
                   <i className="fas fa-times"></i>
@@ -86,7 +92,8 @@ const CartScreen = ({ match, location, history }) => {
                   <select
                     value={item.qty}
                     onChange={(e) => {
-                      dispatch(addToCart(item.product, e.target.value,userInfo._id))}
+                      dispatch(addToCart(item.product, e.target.value, userInfo._id))
+                    }
                     }
                   >
                     {[...Array(item.countInStock).keys()].map((x) => (
