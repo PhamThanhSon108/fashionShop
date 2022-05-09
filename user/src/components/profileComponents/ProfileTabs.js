@@ -14,12 +14,12 @@ const ProfileTabs = () => {
   const [oldPassword, setOldPassword] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [blean, setBlean] = useState(false);
+  const [uploadProfile, setUploadProfile] = useState(true);//ghi chú
+  const [uploadPassword, setUploadPassword] = useState(false);//ghi chú
   const [checkbox, setCheckbox] = useState("0");
   const toastId = React.useRef(null);
-  const refOldPass = useRef();/// ghi chú
-  const refNewPass = useRef();/// ghi chú
-  const refCfPass = useRef();/// ghi chú
+  const refProfile = useRef();/// ghi chú
+  const refSetPassword = useRef();/// ghi chú
   const Toastobjects = {
     pauseOnFocusLoss: false,
     draggable: false,
@@ -33,31 +33,45 @@ const ProfileTabs = () => {
   const { loading, error, user } = userDetails;
 
   const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
-  const {success: success, loading: updateLoading, error: errorUpdate} = userUpdateProfile;
+  const { success: success, loading: updateLoading, error: errorUpdate } = userUpdateProfile;
 
   // xư lý phần cập nhật mật khẩu
-  function removeAtt() {
-    refOldPass.current.removeAttribute("disabled")
-    refNewPass.current.removeAttribute("disabled")
-    refCfPass.current.removeAttribute("disabled")
-  }
-  function setAtt() {
-    refOldPass.current.setAttribute("disabled", "")
-    refNewPass.current.setAttribute("disabled", "")
-    refCfPass.current.setAttribute("disabled", "")
-  }
+  // function removeProfile() {
+  //   refProfile.current.style.display("none")
+  //   refSetPassword.current.style.display("block")
 
-  function checkSetPass() {
+  // }
+  // function setProfile() {
+  //   refProfile.current.style.display("block")
+  //   refSetPassword.current.style.display("none")
+
+  // }
+
+  function checkProfile() {
     let x = Number(checkbox);
     if (x === 0) {
-      setBlean(true)
-      removeAtt()
-      setCheckbox("1")
-    } else {
-      setBlean(false)
-      setAtt()
+      setUploadProfile(true)
+      setUploadPassword(false)
+      setCheckbox("0")
+    }else{
+      setUploadProfile(true)
+      setUploadPassword(false)
       setCheckbox("0")
     }
+  }
+  function checkSetPassword() {
+    let y = Number(checkbox);
+    if (y === 0) {
+      setUploadProfile(false)
+      setUploadPassword(true)
+      setCheckbox("1")
+    }else{
+      setUploadProfile(false)
+      setUploadPassword(true)
+      setCheckbox("1")
+
+    }
+    console.log(y)
   }
   // xử lý login validate profile upload
   const [objFormPass, setObjFromPass] = useState({})
@@ -103,17 +117,17 @@ const ProfileTabs = () => {
 
   const submitUpdateProfile = (e) => {
     e.preventDefault();
-    
-      dispatch(updateUserProfile({ id: user._id, name, email, phone}));
-      if (!toast.isActive(toastId.current)) {
-        toastId.current = toast.success("Profile Updated", Toastobjects);
+
+    dispatch(updateUserProfile({ id: user._id, name, email, phone }));
+    if (!toast.isActive(toastId.current)) {
+      toastId.current = toast.success("Profile Updated", Toastobjects);
     }
     setPassword("");
     setConfirmPassword("");
   };
 
   const toastSuccess = () => {
-    
+
   }
 
   const submitUpdatePassword = (e) => {
@@ -128,12 +142,10 @@ const ProfileTabs = () => {
       dispatch(updateUserProfile({ id: user._id, oldPassword, password }));
 
       if (!toast.isActive(toastId.current)) {
-        if(errorUpdate)
-        {
+        if (errorUpdate) {
           toastId.current = toast.error(errorUpdate, Toastobjects);
         }
-        else
-        {
+        else {
           toastId.current = toast.success("Password Updated", Toastobjects);
         }
       }
@@ -147,110 +159,139 @@ const ProfileTabs = () => {
       {error && <Message variant="alert-danger">{error}</Message>}
       {loading && <Loading />}
       {updateLoading && <Loading />}
-      <div>
+      <div className="row form-container">
         {/*Update profile*/}
-        <form className="row  form-container" onSubmit={submitUpdateProfile}>
-          <div className="col-md-6">
-            <div className="form">
-              <label for="account-fn">UserName</label>
-              <input
-                className="form-control"
-                type="text"
-                required
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
+        {/* nut check radio */}
+        <div className="radio-check">
+          <from className="radio-from">
+            <div className="radio-from__flex">
+              <label for="profile" className={Number(checkbox) === 0 ? "color" : ""}>Upload Profile</label>
+              <input id="profile" style={{ display: "none" }} name="checkProfilePass" type="radio" onClick={checkProfile}></input>
             </div>
-          </div>
-
-
-
-          <div className="col-md-6">
-            <div className="form">
-              <label for="account-email">E-mail Address</label>
-              <input
-                className="form-control"
-                type="email"
-                disabled
-                value={email}
-                required
-                onChange={(e) => setEmail(e.target.value)}
-              />
+            <div className="radio-from__flex">
+              <label for="pass" className={Number(checkbox) === 1 ? "color" : ""}>Set Password</label>
+              <input id="pass" style={{ display: "none" }} name="checkProfilePass" type="radio" onClick={checkSetPassword}></input>
             </div>
-          </div>
-
-          <div className="col-md-6">
-            <div className="form">
-              <label>Phone</label>
-              <input
-                className="form-control"
-                type="text"
-                value={phone}
-                required
-                onChange={(e) => setPhone(e.target.value)}
-              />
+          </from>
+        </div>
+        <div ref={refProfile} className={uploadProfile ? "col-lg-12 col-md-12 col-sm-12 color" : "col-lg-12 col-md-12 col-sm-12"} 
+          style={{ display: uploadProfile ? "block" : "none" }}
+        >
+          <form className="row  form-container" onSubmit={submitUpdateProfile}>
+            <div className="col-md-12">
+              <div className="form">
+                <label for="account-fn">UserName</label>
+                <input
+                  className="form-control"
+                  type="text"
+                  required
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+                <p className="noti-validate"></p>
+              </div>
             </div>
-          </div>
 
-          <button type="submit">Update Profile</button>
-        </form>
+
+
+            <div className="col-md-12">
+              <div className="form">
+                <label for="account-email">E-mail Address</label>
+                <input
+                  className="form-control"
+                  type="email"
+                  disabled
+                  value={email}
+                  required
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                <p className="noti-validate"></p>
+              </div>
+            </div>
+
+            <div className="col-md-12">
+              <div className="form">
+                <label>Phone</label>
+                <input
+                  className="form-control"
+                  type="text"
+                  value={phone}
+                  required
+                  onChange={(e) => setPhone(e.target.value)}
+                />
+                <p className="noti-validate"></p>
+              </div>
+            </div>
+
+            <div className="button-submit">
+              <button type="submit">Update Profile</button>
+            </div>
+          </form>
+        </div>
 
         {/*Update password*/}
-            {errorUpdate && <Message variant="alert-danger">{errorUpdate}</Message>}
-        <form className="row  form-container" onSubmit={submitUpdatePassword}>
-          <div className="col-md-6">
-            <div className="form">
-              <label for="account-pass">Old Password</label>
-              <input
-                ref={refOldPass}
-                className="form-control"
-                type="password"
-                value={oldPassword}
-                onChange={(e) => {
-                  objFormPass.oldPassword = " "
-                  setOldPassword(e.target.value)
-                }}
-              />
-              <p className="noti-validate">{objFormPass.oldPassword}</p>
-            </div>
-          </div>
+        <div ref={refSetPassword} className={uploadPassword ? "col-lg-12 col-md-12 col-sm-12 color" : "col-lg-12 col-md-12 col-sm-12"} 
+          style={{ display: uploadPassword ? "block" : "none" }}
+        >
+          {/* dòng này sơn nó in ra thống báo lỗi sơn nhớ sửa lại nhá */}
+          {errorUpdate && <Message variant="alert-danger">{errorUpdate}</Message>}
+          <form className="row  form-container" onSubmit={submitUpdatePassword}>
+            <div className="col-md-12">
+              <div className="form">
+                <label for="account-pass">Old Password</label>
+                <input
 
-          <div className="col-md-6">
-            <div className="form">
-              <label for="account-pass">New Password</label>
-              <input
-                ref={refNewPass}
-                className="form-control"
-                type="password"
-                value={password}
-                onChange={(e) => {
-                  objFormPass.password = " "
-                  setPassword(e.target.value)
-                }}
-              />
-              <p className="noti-validate">{objFormPass.password}</p>
+                  className="form-control"
+                  type="password"
+                  value={oldPassword}
+                  onChange={(e) => {
+                    objFormPass.oldPassword = " "
+                    setOldPassword(e.target.value)
+                  }}
+                />
+                <p className="noti-validate">{objFormPass.oldPassword}</p>
+              </div>
             </div>
-          </div>
 
-          <div className="col-md-6">
-            <div className="form">
-              <label for="account-confirm-pass">Confirm Password</label>
-              <input
-                ref={refCfPass}
-                className="form-control"
-                type="password"
-                value={confirmPassword}
-                onChange={(e) => {
-                  objFormPass.confirmPassword = " "
-                  setConfirmPassword(e.target.value)
-                }}
-              />
-              <p className="noti-validate">{objFormPass.confirmPassword}</p>
+            <div className="col-md-12">
+              <div className="form">
+                <label for="account-pass">New Password</label>
+                <input
+
+                  className="form-control"
+                  type="password"
+                  value={password}
+                  onChange={(e) => {
+                    objFormPass.password = " "
+                    setPassword(e.target.value)
+                  }}
+                />
+                <p className="noti-validate">{objFormPass.password}</p>
+              </div>
             </div>
-          </div>
 
-          <button type="submit">Update Password</button>
-        </form>
+            <div className="col-md-12">
+              <div className="form">
+                <label for="account-confirm-pass">Confirm Password</label>
+                <input
+
+                  className="form-control"
+                  type="password"
+                  value={confirmPassword}
+                  onChange={(e) => {
+                    objFormPass.confirmPassword = " "
+                    setConfirmPassword(e.target.value)
+                  }}
+                />
+                <p className="noti-validate">{objFormPass.confirmPassword}</p>
+              </div>
+            </div>
+
+            <div className="button-submit">
+              <button type="submit">Update Password</button>
+            </div>
+          </form>
+        </div>
       </div>
     </>
   );
