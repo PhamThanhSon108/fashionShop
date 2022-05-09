@@ -109,7 +109,7 @@ orderRouter.put(
   })
 );
 
-// ORDER IS PAID
+// ORDER IS DELIVERED
 orderRouter.put(
   "/:id/delivered",
   protect,
@@ -125,6 +125,40 @@ orderRouter.put(
     } else {
       res.status(404);
       throw new Error("Order Not Found");
+    }
+  })
+);
+
+orderRouter.put(
+  "/:id/paid",
+  protect,
+  asyncHandler(async (req, res) => {
+    const order = await Order.findById(req.params.id);
+
+    if (order) {
+      order.isPaid = true;
+      order.deliveredAt = Date.now();
+
+      const updatedOrder = await order.save();
+      res.json(updatedOrder);
+    } else {
+      res.status(404);
+      throw new Error("Order Not Found");
+    }
+  })
+);
+
+orderRouter.get(
+  "/:id/address",
+  // protect,
+  asyncHandler(async (req, res) => {
+    const order = await Order.find({ user: req.params.id })
+
+    if (order) {
+      res.json(order[order.length-1].shippingAddress);
+    } else {
+      res.status(404);
+      throw new Error("Not found order of user");
     }
   })
 );
