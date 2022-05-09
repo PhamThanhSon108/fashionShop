@@ -440,9 +440,25 @@ textarea:focus {
 .noti-validate {
   margin: 5px 0 0 0 !important;
   font-size: 16px;
+  height: 22px;
+  overflow: hidden;
   color: red;
   padding-left: 2px;
   text-align: left;
+}
+.button-submit{
+  display: flex;
+  justify-content: center;
+  padding-bottom: 15px;
+}
+.button-submit button{
+  margin-top: 0 !important;
+  width: 100%;
+  border-radius: 7px;
+  border: 0.5px solid rgba(0, 0, 0, 0.05) !important;
+}
+.button-submit button:hover{
+  background-color: #1cb803;
 }
 .Login input:focus {
   outline: 0px;
@@ -519,7 +535,7 @@ textarea:focus {
   color: #ffffff;
 }
 .form {
-  padding: 20px 0;
+  padding: 0px 0;
 }
 .form label {
   padding: 10px 0;
@@ -714,12 +730,18 @@ textarea:focus {
 
 /* Pagination */
 .pagination .page-link {
-  padding: 10px 30px;
+  padding: 10px 25px;
   color: black;
 }
+.page-link{
+  border: none;
+}
+.page-item{
+  margin: 0 15px;
+}
 .page-item.active .page-link {
-  background-color: black;
-  border: 1px solid black;
+  background-color: #fb5533;
+  /* border: 1px solid black; */
 }
  /*Slider */
 .slider-row{
@@ -790,7 +812,13 @@ textarea:focus {
   position: absolute;
   left: 0;
   z-index: 1;
-  padding-left: 5px;
+  /* padding-left: 5px; */
+  width: 30px;
+  height: 50px;
+  text-align: center;
+  background-color: #f8e30b78;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
 }
 .slider-btn__next {
   color: #0f72c4;
@@ -798,7 +826,13 @@ textarea:focus {
   position: absolute;
   right: 0;
   z-index: 1;
-  padding-right: 5px;
+  /* padding-right: 5px; */
+  width: 30px;
+  height: 50px;
+  text-align: center;
+  background-color: #f8e30b78;
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
 }
 .slider-btn__next:hover {
   color: #0f4674 ;
@@ -871,3 +905,20 @@ textarea:focus {
   transition: 0.1s ease-in;
   min-width: 900px;
 } */
+/* sử lý nút check radio */
+.radio-check{
+  padding: 0;
+}
+.radio-from{
+  display: flex;
+}
+.radio-from__flex label{
+  width: 130px;
+  height: 40px;
+  text-align: center;
+  line-height: 44px;
+  cursor: pointer;
+}
+.color{
+  background-color: #e2f2f5c9;
+}
