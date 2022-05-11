@@ -16,6 +16,7 @@ import {
   orderPaidReducer,
 } from "./Reducers/OrderReducres";
 import { sliderCreateReducer, sliderDeleteReducer, sliderListReducer } from "./Reducers/SliderListReducers";
+import { categoryListReducer } from "./Reducers/CategoryReducers";
 
 const reducer = combineReducers({
   userLogin: userLoginReducer,
@@ -32,6 +33,7 @@ const reducer = combineReducers({
   sliderList: sliderListReducer,
   deleteSlider: sliderDeleteReducer,
   sliderCreate: sliderCreateReducer,
+  CategoryList: categoryListReducer
 });
 
 // login

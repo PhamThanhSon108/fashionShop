@@ -75,7 +75,7 @@ export default function Silder() {
                 }
                 <li className='slider-item'>
                   {/* <img className='slider-item-img' src={staticSlider} /> */}
-                  <img className='slider-item-img' src={slider && slider[0] != undefined ? slider[currentIndex].url : '	https://cf.shopee.vn/file/79c43b8850690947d417c61507b20486'} />
+                  <img className='slider-item-img' src={slider && slider[0] != undefined ? slider[currentIndex].url : 'https://cf.shopee.vn/file/79c43b8850690947d417c61507b20486'} />
                 </li>
 
 
