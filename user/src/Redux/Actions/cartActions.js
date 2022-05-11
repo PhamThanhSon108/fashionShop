@@ -20,9 +20,9 @@ import { logout } from "./userActions";
 
 //   localStorage.setItem("cartItems", JSON.stringify(getState().cart.cartItems));
 // };
-export const listCart = () => async (dispatch,getState) => {
+export const listCart = () => async (dispatch, getState) => {
   try {
-    dispatch({type: CART_LIST_REQUEST})
+    // dispatch({ type: CART_LIST_REQUEST })
 
     const {
       userLogin: { userInfo },
@@ -54,40 +54,40 @@ export const listCart = () => async (dispatch,getState) => {
 //ADD TO CART NEW
 export const addToCart =
   (productId, qty) =>
-  async (dispatch, getState) => {
-    try {
-      dispatch({ type: CART_CREATE_REQUEST});
+    async (dispatch, getState) => {
+      try {
+        dispatch({ type: CART_CREATE_REQUEST });
 
-      const {
-        userLogin: { userInfo },
-      } = getState();
-      const { _id } = userInfo
-      const config = {
-        headers: {
-          Authorization: `Bearer ${userInfo.token}`,
-        },
-      };
+        const {
+          userLogin: { userInfo },
+        } = getState();
+        const { _id } = userInfo
+        const config = {
+          headers: {
+            Authorization: `Bearer ${userInfo.token}`,
+          },
+        };
 
-      const { data } = await axios.post(
-        `/api/cart/`,
-        { productId, qty, _id },
-        config
-      );
-      dispatch({ type: CART_CREATE_SUCCESS, payload: data });
-    } catch (error) {
-      const message =
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message;
-      if (message === "Not authorized, token failed") {
-        dispatch(logout());
+        const { data } = await axios.post(
+          `/api/cart/`,
+          { productId, qty, _id },
+          config
+        );
+        dispatch({ type: CART_CREATE_SUCCESS });
+      } catch (error) {
+        const message =
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message;
+        if (message === "Not authorized, token failed") {
+          dispatch(logout());
+        }
+        dispatch({
+          type: CART_CREATE_FAIL,
+          payload: message,
+        });
       }
-      dispatch({
-        type: CART_CREATE_FAIL,
-        payload: message,
-      });
-    }
-  };
+    };
 
 // REMOVE PRODUCT FROM CART
 export const removefromcart = (pr) => async (dispatch, getState) => {
@@ -102,16 +102,16 @@ export const removefromcart = (pr) => async (dispatch, getState) => {
       headers: {
         Authorization: `Bearer ${userInfo.token}`,
       },
-     
+
     };
     const user = userInfo._id;
-    await axios.post(`/api/cart/delete`,{
- 
-       user,pr
- 
+    await axios.post(`/api/cart/delete`, {
+
+      user, pr
+
     }, config);
 
-    dispatch({ type: CART_DELETE_SUCCESS});
+    dispatch({ type: CART_DELETE_SUCCESS, payload: pr });
   } catch (error) {
     const message =
       error.response && error.response.data.message
@@ -142,12 +142,12 @@ export const clearFromCart = () => async (dispatch, getState) => {
       headers: {
         Authorization: `Bearer ${userInfo.token}`,
       },
-     
+
     };
     const user = userInfo._id;
     await axios.delete(`/api/cart/${user}`, config);
 
-    dispatch({ type: CART_CLEAR_SUCCESS});
+    dispatch({ type: CART_CLEAR_SUCCESS });
   } catch (error) {
     const message =
       error.response && error.response.data.message
@@ -162,8 +162,7 @@ export const clearFromCart = () => async (dispatch, getState) => {
     });
   }
 
-  // localStorage.setItem("cartItems", JSON.stringify(getState().cart.cartItems));
-  localStorage.removeItem("cartItems");
+  localStorage.setItem("cartItems", JSON.stringify(getState().cart.cartItems));
 };
 // SAVE SHIPPING ADDRESS
 export const saveShippingAddress = (data) => (dispatch) => {

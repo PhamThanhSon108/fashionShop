@@ -6,6 +6,7 @@ import Loading from "./../LoadingError/Loading";
 import { toast } from "react-toastify";
 import { updateUserPassword, updateUserProfile } from "../../Redux/Actions/userActions";
 import isEmpty from "validator/lib/isEmpty";
+import { listCart } from "../../Redux/Actions/cartActions";
 
 const ProfileTabs = () => {
   const [name, setName] = useState("");
@@ -33,7 +34,7 @@ const ProfileTabs = () => {
   const { loading, error, user } = userDetails;
 
   const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
-  const { success: success, loading: updateLoading, error: errorUpdate } = userUpdateProfile;
+  const { successPass: updatesuccessPass, success: updatesuccess, loading: updateLoading, error: errorUpdate } = userUpdateProfile;
 
   // xư lý phần cập nhật mật khẩu
   // function removeProfile() {
@@ -53,7 +54,7 @@ const ProfileTabs = () => {
       setUploadProfile(true)
       setUploadPassword(false)
       setCheckbox("0")
-    }else{
+    } else {
       setUploadProfile(true)
       setUploadPassword(false)
       setCheckbox("0")
@@ -65,7 +66,7 @@ const ProfileTabs = () => {
       setUploadProfile(false)
       setUploadPassword(true)
       setCheckbox("1")
-    }else{
+    } else {
       setUploadProfile(false)
       setUploadPassword(true)
       setCheckbox("1")
@@ -102,23 +103,34 @@ const ProfileTabs = () => {
     if (Object.keys(passObj).length > 0) return false
     return true
   }
-
+  useEffect(() => {
+    dispatch(listCart())
+    if (!toast.isActive(toastId.current)) {
+      if (updatesuccessPass === true) {
+        toastId.current = toast.success("Password Updated", Toastobjects);
+      }
+    }
+  }, [updatesuccessPass])
   useEffect(() => {
     if (user) {
       setName(user.name);
       setEmail(user.email);
       setPhone(user.phone)
     }
+    if (errorUpdate) {
+      toastId.current = toast.error(error, Toastobjects);
+    }
+
   }, [dispatch, user]);
 
   // useEffect(() => {
   //   dispatch(updateUserProfile({ id: user._id, oldPassword, password }));
   // },[dispatch, success])
-
   const submitUpdateProfile = (e) => {
     e.preventDefault();
 
     dispatch(updateUserProfile({ id: user._id, name, email, phone }));
+
     if (!toast.isActive(toastId.current)) {
       toastId.current = toast.success("Profile Updated", Toastobjects);
     }
@@ -126,30 +138,28 @@ const ProfileTabs = () => {
     setConfirmPassword("");
   };
 
-  const toastSuccess = () => {
-
-  }
 
   const submitUpdatePassword = (e) => {
     e.preventDefault();
     if (!checkPassword()) return // check funtion check pass để kiểm tra xem có các trường bị rổng hay không
-    // Password match
-    if (password !== confirmPassword) {
-      if (!toast.isActive(toastId.current)) {
-        toastId.current = toast.error("Password does not match", Toastobjects);
-      }
-    } else {
-      dispatch(updateUserProfile({ id: user._id, oldPassword, password }));
+    // // Password match
+    // if (password !== confirmPassword) {
+    //   if (!toast.isActive(toastId.current)) {
+    //     toastId.current = toast.error("Password does not match", Toastobjects);
+    //   }
+    // } else {
+    //   dispatch(updateUserProfile({ id: user._id, oldPassword, password }));
 
-      if (!toast.isActive(toastId.current)) {
-        if (errorUpdate) {
-          toastId.current = toast.error(errorUpdate, Toastobjects);
-        }
-        else {
-          toastId.current = toast.success("Password Updated", Toastobjects);
-        }
-      }
-    }
+    //   if (!toast.isActive(toastId.current)) {
+    //     if (updatesuccess && uploadPassword) {
+    //       toastId.current = toast.success("Password Updated", Toastobjects);
+    //     }
+    //   }
+    // }
+    dispatch(updateUserPassword({ id: user._id, oldPassword, password }));
+
+
+    setOldPassword("")
     setPassword("");
     setConfirmPassword("");
   }
@@ -174,7 +184,7 @@ const ProfileTabs = () => {
             </div>
           </from>
         </div>
-        <div ref={refProfile} className={uploadProfile ? "col-lg-12 col-md-12 col-sm-12 color" : "col-lg-12 col-md-12 col-sm-12"} 
+        <div ref={refProfile} className={uploadProfile ? "col-lg-12 col-md-12 col-sm-12 color" : "col-lg-12 col-md-12 col-sm-12"}
           style={{ display: uploadProfile ? "block" : "none" }}
         >
           <form className="row  form-container" onSubmit={submitUpdateProfile}>
@@ -230,7 +240,7 @@ const ProfileTabs = () => {
         </div>
 
         {/*Update password*/}
-        <div ref={refSetPassword} className={uploadPassword ? "col-lg-12 col-md-12 col-sm-12 color" : "col-lg-12 col-md-12 col-sm-12"} 
+        <div ref={refSetPassword} className={uploadPassword ? "col-lg-12 col-md-12 col-sm-12 color" : "col-lg-12 col-md-12 col-sm-12"}
           style={{ display: uploadPassword ? "block" : "none" }}
         >
           {/* dòng này sơn nó in ra thống báo lỗi sơn nhớ sửa lại nhá */}
