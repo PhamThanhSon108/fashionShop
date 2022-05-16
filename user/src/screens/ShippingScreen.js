@@ -28,7 +28,7 @@ const ShippingScreen = ({ history }) => {
   //   dispatch(orderGetAddress());
   //   console.log("lần 2 nè")
   // }, []);
-  console.log("Bug")
+  //console.log("Bug")
   useEffect(() => {
     dispatch(orderGetAddress());}
   , []);
@@ -37,7 +37,7 @@ const ShippingScreen = ({ history }) => {
       dispatch({type: ORDER_ADDRESS_MY_RESET})
     }
     else {
-    if(orderAddress.address != undefined){
+    if(orderAddress?.address != undefined){
       setAddress(orderAddress.address)
       setCity(orderAddress.city)
       setPostalCode(orderAddress.postalCode)

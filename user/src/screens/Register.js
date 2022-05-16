@@ -15,7 +15,7 @@ const Register = ({ location, history }) => {
   const [password, setPassword] = useState("");
   const [cfpassword, setCfPassword] = useState("");
 
-  const [checkValidate, setCheckValidate] = useState("") // tao một usestate mới để check from
+  const [checkValidate, setCheckValidate] = useState({}) // tao một usestate mới để check from
   const dispatch = useDispatch();
   const redirect = location.search ? location.search.split("=")[1] : "/";
 

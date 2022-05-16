@@ -7,6 +7,7 @@ import { listProduct } from "../../Redux/Actions/ProductActions";
 import Loading from "../LoadingError/Loading";
 import Message from "../LoadingError/Error";
 import { listCart } from "../../Redux/Actions/cartActions";
+import CategorySection from "./CategorySection";
 
 const ShopSection = (props) => {
   const { keyword, pagenumber } = props;
@@ -27,7 +28,8 @@ const ShopSection = (props) => {
       <div className="container">
         <div className="section">
           <div className="row">
-            <div className="col-lg-12 col-md-12 article">
+            <CategorySection></CategorySection>
+            <div className="col-lg-10 col-md-9 article">
               <div className="shopcontainer row">
                 {loading ? (
                   <div className="mb-5">
@@ -40,7 +42,7 @@ const ShopSection = (props) => {
                     {products.map((product) => (
                       <div
 
-                        className="shop col-lg-3 col-md-4 col-sm-12"
+                        className="shop col-lg-3 col-md-6 col-sm-12"
                         
                         key={product._id}
                       >
