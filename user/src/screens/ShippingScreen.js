@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "../components/Header";
 import { listCart, saveShippingAddress } from "../Redux/Actions/cartActions";
@@ -9,16 +9,16 @@ const ShippingScreen = ({ history }) => {
   window.scrollTo(0, 0);
   const dispatch = useDispatch();
   const orderListMy = useSelector((state) => state.orderAddress);
-  const { success: successOrder,orderAddress,loading: loadingOrder } = orderListMy;
+  const { success: successOrder, orderAddress, loading: loadingOrder } = orderListMy;
   // const cart = useSelector((state) => state.cart);
   // const { shippingAddress } = cart;
- 
- console.log(orderAddress)
+
+  console.log(orderAddress)
   // const [address, setAddress] = useState(orders.length!=0  ? (orders[orders.length-1].shippingAddress.address):'');
   // const [city, setCity] = useState(orders.length!=0 ? (orders[orders.length-1].shippingAddress.city):'');
   // const [postalCode, setPostalCode] = useState(orders.length!=0  ? (orders[orders.length-1].shippingAddress.postalCode):'');
   // const [country, setCountry] = useState(orders.length!=0  ? (orders[orders.length-1].shippingAddress.postalCode): '');
-  
+
   const [address, setAddress] = useState('');
   const [city, setCity] = useState('');
   const [postalCode, setPostalCode] = useState('');
@@ -30,11 +30,12 @@ const ShippingScreen = ({ history }) => {
   // }, []);
   //console.log("Bug")
   useEffect(() => {
-    dispatch(orderGetAddress());}
-  , []);
+    dispatch(orderGetAddress());
+  }
+    , []);
   useEffect(() => {
-    if(successOrder) {
-      dispatch({type: ORDER_ADDRESS_MY_RESET})
+    if (successOrder) {
+      dispatch({ type: ORDER_ADDRESS_MY_RESET })
     }
     else {
     if(orderAddress?.address != undefined){
@@ -44,7 +45,7 @@ const ShippingScreen = ({ history }) => {
       setCountry(orderAddress.country)
     }
     }
-  }, [dispatch,orderAddress,successOrder]);
+  }, [dispatch, orderAddress, successOrder]);
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(saveShippingAddress({ address, city, postalCode, country }));

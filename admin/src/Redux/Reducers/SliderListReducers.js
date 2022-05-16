@@ -3,7 +3,7 @@ import { SLIDER_CREATE_FAIL, SLIDER_CREATE_REQUEST, SLIDER_CREATE_RESET, SLIDER_
 export const sliderListReducer = (state = { slider: [] }, action) => {
     switch (action.type) {
       case SLIDER_LIST_REQUEST:
-        return { loading: true, slider: [] };
+        return { loading: true, slider: [...state.slider] };
       case SLIDER_LIST_SUCCESS:
         return {
           loading: false,

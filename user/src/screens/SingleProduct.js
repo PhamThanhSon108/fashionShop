@@ -11,6 +11,7 @@ import {
 import Loading from "../components/LoadingError/Loading";
 import { PRODUCT_CREATE_REVIEW_RESET } from "../Redux/Constants/ProductConstants";
 import moment from "moment";
+import { addToCart } from "../Redux/Actions/cartActions";
 
 const SingleProduct = ({ history, match }) => {
   const [qty, setQty] = useState(1);
@@ -44,8 +45,9 @@ const SingleProduct = ({ history, match }) => {
   const AddToCartHandle = (e) => {
     console.log(product)
     e.preventDefault();
-    if(userInfo){
-    history.push(`/cart/${productId}?qty=${qty}`);
+    if (userInfo) {
+      dispatch(addToCart(productId, qty, userInfo._id))
+      history.push(`/cart/${productId}?qty=${qty}`);
     }
     else history.push("/login")
   };

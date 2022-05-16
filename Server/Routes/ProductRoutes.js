@@ -13,11 +13,11 @@ productRoute.get(
     const page = Number(req.query.pageNumber) || 1;
     const keyword = req.query.keyword
       ? {
-          name: {
-            $regex: req.query.keyword,
-            $options: "i",
-          },
-        }
+        name: {
+          $regex: req.query.keyword,
+          $options: "i",
+        },
+      }
       : {};
     const count = await Product.countDocuments({ ...keyword });
     const products = await Product.find({ ...keyword })
