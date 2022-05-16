@@ -46,7 +46,7 @@ export default function AddSlider() {
                                     
                                     
                                     <div className="mb-8 d-flex">
-                                        <label htmlFor="product_title" className="form-label">
+                                        <label htmlFor="product_title" className="form-label" >
                                                 URL BANNER
                                         </label>
                                         <input

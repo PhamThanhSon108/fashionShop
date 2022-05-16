@@ -1,22 +1,34 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Product from "./Product";
 import { useDispatch, useSelector } from "react-redux";
 import { listProducts } from "../../Redux/Actions/ProductActions";
 import Loading from "../LoadingError/Loading";
 import Message from "../LoadingError/Error";
+import { ListCategory } from "../../Redux/Actions/categoryActions";
 
 const MainProducts = () => {
   const dispatch = useDispatch();
 
+  const [categoryFilter, setCategoryFilter] = useState('All category')
+
   const productList = useSelector((state) => state.productList);
   const { loading, error, products } = productList;
-
+  let productss = []
+  if (categoryFilter !== 'All category') {
+    productss = products ? products.filter(value => value.category === categoryFilter) : []
+  }
+  else {
+    productss = products
+  }
   const productDelete = useSelector((state) => state.productDelete);
   const { error: errorDelete, success: successDelete } = productDelete;
-
+  //category
+  const lcategories = useSelector((state) => state.CategoryList)
+  const { categories } = lcategories
   useEffect(() => {
     dispatch(listProducts());
+    dispatch(ListCategory())
   }, [dispatch, successDelete]);
 
   return (
@@ -41,11 +53,18 @@ const MainProducts = () => {
               />
             </div>
             <div className="col-lg-2 col-6 col-md-3">
-              <select className="form-select">
+              <select className="form-select"
+                value={categoryFilter}
+                onChange={(e) => {
+                  setCategoryFilter(e.target.value)
+                }}
+              >
                 <option>All category</option>
-                <option>Electronics</option>
-                <option>Clothings</option>
-                <option>Something else</option>
+                {
+                  categories.map((category) => (
+                    <option>{category.name}</option>
+                  ))
+                }
               </select>
             </div>
             <div className="col-lg-2 col-6 col-md-3">
@@ -69,7 +88,7 @@ const MainProducts = () => {
           ) : (
             <div className="row">
               {/* Products */}
-              {products.map((product) => (
+              {productss.map((product) => (
                 <Product product={product} key={product._id} />
               ))}
             </div>
