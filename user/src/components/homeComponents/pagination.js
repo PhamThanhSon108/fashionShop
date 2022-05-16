@@ -1,11 +1,23 @@
 import React from "react";
+import { useState, useEffect } from "react"
 import { Link } from "react-router-dom";
+
 
 const Pagination = (props) => {
   const { page, pages, keyword = "" } = props;
   return (
     pages > 1 && (
-      <nav>
+      <nav className="pagination-flex">
+        <div className="icon-left">
+          <Link
+            to={
+              keyword
+                ? `/search/${keyword}/page/${page > 1 ? page - 1 : page}`
+                : `/page/${page > 1 ? page - 1 : page}`
+            }>
+            <i class="fas fa-angle-double-left"></i>
+          </Link>
+        </div>
         <ul className="pagination justify-content-center">
           {[...Array(pages).keys()].map((x) => (
             <li
@@ -25,6 +37,16 @@ const Pagination = (props) => {
             </li>
           ))}
         </ul>
+        <div className="icon-right">
+          <Link
+            to={
+              keyword
+                ? `/search/${keyword}/page/${page < pages ? page + 1 : pages}`
+                : `/page/${page < pages ? page + 1 : pages}`
+            }>
+            <i class="fas fa-angle-double-right"></i>
+          </Link>
+        </div>
       </nav>
     )
   );

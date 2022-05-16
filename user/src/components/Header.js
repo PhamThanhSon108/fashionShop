@@ -3,9 +3,11 @@ import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../Redux/Actions/userActions";
 import { listCart } from "../Redux/Actions/cartActions";
+import NavBar from "./navbar"
 
 const Header = () => {
   const [keyword, setKeyword] = useState();
+  const [navbar,setNavbar] = useState(false);
   const dispatch = useDispatch();
   let history = useHistory();
 
@@ -15,6 +17,12 @@ const Header = () => {
   const { userInfo } = userLogin;
   const {error} = userLogin
 
+  const clickIconNavBar = () =>{
+      setNavbar(true);
+  }
+  const removeNavBar = () =>{
+      setNavbar(false);
+  }
   const logoutHandler = () => {
     dispatch(logout());
     history.push("/");
@@ -84,10 +92,14 @@ const Header = () => {
             <div className="container ">
               <div className="row ">
                 <div className="col-6 d-flex align-items-center">
+                  <div className="moblie-menu" onClick={clickIconNavBar}>
+                    <i class="fas fa-bars"></i>
+                  </div>
                   <Link className="navbar-brand" to="/">
                     <img alt="logo" src="/images/logo.png" />
                   </Link>
                 </div>
+                {navbar && <NavBar onRemove={removeNavBar}></NavBar>}
                 <div className="col-6 d-flex align-items-center justify-content-end Login-Register">
                   {userInfo ? (
                     <div className="btn-group">
@@ -167,7 +179,7 @@ const Header = () => {
                   <img alt="logo" src="/images/logo.png" />
                 </Link>
               </div>
-              <div className="col-md-6 col-8 d-flex align-items-center">
+              <div className="col-md-6 col-8 header-nav__search">
                 <form onSubmit={submitHandler} className="input-group">
                   <input
                     type="search"
@@ -179,6 +191,7 @@ const Header = () => {
                   <i className="fas fa-search submit-search"></i>
                   </button>
                 </form>
+                <NavBar></NavBar>
               </div>
               <div className="col-md-3 d-flex align-items-center justify-content-end Login-Register">
                 {userInfo ? (
