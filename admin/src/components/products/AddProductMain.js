@@ -7,6 +7,7 @@ import { createProduct } from "./../../Redux/Actions/ProductActions";
 import Toast from "../LoadingError/Toast";
 import Message from "../LoadingError/Error";
 import Loading from "../LoadingError/Loading";
+import { ListCategory } from "../../Redux/Actions/categoryActions";
 
 const ToastObjects = {
   pauseOnFocusLoss: false,
@@ -17,6 +18,7 @@ const ToastObjects = {
 const AddProductMain = () => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
+  const [category, setCategory] = useState("");
   const [image, setImage] = useState("");
   const [countInStock, setCountInStock] = useState(0);
   const [description, setDescription] = useState("");
@@ -25,22 +27,27 @@ const AddProductMain = () => {
 
   const productCreate = useSelector((state) => state.productCreate);
   const { loading, error, product } = productCreate;
-
+  const lcategories = useSelector((state) => state.CategoryList)
+  const { categories } = lcategories
   useEffect(() => {
     if (product) {
       toast.success("Product Added", ToastObjects);
       dispatch({ type: PRODUCT_CREATE_RESET });
       setName("");
       setDescription("");
+      setCategory("")
       setCountInStock(0);
       setImage("");
       setPrice(0);
     }
   }, [product, dispatch]);
-
+  useEffect(() => {
+    dispatch(ListCategory())
+    console.log(categories)
+  }, [])
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(createProduct(name, price, description, image, countInStock));
+    dispatch(createProduct(name, price, description, category, image, countInStock));
   };
 
   return (
@@ -94,6 +101,29 @@ const AddProductMain = () => {
                       onChange={(e) => setPrice(e.target.value)}
                     />
                   </div>
+
+                  <div className="mb-4">
+                    <label htmlFor="product_category" className="form-label">
+                      Category
+                    </label>
+                    <select
+                      type="text"
+                      id="product_category"
+                      className="form-control"
+                      required
+                      value={category}
+                      onChange={(e) => setCategory(e.target.value)}
+                    >
+                      {categories.map((cate, index) => (
+                        <option key={index} value={cate.name}>
+                          {cate.name}
+                        </option>
+                      )
+                      )}
+
+                    </select>
+                  </div>
+
                   <div className="mb-4">
                     <label htmlFor="product_price" className="form-label">
                       Count In Stock

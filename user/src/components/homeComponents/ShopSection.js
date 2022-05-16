@@ -43,7 +43,7 @@ const ShopSection = (props) => {
                       <div
 
                         className="shop col-lg-3 col-md-6 col-sm-12"
-                        
+
                         key={product._id}
                       >
                         <div className="border-product">

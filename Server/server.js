@@ -9,6 +9,9 @@ import orderRouter from "./Routes/orderRoutes.js";
 import SliderRouter from "./Routes/SliderRouter.js";
 import cartRoutes from "./Routes/cartRoutes.js";
 import categoryRoute from "./Routes/categoryRouter.js";
+import multer from 'multer'
+import path from 'path'
+import Upload from "./Routes/Upload.js";
 
 dotenv.config();
 connectDatabase();
@@ -26,11 +29,14 @@ app.use("/api/category", categoryRoute)
 app.get("/api/config/paypal", (req, res) => {
   res.send(process.env.PAYPAL_CLIENT_ID);
 });
-
+app.use("/api/upload-profile-pic", Upload)
 
 // ERROR HANDLER
 app.use(notFound);
 app.use(errorHandler);
+
+
+
 
 const PORT = process.env.PORT || 1000;
 

@@ -29,50 +29,50 @@ const Register = ({ location, history }) => {
   }, [userInfo, history, redirect]);
 
   //xủ lí logic check from
-  const validateAll = () =>{
-     const msg = {}
-     if(isEmpty(name)){
-        msg.name = "Please input your name";
-     }
+  const validateAll = () => {
+    const msg = {}
+    if (isEmpty(name)) {
+      msg.name = "Please input your name";
+    }
 
-     if(isEmpty(email)){
-        msg.email = "Plesae input your email";
-     }
+    if (isEmpty(email)) {
+      msg.email = "Plesae input your email";
+    }
 
-     if(isEmpty(phone)){
+    if (isEmpty(phone)) {
       msg.phone = "Plesae input your phone";
-   }
+    }
 
-     if(isEmpty(password)){
-        msg.password = "Please input your password";
-     }else{
-       if(password.length < 6){
-         msg.password = "Password must be at least 6 characters"
-       }
-     }
+    if (isEmpty(password)) {
+      msg.password = "Please input your password";
+    } else {
+      if (password.length < 6) {
+        msg.password = "Password must be at least 6 characters"
+      }
+    }
 
-     if(isEmpty(cfpassword)){
+    if (isEmpty(cfpassword)) {
       msg.cfpassword = "Please input your cfpassword";
-      }else{
-        if(cfpassword.length < 6){
-          msg.cfpassword = "CfPassword must be at least 6 characters"
-        }else{
-          if(cfpassword !== password){
-            msg.cfpassword = "The password entered is incorrect"
-          }
+    } else {
+      if (cfpassword.length < 6) {
+        msg.cfpassword = "CfPassword must be at least 6 characters"
+      } else {
+        if (cfpassword !== password) {
+          msg.cfpassword = "The password entered is incorrect"
         }
       }
-     setCheckValidate(msg)
-     if(Object.keys(msg).length > 0) return false
-     return true
+    }
+    setCheckValidate(msg)
+    if (Object.keys(msg).length > 0) return false
+    return true
   }
- 
+
 
   const submitHandler = (e) => {
     e.preventDefault();
     const isValid = validateAll()
-    if(!isValid) return
-    dispatch(register(name, email,phone, password));
+    if (!isValid) return
+    dispatch(register(name, email, phone, password));
   };
 
   return (
@@ -96,7 +96,7 @@ const Register = ({ location, history }) => {
             }}
           />
           <p className="noti-validate">{checkValidate.name}</p>
-          
+
           <input
             type="email"
             placeholder="Email"
@@ -106,7 +106,7 @@ const Register = ({ location, history }) => {
               checkValidate.email = " "
             }}
           />
-            <p className="noti-validate">{checkValidate.email}</p>
+          <p className="noti-validate">{checkValidate.email}</p>
 
           <input
             type="text"

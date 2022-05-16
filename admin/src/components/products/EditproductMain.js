@@ -10,6 +10,7 @@ import { PRODUCT_UPDATE_RESET } from "../../Redux/Constants/ProductConstants";
 import { toast } from "react-toastify";
 import Message from "../LoadingError/Error";
 import Loading from "../LoadingError/Loading";
+import { ListCategory } from "../../Redux/Actions/categoryActions";
 
 const ToastObjects = {
   pauseOnFocusLoss: false,
@@ -20,7 +21,7 @@ const ToastObjects = {
 
 const EditProductMain = (props) => {
   const { productId } = props;
-
+  const [category, setCategory] = useState("");
   const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
   const [image, setImage] = useState("");
@@ -39,7 +40,10 @@ const EditProductMain = (props) => {
     success: successUpdate,
   } = productUpdate;
 
+  const lcategories = useSelector((state) => state.CategoryList)
+  const { categories } = lcategories
   useEffect(() => {
+    dispatch(ListCategory())
     if (successUpdate) {
       dispatch({ type: PRODUCT_UPDATE_RESET });
       toast.success("Product Updated", ToastObjects);
@@ -50,6 +54,7 @@ const EditProductMain = (props) => {
         setName(product.name);
         setDescription(product.description);
         setCountInStock(product.countInStock);
+        setCategory(product.category)
         setImage(product.image);
         setPrice(product.price);
       }
@@ -63,6 +68,7 @@ const EditProductMain = (props) => {
         _id: productId,
         name,
         price,
+        category,
         description,
         image,
         countInStock,
@@ -129,6 +135,29 @@ const EditProductMain = (props) => {
                           onChange={(e) => setPrice(e.target.value)}
                         />
                       </div>
+
+                      <div className="mb-4">
+                        <label htmlFor="product_category" className="form-label">
+                          Category
+                        </label>
+                        <select
+                          type="text"
+                          id="product_category"
+                          className="form-control"
+                          required
+                          value={category}
+                          onChange={(e) => setCategory(e.target.value)}
+                        >
+                          {categories.map((cate, index) => (
+                            <option key={index} value={cate.name}>
+                              {cate.name}
+                            </option>
+                          )
+                          )}
+
+                        </select>
+                      </div>
+
                       <div className="mb-4">
                         <label htmlFor="product_price" className="form-label">
                           Count In Stock

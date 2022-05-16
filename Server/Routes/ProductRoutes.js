@@ -114,7 +114,7 @@ productRoute.post(
   protect,
   admin,
   asyncHandler(async (req, res) => {
-    const { name, price, description, image, countInStock } = req.body;
+    const { name, price, description, category, image, countInStock } = req.body;
     const productExist = await Product.findOne({ name });
     if (productExist) {
       res.status(400);
@@ -124,6 +124,7 @@ productRoute.post(
         name,
         price,
         description,
+        category,
         image,
         countInStock,
         user: req.user._id,
@@ -145,12 +146,13 @@ productRoute.put(
   protect,
   admin,
   asyncHandler(async (req, res) => {
-    const { name, price, description, image, countInStock } = req.body;
+    const { name, price, description, category, image, countInStock } = req.body;
     const product = await Product.findById(req.params.id);
     if (product) {
       product.name = name || product.name;
       product.price = price || product.price;
       product.description = description || product.description;
+      product.category = category || product.category;
       product.image = image || product.image;
       product.countInStock = countInStock || product.countInStock;
 
