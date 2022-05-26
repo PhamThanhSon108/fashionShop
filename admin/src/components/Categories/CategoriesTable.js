@@ -1,15 +1,26 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { ListCategory } from "../../Redux/Actions/categoryActions";
+import { DeleteCategory, ListCategory } from "../../Redux/Actions/categoryActions";
 const CategoriesTable = () => {
   const lcategories = useSelector((state) => state.CategoryList)
   const { categories } = lcategories
+
+  const dcategories = useSelector((state) => state.CategoryDelete)
+  const { success } = dcategories
   const dispatch = useDispatch()
+
+  const handleDeleteCategory = (index) => {
+    if (window.confirm("Are you sure??")) {
+    dispatch(DeleteCategory(categories[index]._id))
+    }
+  }
+
+  const cCategory = useSelector((state) => state.CategoryAdd);
+  const { success:csuccess} = cCategory;
   useEffect(() => {
-    console.log(categories)
     dispatch(ListCategory())
-  }, [])
+  }, [csuccess,success])
   return (
     <div className="col-md-12 col-lg-8">
       <table className="table">
@@ -52,12 +63,16 @@ const CategoriesTable = () => {
                       <i className="fas fa-ellipsis-h"></i>
                     </Link>
                     <div className="dropdown-menu">
-                      <Link className="dropdown-item" to="#">
+                      <button className="dropdown-item" 
+                     >
                         Edit info
-                      </Link>
-                      <Link className="dropdown-item text-danger" to="#">
+                      </button>
+                      <button className="dropdown-item" onClick={()=> {
+                          handleDeleteCategory(index); }
+                      }
+                     >
                         Delete
-                      </Link>
+                      </button>
                     </div>
                   </div>
                 </td>

@@ -1,4 +1,4 @@
-import { CATEGORY_FAIL, CATEGORY_REQUEST, CATEGORY_SUCCESS } from "../Constants/CategoryConstants";
+import { CATEGORY_ADD_FAIL, CATEGORY_ADD_REQUEST, CATEGORY_ADD_SUCCESS, CATEGORY_DELETE_FAIL, CATEGORY_DELETE_REQUEST, CATEGORY_DELETE_SUCCESS, CATEGORY_FAIL, CATEGORY_REQUEST, CATEGORY_SUCCESS } from "../Constants/CategoryConstants";
 
 export const categoryListReducer = (state = { categories: [] }, action) => {
     switch (action.type) {
@@ -7,6 +7,34 @@ export const categoryListReducer = (state = { categories: [] }, action) => {
         case CATEGORY_SUCCESS:
             return { loading: false, categories: action.payload };
         case CATEGORY_FAIL:
+            return { loading: false, error: action.payload };
+        default:
+            return state;
+    }
+};
+
+
+export const categoryDeleteReducer = (state = {}, action) => {
+    switch (action.type) {
+        case CATEGORY_DELETE_REQUEST:
+            return { loading: true};
+        case CATEGORY_DELETE_SUCCESS:
+            return { loading: false, success: true};
+        case CATEGORY_DELETE_FAIL:
+            return { loading: false, error: action.payload };
+        default:
+            return state;
+    }
+};
+
+
+export const categoryAddReducer = (state = {}, action) => {
+    switch (action.type) {
+        case CATEGORY_ADD_REQUEST:
+            return { loading: true};
+        case CATEGORY_ADD_SUCCESS:
+            return { loading: false, success: true};
+        case CATEGORY_ADD_FAIL:
             return { loading: false, error: action.payload };
         default:
             return state;
