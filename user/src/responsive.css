@@ -63,6 +63,13 @@
     height: 280px;
     width: 89%;
   }
+  .corousel-img{
+    height: 135px !important;
+    margin: auto;
+  }
+  .corousel-price {
+    padding-left: 20px;
+  }
 }
 @media (max-width: 768px) {
   .pc-header {
@@ -242,5 +249,9 @@
   .foorter-flex {
     display: flex;
     justify-content: center;
+  }
+  .corousel-img{
+    height: 125px !important;
+    margin: auto;
   }
 }
