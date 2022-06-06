@@ -6,6 +6,7 @@ import CalltoActionSection from "./../components/homeComponents/CalltoActionSect
 import Footer from "./../components/Footer";
 import Silder from "../components/Silder";
 import Corousel from "../components/Corousel"
+import CorouselOder from "../components/CourouselOder";
 
 const HomeScreen = ({ match }) => {
   window.scrollTo(0, 0);
@@ -16,6 +17,7 @@ const HomeScreen = ({ match }) => {
       <Header />
       <Silder />
       <Corousel />
+      <CorouselOder />
       <ShopSection keyword={keyword} pagenumber={pagenumber} />
 
       <CalltoActionSection />

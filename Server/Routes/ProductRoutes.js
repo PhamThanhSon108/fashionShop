@@ -5,7 +5,7 @@ import { admin, protect } from "./../Middleware/AuthMiddleware.js";
 
 const productRoute = express.Router();
 
-// GET ALL PRODUCT
+// GET PRODUCT
 productRoute.get(
   "/",
   asyncHandler(async (req, res) => {
@@ -27,6 +27,17 @@ productRoute.get(
     res.json({ products, page, pages: Math.ceil(count / pageSize) });
   })
 );
+
+// GET ALL PRODUCT
+productRoute.get(
+  "/ProductAll",
+  asyncHandler(async (req, res) => {
+    const products = await Product.find({}).sort({ _id: -1 });
+    const productSlice = products.slice(0,10);
+    res.json(productSlice);
+  })
+);
+
 
 // ADMIN GET ALL PRODUCT WITHOUT SEARCH AND PEGINATION
 productRoute.get(

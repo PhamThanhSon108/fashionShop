@@ -9,8 +9,33 @@ import {
   PRODUCT_LIST_FAIL,
   PRODUCT_LIST_REQUEST,
   PRODUCT_LIST_SUCCESS,
+  PRODUCT_LIST_ALL_FAIL,
+  PRODUCT_LIST_ALL_REQUEST,
+  PRODUCT_LIST_ALL_SUCCESS,
 } from "../Constants/ProductConstants";
 import { logout } from "./userActions";
+
+// PRODUCT LIST ALL
+export const listAllProduct =
+  () =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: PRODUCT_LIST_ALL_REQUEST });
+      const { data } = await axios.get(
+        `/api/products/ProductAll`
+      );
+      dispatch({ type: PRODUCT_LIST_ALL_SUCCESS, payload: data });
+    } catch (error) {
+      
+      dispatch({
+        type: PRODUCT_LIST_ALL_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
 
 // PRODUCT LIST
 export const listProduct =

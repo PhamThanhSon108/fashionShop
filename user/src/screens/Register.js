@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useRouteMatch } from "react-router-dom";
 import isEmpty from "validator/lib/isEmpty";
 import Message from "../components/LoadingError/Error";
 import Loading from "../components/LoadingError/Loading";
@@ -33,32 +33,40 @@ const Register = ({ location, history }) => {
     const msg = {}
     if (isEmpty(name)) {
       msg.name = "Please input your name";
+      msg.color = "border-red";
     }
 
     if (isEmpty(email)) {
       msg.email = "Plesae input your email";
+      msg.color = "border-red";
     }
 
     if (isEmpty(phone)) {
       msg.phone = "Plesae input your phone";
+      msg.color = "border-red";
     }
 
     if (isEmpty(password)) {
       msg.password = "Please input your password";
+      msg.color = "border-red";
     } else {
       if (password.length < 6) {
         msg.password = "Password must be at least 6 characters"
+        msg.color = "border-red";
       }
     }
 
     if (isEmpty(cfpassword)) {
       msg.cfpassword = "Please input your cfpassword";
+      msg.color = "border-red";
     } else {
       if (cfpassword.length < 6) {
         msg.cfpassword = "CfPassword must be at least 6 characters"
+        msg.color = "border-red";
       } else {
         if (cfpassword !== password) {
           msg.cfpassword = "The password entered is incorrect"
+          msg.color = "border-red";
         }
       }
     }
@@ -66,7 +74,7 @@ const Register = ({ location, history }) => {
     if (Object.keys(msg).length > 0) return false
     return true
   }
-
+  console.log(checkValidate)
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -86,60 +94,83 @@ const Register = ({ location, history }) => {
           className="Login col-md-8 col-lg-4 col-11"
           onSubmit={submitHandler}
         >
-          <input
-            type="text"
-            placeholder="Username"
-            value={name}
-            onChange={(e) => {
-              setName(e.target.value)
-              checkValidate.name = " "
-            }}
-          />
-          <p className="noti-validate">{checkValidate.name}</p>
+          <div className="Login-from">
+            <input
+              type="text"
+              className={checkValidate.color}
+              //placeholder="Username"
+              value={name}
+              onClick={() => {
+                setCheckValidate((object) => {
+                  const x = { ...object }
+                  x.color = " ";
+                  x.name = " ";
+                  return x
+                })
+              }}
+              onChange={(e) => {
+                setName(e.target.value)
+              }}
+            />
+            <p className="noti-validate">{checkValidate.name}</p>
+            <p className="Login-from__name">Username</p>
+          </div>
 
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value)
-              checkValidate.email = " "
-            }}
-          />
-          <p className="noti-validate">{checkValidate.email}</p>
+          <div className="Login-from">
+            <input
+              type="email"
+              //placeholder="Email"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value)
+                checkValidate.email = " "
+              }}
+            />
+            <p className="noti-validate">{checkValidate.email}</p>
+            <p className="Login-from__email">Email</p>
+          </div>
 
-          <input
-            type="text"
-            placeholder="Phone"
-            value={phone}
-            onChange={(e) => {
-              setPhone(e.target.value)
-              checkValidate.phone = " "
-            }}
-          />
-          <p className="noti-validate">{checkValidate.phone}</p>
+          <div className="Login-from">
+            <input
+              type="text"
+              //placeholder="Phone"
+              value={phone}
+              onChange={(e) => {
+                setPhone(e.target.value)
+                checkValidate.phone = " "
+              }}
+            />
+            <p className="noti-validate">{checkValidate.phone}</p>
+            <p className="Login-from__phone">Phone</p>
+          </div>
 
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => {
-              setPassword(e.target.value)
-              checkValidate.password = " "
-            }}
-          />
-          <p className="noti-validate">{checkValidate.password}</p>
+          <div className="Login-from">
+            <input
+              type="password"
+              //placeholder="Password"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value)
+                checkValidate.password = " "
+              }}
+            />
+            <p className="noti-validate">{checkValidate.password}</p>
+            <p className="Login-from__password">Password</p>
+          </div>
 
-          <input
-            type="password"
-            placeholder="Cfpassword"
-            value={cfpassword}
-            onChange={(e) => {
-              setCfPassword(e.target.value)
-              checkValidate.cfpassword = " "
-            }}
-          />
-          <p className="noti-validate">{checkValidate.cfpassword}</p>
+          <div className="Login-from">
+            <input
+              type="password"
+              //placeholder="Cfpassword"
+              value={cfpassword}
+              onChange={(e) => {
+                setCfPassword(e.target.value)
+                checkValidate.cfpassword = " "
+              }}
+            />
+            <p className="noti-validate">{checkValidate.cfpassword}</p>
+            <p className="Login-from__cfpassword">Cfpassword</p>
+          </div>
 
           <button type="submit">Register</button>
           <p>
