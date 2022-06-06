@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import CreateCategory from "./CreateCategory";
+import UpdateCategory from "./UpdateCategory";
 import CategoriesTable from "./CategoriesTable";
 
 const MainCategories = () => {
+  const [editInfo,setEditInfo] = useState(false)
+  const [currentCategory,setCurrentCategory] = useState('')
+  console.log(currentCategory)
+  const handleEditInfo = () => {setEditInfo(true)}
+  const handleCurrentCategory = (category) => {setCurrentCategory(category)}
   return (
     <section className="content-main">
       <div className="content-header">
@@ -13,9 +19,11 @@ const MainCategories = () => {
         <div className="card-body">
           <div className="row">
             {/* Create category */}
-            <CreateCategory />
+            {editInfo ? <UpdateCategory currentCategory= {currentCategory}/>:<CreateCategory />}
             {/* Categories table */}
-            <CategoriesTable />
+            <CategoriesTable 
+              handleCurrentCategory= {handleCurrentCategory} 
+              handleEditInfo= {handleEditInfo}/>
           </div>
         </div>
       </div>

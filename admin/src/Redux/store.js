@@ -16,7 +16,7 @@ import {
   orderPaidReducer,
 } from "./Reducers/OrderReducres";
 import { sliderCreateReducer, sliderDeleteReducer, sliderListReducer } from "./Reducers/SliderListReducers";
-import { categoryAddReducer, categoryDeleteReducer, categoryListReducer } from "./Reducers/CategoryReducers";
+import { categoryAddReducer, categoryDeleteReducer, categoryListReducer, categoryUpdateReducer } from "./Reducers/CategoryReducers";
 
 const reducer = combineReducers({
   userLogin: userLoginReducer,
@@ -35,7 +35,8 @@ const reducer = combineReducers({
   sliderCreate: sliderCreateReducer,
   CategoryList: categoryListReducer,
   CategoryDelete : categoryDeleteReducer,
-  CategoryAdd: categoryAddReducer
+  CategoryAdd: categoryAddReducer,
+  CategoryUpdate: categoryUpdateReducer
 });
 
 // login

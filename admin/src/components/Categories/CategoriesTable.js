@@ -1,14 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { DeleteCategory, ListCategory } from "../../Redux/Actions/categoryActions";
-const CategoriesTable = () => {
+const CategoriesTable = ({handleEditInfo, handleCurrentCategory}) => {
   const lcategories = useSelector((state) => state.CategoryList)
   const { categories } = lcategories
 
   const dcategories = useSelector((state) => state.CategoryDelete)
   const { success } = dcategories
   const dispatch = useDispatch()
+
+
 
   const handleDeleteCategory = (index) => {
     if (window.confirm("Are you sure??")) {
@@ -63,7 +65,13 @@ const CategoriesTable = () => {
                       <i className="fas fa-ellipsis-h"></i>
                     </Link>
                     <div className="dropdown-menu">
-                      <button className="dropdown-item" 
+                      <button 
+                      className="dropdown-item" 
+                      onClick={()=> {
+                          handleEditInfo();
+                          handleCurrentCategory(index)
+                        }
+                      }
                      >
                         Edit info
                       </button>

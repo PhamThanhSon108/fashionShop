@@ -1,9 +1,44 @@
 import express from "express";
 import asyncHandler from "express-async-handler";
 import { admin, protect } from "../Middleware/AuthMiddleware.js";
+import Product from "../Models/ProductModel.js";
 import Order from "./../Models/OrderModel.js";
 
 const orderRouter = express.Router();
+
+
+orderRouter.get(
+  "/productbestseller",
+  protect,
+  asyncHandler(async (req, res) => {
+    const orders = await Order.find({})
+    const products = await Product.find({}).sort({ _id: -1 });
+    let AllOrder = [];
+    let Arr = {};
+    let ArrQuatity = [];
+    for (let order of orders) {
+      for (let ordr of order.orderItems) {
+        AllOrder.push(ordr)
+      }
+    }
+    for(let i = 0 ;i<AllOrder.length - 1;i++) {
+        if (Arr[AllOrder[i].name]!= undefined) Arr[AllOrder[i].name]++ 
+        else Arr[AllOrder[i].name] = 1 
+    }
+    let newarr = []
+    ArrQuatity = Object.entries(Arr).sort(function(a, b){return b[1] - a[1]})
+    for(let i = 0; i<ArrQuatity.length; i++) {
+      for(let j = 0; j< products.length; j++) {
+              if(ArrQuatity[i][0] === products[j].name) {
+              newarr.push(products[j])
+              break
+             
+              }
+      }
+    }
+    res.json(newarr);
+    })
+);
 
 // CREATE ORDER
 orderRouter.post(
@@ -45,8 +80,8 @@ orderRouter.post(
 // ADMIN GET ALL ORDERS
 orderRouter.get(
   "/all",
-  protect,
-  admin,
+  // protect,
+  // admin,
   asyncHandler(async (req, res) => {
     const orders = await Order.find({})
       .sort({ _id: -1 })
@@ -150,7 +185,7 @@ orderRouter.put(
 
 orderRouter.get(
   "/:id/address",
-  // protect,
+  protect,
   asyncHandler(async (req, res) => {
     const order = await Order.find({ user: req.params.id })
 
@@ -162,5 +197,8 @@ orderRouter.get(
     }
   })
 );
+
+
+
 
 export default orderRouter;
