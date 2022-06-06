@@ -33,7 +33,7 @@ export const listProducts = () => async (dispatch, getState) => {
     };
 
     const { data } = await axios.get(`/api/products/all`, config);
-
+    console.log(data)
     dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
   } catch (error) {
     const message =

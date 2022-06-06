@@ -43,7 +43,6 @@ const AddProductMain = () => {
   }, [product, dispatch]);
   useEffect(() => {
     dispatch(ListCategory())
-    console.log(categories)
   }, [])
   const submitHandler = (e) => {
     e.preventDefault();
@@ -109,13 +108,15 @@ const AddProductMain = () => {
                     <select
                       type="text"
                       id="product_category"
-                      className="form-control"
+                      className="form-select selectpicker"
                       required
                       value={category}
                       onChange={(e) => setCategory(e.target.value)}
+                      title= "Please select category"
                     >
+                      <option ></option>
                       {categories.map((cate, index) => (
-                        <option key={index} value={cate.name}>
+                        <option key={index} value={cate._id}>
                           {cate.name}
                         </option>
                       )
