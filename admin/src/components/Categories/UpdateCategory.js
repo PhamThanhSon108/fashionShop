@@ -1,52 +1,31 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from 'react'
 import Toast from "../LoadingError/Toast";
-import { addCategory } from "../../Redux/Actions/categoryActions";
-import Loading from "../LoadingError/Loading";
-import { toast } from "react-toastify";
-import { CATEGORY_ADD_RESET } from "../../Redux/Constants/CategoryConstants";
+import Loading from '../LoadingError/Loading';
+import { useDispatch, useSelector } from 'react-redux';
+import { UpdateCurrentCategory } from '../../Redux/Actions/categoryActions';
 
-
-
-const ToastObjects = {
-  pauseOnFocusLoss: false,
-  draggable: false,
-  pauseOnHover: false,
-  autoClose: 2000,
-};
-
-const CreateCategory = () => {
+const UpdateCategory = ({currentCategory}) => {
+  const dispatch = useDispatch()
   const [name,setName] = useState('')
+  const [idCategory,setIdCategory] = useState('')
   const [image,setImage] = useState('')
-  const [description,setDescription] = useState('')
-
-  const dispatch = useDispatch();
-
-  const cCategory = useSelector((state) => state.CategoryAdd);
-  const { loading, error, success} = cCategory;
-   
-  useEffect(() => {
-      if (success) {
-        toast.success("Category Added", ToastObjects);
-      }
-      if(error) {
-        toast.error(error, ToastObjects);
-      }
-      dispatch({type: CATEGORY_ADD_RESET})
-    }, [success, error]);
-  const handleCreateCategory = (e) => {
-    e.preventDefault();
-    dispatch(addCategory(name, image, description))
-    setName('')
-    setImage('')
-    setDescription('')
+  const [description,setDescription] = useState('');
+  const lcategories = useSelector((state) => state.CategoryList)
+  const { categories } = lcategories
+  const handleCreateCategory = () => {
+    dispatch(UpdateCurrentCategory(idCategory,name,image,description))
 }
+useEffect(()=>{
+    setIdCategory(categories[currentCategory]?._id)
+    setName(categories[currentCategory]?.name)
+    setImage(categories[currentCategory]?.image)
+    setDescription(categories[currentCategory]?.description)
+},[currentCategory])
   return (
     <>
-    <Toast />
     <div className="col-md-12 col-lg-4">
       <form>
-        {loading && <Loading />}
+        {/* {} <Loading />} */}
         <div className="mb-4">
           <label htmlFor="product_name" className="form-label">
             Name
@@ -105,12 +84,12 @@ const CreateCategory = () => {
         </div>
 
         <div className="d-grid">
-          <button className="btn btn-primary py-3" onClick={handleCreateCategory}>Create category</button>
+          <button className="btn btn-primary py-3" onClick={handleCreateCategory}>Update Category</button>
         </div>
       </form>
     </div>
     </>
   );
 };
+export default UpdateCategory
 
-export default CreateCategory;

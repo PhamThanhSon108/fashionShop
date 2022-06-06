@@ -143,13 +143,15 @@ const EditProductMain = (props) => {
                         <select
                           type="text"
                           id="product_category"
-                          className="form-control"
+                          className="form-select"
+                          placeholder="Category"
                           required
                           value={category}
                           onChange={(e) => setCategory(e.target.value)}
                         >
+                          <option selected ></option>
                           {categories.map((cate, index) => (
-                            <option key={index} value={cate.name}>
+                            <option key={index} value={cate._id}>
                               {cate.name}
                             </option>
                           )

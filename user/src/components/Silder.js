@@ -16,7 +16,7 @@ export default function Silder() {
   }, [])
   useEffect(() => {
     const interval = setInterval(() => {
-      if (currentIndex < slider.length - 1) {
+      if (currentIndex < slider?.length - 1) {
         setCurrentIndex((currentIndex) => currentIndex + 1)
       }
       else {
