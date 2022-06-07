@@ -15,12 +15,15 @@ const MainProducts = () => {
   const productList = useSelector((state) => state.productList);
   const { loading, error, products } = productList;
   let productss = []
-  if (categoryFilter !== 'All category') {
+  const handleFilter = () => {
+    if (categoryFilter !== 'All category') {
     productss = products ? products.filter(value => value.category === categoryFilter) : []
   }
   else {
     productss = products
   }
+  }
+  handleFilter()
   const productDelete = useSelector((state) => state.productDelete);
   const { error: errorDelete, success: successDelete } = productDelete;
   //category
@@ -62,18 +65,18 @@ const MainProducts = () => {
                 <option>All category</option>
                 {
                   categories.map((category) => (
-                    <option>{category.name}</option>
+                    <option value={category._id}>{category.name}</option>
                   ))
                 }
               </select>
             </div>
-            <div className="col-lg-2 col-6 col-md-3">
+            {/* <div className="col-lg-2 col-6 col-md-3">
               <select className="form-select">
                 <option>Latest added</option>
                 <option>Cheap first</option>
                 <option>Most viewed</option>
               </select>
-            </div>
+            </div> */}
           </div>
         </header>
 

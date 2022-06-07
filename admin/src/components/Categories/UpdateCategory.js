@@ -3,7 +3,15 @@ import Toast from "../LoadingError/Toast";
 import Loading from '../LoadingError/Loading';
 import { useDispatch, useSelector } from 'react-redux';
 import { UpdateCurrentCategory } from '../../Redux/Actions/categoryActions';
+import { toast } from 'react-toastify';
+import { CATEGORY_UPDATE_RESET } from '../../Redux/Constants/CategoryConstants';
 
+const ToastObjects = {
+  pauseOnFocusLoss: false,
+  draggable: false,
+  pauseOnHover: false,
+  autoClose: 2000,
+};
 const UpdateCategory = ({currentCategory}) => {
   const dispatch = useDispatch()
   const [name,setName] = useState('')
@@ -12,9 +20,22 @@ const UpdateCategory = ({currentCategory}) => {
   const [description,setDescription] = useState('');
   const lcategories = useSelector((state) => state.CategoryList)
   const { categories } = lcategories
-  const handleCreateCategory = () => {
+
+  const notifiUpdateCategory = useSelector((state)=>state.CategoryUpdate)
+  const {loading, success, error} = notifiUpdateCategory;
+  const handleCreateCategory = (e) => {
+    e.preventDefault();
     dispatch(UpdateCurrentCategory(idCategory,name,image,description))
 }
+useEffect(() => {
+      if (success) {
+        toast.success("Update category success", ToastObjects);
+      }
+      if(error) {
+        toast.error(error, ToastObjects);
+      }
+      dispatch({type: CATEGORY_UPDATE_RESET})
+    }, [success, error]);
 useEffect(()=>{
     setIdCategory(categories[currentCategory]?._id)
     setName(categories[currentCategory]?.name)
@@ -23,6 +44,7 @@ useEffect(()=>{
 },[currentCategory])
   return (
     <>
+    <Toast />
     <div className="col-md-12 col-lg-4">
       <form>
         {/* {} <Loading />} */}
@@ -91,5 +113,5 @@ useEffect(()=>{
     </>
   );
 };
-export default UpdateCategory
+export default React.memo(UpdateCategory)
 

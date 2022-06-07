@@ -24,10 +24,9 @@ const OrderDetailmain = (props) => {
   const orderPaid = useSelector((state) => state.orderPaid);
   const { loading: loadingPaid, success: successPaid } = orderPaid;
 
-
   useEffect(() => {
     dispatch(getOrderDetails(orderId));
-    console.log(order)
+    console.log(order);
   }, [dispatch, orderId, successDelivered, successPaid]);
 
   const deliverHandler = () => {
@@ -101,7 +100,6 @@ const OrderDetailmain = (props) => {
                       DELIVERED AT ({" "}
                       {moment(order.isDeliveredAt).format("MMM Do YY")})
                     </button>
-                    
                   ) : (
                     <>
                       {loadingDelivered && <Loading />}
@@ -113,19 +111,19 @@ const OrderDetailmain = (props) => {
                       </button>
                     </>
                   )}
-                  <div>abc</div>
-                   {order.isPaid ? (
+                  <div>MARK</div>
+                  {order.isPaid ? (
                     <button className="btn btn-success col-12">
                       PAID AT ({" "}
                       {moment(order.isDeliveredAt).format("MMM Do YY")})
                     </button>
-                    
                   ) : (
                     <>
                       {loadingDelivered && <Loading />}
                       <button
                         onClick={paidHandler}
                         className="btn btn-dark col-12"
+                        disabled={!order.isDelivered}
                       >
                         MARK AS PAID
                       </button>

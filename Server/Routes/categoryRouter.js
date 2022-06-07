@@ -66,7 +66,17 @@ CategoryRouter.put(
     protect,
     asyncHandler(async (req, res)=> {
         const {idCategory,name,image,description} = req.body;
+        const exitCategory = await Category.findOne({name: name.trim()})
         const oldCategory = await Category.findById(idCategory.trim())
+        if(oldCategory.name === name.trim() &&  oldCategory.image === image && oldCategory.description === description) {
+            res.status(404);
+            throw new Error("No thing to update")
+        }
+        if(exitCategory) {
+            res.status(404);
+            throw new Error("Category already exists")
+            
+        }
         if(oldCategory) {
             oldCategory.name = name || oldCategory.name
             oldCategory.image = image || oldCategory.image
