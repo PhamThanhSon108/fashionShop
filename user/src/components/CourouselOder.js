@@ -15,6 +15,7 @@ export default function CorouselOder() {
     useEffect(() => {
         dispatch(listAllOrder())
     }, [])
+    console.log(products)
     let settings = {
         dots: false,
         infinite: true,

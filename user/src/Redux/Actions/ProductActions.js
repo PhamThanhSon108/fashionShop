@@ -16,7 +16,7 @@ import {
 import { logout } from "./userActions";
 
 // PRODUCT LIST ALL
-export const listAllProduct =
+export const ListProductAll =
   () =>
   async (dispatch) => {
     try {

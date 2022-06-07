@@ -27,7 +27,7 @@ import { Sliderload } from "./Reducers/SliderReducer";
 const reducer = combineReducers({
   listAllOrder: productbestseller,
   productList: productListReducer,
-  productAllList: productListAllReducer,
+  productAll: productListAllReducer,
   productDetails: productDetailsReducer,
   productReviewCreate: productCreateReviewReducer,
   cart: cartReducer,

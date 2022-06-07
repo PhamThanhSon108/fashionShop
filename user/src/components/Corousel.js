@@ -5,17 +5,18 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
-import { listAllProduct } from "../Redux/Actions/ProductActions";
+import { ListProductAll } from "../Redux/Actions/ProductActions";
 import {useEffect, useState} from 'react';
 
 export default function Corousel() {
-    const productAllList = useSelector((state) => state.productAllList);
-    const {products, loading } = productAllList;
-    //const [test, setTest] = useState(products)
+    const allProduct = useSelector((state) => state.productAll);
+    const {products, loading } = allProduct;
+    console.log(products)
+    
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(listAllProduct())
-    }, [dispatch])
+        dispatch(ListProductAll())
+    }, [])
    
     //console.log(products)
     
@@ -84,14 +85,14 @@ export default function Corousel() {
 
 
 
-    let settings = {
+    const settings = {
         dots: false,
         infinite: true,
         speed: 500,
         slidesToShow: 6,
         slidesToScroll: 6,
         initialSlide: 0,
-        default: 0,
+        
         responsive: [
             {
                 breakpoint: 1024,
@@ -132,20 +133,19 @@ export default function Corousel() {
                 <Slider {...settings}>
                   {products?.map((product, index) => {
                         return (
-                            <div key={index}>{product.name}</div>
-                            // <div key={index} className="corousel-div">
-                            //     <Link to={`/products/${product._id}`} className="corousel-link">
-                            //         <img src={product.image} className="corousel-img"></img>
-                            //         <p className="corousel-noti">{product.name}</p>
-                            //         <div className="corousel-rating">
-                            //             <Rating
-                            //                 value={product.rating}
-                            //                 text={`${product.numReviews} reviews`}
-                            //             />
-                            //         </div>
-                            //         <p className="corousel-price">${product.price}</p>
-                            //     </Link>
-                            // </div>
+                            <div key={index} className="corousel-div">
+                                <Link to={`/products/${product._id}`} className="corousel-link">
+                                    <img src={product.image} className="corousel-img"></img>
+                                    <p className="corousel-noti">{product.name}</p>
+                                    <div className="corousel-rating">
+                                        <Rating
+                                            value={product.rating}
+                                            text={`${product.numReviews} reviews`}
+                                        />
+                                    </div>
+                                    <p className="corousel-price">${product.price}</p>
+                                </Link>
+                            </div>
                         )
                     })}
                 </Slider>

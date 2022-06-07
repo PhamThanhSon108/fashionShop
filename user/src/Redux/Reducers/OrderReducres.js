@@ -108,7 +108,7 @@ export const orderAddressMyReducer = (state = { orderAddress: {} }, action) => {
 export const productbestseller = (state = { products: [] }, action) => {
   switch (action.type) {
     case ORDER_LIST_ALL_REQUEST:
-      return { loading: true};
+      return { loading: true, products: [...state.products]};
     case ORDER_LIST_ALL_SUCCESS:
       return {
         products: action.payload,
