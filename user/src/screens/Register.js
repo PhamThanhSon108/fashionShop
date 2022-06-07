@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useRouteMatch } from "react-router-dom";
 import isEmpty from "validator/lib/isEmpty";
 import Message from "../components/LoadingError/Error";
 import Loading from "../components/LoadingError/Loading";
@@ -33,32 +33,51 @@ const Register = ({ location, history }) => {
     const msg = {}
     if (isEmpty(name)) {
       msg.name = "Please input your name";
+      msg.borderRed1 = "border-red";
+      msg.colorRed1 = "color-red";
     }
 
     if (isEmpty(email)) {
       msg.email = "Plesae input your email";
+      msg.borderRed2 = "border-red";
+      msg.colorRed2 = "color-red";
     }
 
     if (isEmpty(phone)) {
       msg.phone = "Plesae input your phone";
+      msg.borderRed3 = "border-red";
+      msg.colorRed3 = "color-red";
     }
 
     if (isEmpty(password)) {
       msg.password = "Please input your password";
+      msg.borderRed4 = "border-red";
+      msg.colorRed4 = "color-red";
     } else {
       if (password.length < 6) {
         msg.password = "Password must be at least 6 characters"
+        msg.borderRed4 = "border-red";
+        msg.colorRed4 = "color-red";
       }
     }
 
     if (isEmpty(cfpassword)) {
       msg.cfpassword = "Please input your cfpassword";
+      msg.borderRed5 = "border-red";
+      msg.colorRed5 = "color-red";
+
     } else {
       if (cfpassword.length < 6) {
         msg.cfpassword = "CfPassword must be at least 6 characters"
+        msg.borderRed5 = "border-red";
+        msg.colorRed5 = "color-red";
+
       } else {
         if (cfpassword !== password) {
           msg.cfpassword = "The password entered is incorrect"
+          msg.borderRed5 = "border-red";
+          msg.colorRed5 = "color-red";
+
         }
       }
     }
@@ -66,7 +85,7 @@ const Register = ({ location, history }) => {
     if (Object.keys(msg).length > 0) return false
     return true
   }
-
+  console.log(checkValidate)
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -83,63 +102,127 @@ const Register = ({ location, history }) => {
         {loading && <Loading />}
 
         <form
-          className="Login col-md-8 col-lg-4 col-11"
+          className="Login col-md-6 col-lg-4 col-10"
           onSubmit={submitHandler}
         >
-          <input
-            type="text"
-            placeholder="Username"
-            value={name}
-            onChange={(e) => {
-              setName(e.target.value)
-              checkValidate.name = " "
-            }}
-          />
-          <p className="noti-validate">{checkValidate.name}</p>
+          <div className="Login-from">
+            <input
+              type="text"
+              className={checkValidate.borderRed1}
+              //placeholder="Username"
+              value={name}
+              onClick={() => {
+                setCheckValidate((object) => {
+                  const x = { ...object }
+                  x.borderRed1 = " ";
+                  x.colorRed1 = " ";
+                  x.name = " ";
+                  return x
+                })
+              }}
+              onChange={(e) => {
+                setName(e.target.value)
+              }}
+            />
+            <p className="noti-validate">{checkValidate.name}</p>
+            <p className={`Login-from__name ${checkValidate.colorRed1}`}>Username</p>
+          </div>
 
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value)
-              checkValidate.email = " "
-            }}
-          />
-          <p className="noti-validate">{checkValidate.email}</p>
+          <div className="Login-from">
+            <input
+              type="email"
+              //placeholder="Email"
+              className={checkValidate.borderRed2}
+              value={email}
+              onClick={() => {
+                setCheckValidate((object) => {
+                  const x = { ...object }
+                  x.borderRed2 = " ";
+                  x.colorRed2 = " ";
+                  x.email = " ";
+                  return x
+                })
+              }}
+              onChange={(e) => {
+                setEmail(e.target.value)
 
-          <input
-            type="text"
-            placeholder="Phone"
-            value={phone}
-            onChange={(e) => {
-              setPhone(e.target.value)
-              checkValidate.phone = " "
-            }}
-          />
-          <p className="noti-validate">{checkValidate.phone}</p>
+              }}
+            />
+            <p className="noti-validate">{checkValidate.email}</p>
+            <p className={`Login-from__email ${checkValidate.colorRed2}`}>Email</p>
+          </div>
 
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => {
-              setPassword(e.target.value)
-              checkValidate.password = " "
-            }}
-          />
-          <p className="noti-validate">{checkValidate.password}</p>
+          <div className="Login-from">
+            <input
+              type="text"
+              className={checkValidate.borderRed3}
+              //placeholder="Phone"
+              value={phone}
+              onClick={() => {
+                setCheckValidate((object) => {
+                  const x = { ...object }
+                  x.borderRed3 = " ";
+                  x.colorRed3 = " ";
+                  x.phone = " ";
+                  return x
+                })
+              }}
+              onChange={(e) => {
+                setPhone(e.target.value)
 
-          <input
-            type="password"
-            placeholder="Cfpassword"
-            value={cfpassword}
-            onChange={(e) => {
-              setCfPassword(e.target.value)
-              checkValidate.cfpassword = " "
-            }}
-          />
-          <p className="noti-validate">{checkValidate.cfpassword}</p>
+              }}
+            />
+            <p className="noti-validate">{checkValidate.phone}</p>
+            <p className={`Login-from__phone ${checkValidate.colorRed3}`}>Phone</p>
+          </div>
+
+          <div className="Login-from">
+            <input
+              type="password"
+              className={checkValidate.borderRed4}
+              //placeholder="Password"
+              value={password}
+              onClick={() => {
+                setCheckValidate((object) => {
+                  const x = { ...object }
+                  x.borderRed4 = " ";
+                  x.colorRed4 = " ";
+                  x.password = " ";
+                  return x
+                })
+              }}
+              onChange={(e) => {
+                setPassword(e.target.value)
+
+              }}
+            />
+            <p className="noti-validate">{checkValidate.password}</p>
+            <p className={`Login-from__password ${checkValidate.colorRed4}`}>Password</p>
+          </div>
+
+          <div className="Login-from">
+            <input
+              type="password"
+              className={checkValidate.borderRed5}
+              //placeholder="Cfpassword"
+              value={cfpassword}
+              onClick={() => {
+                setCheckValidate((object) => {
+                  const x = { ...object }
+                  x.borderRed5 = " ";
+                  x.colorRed5 = " ";
+                  x.cfpassword = " ";
+                  return x
+                })
+              }}
+              onChange={(e) => {
+                setCfPassword(e.target.value)
+
+              }}
+            />
+            <p className="noti-validate">{checkValidate.cfpassword}</p>
+            <p className={`Login-from__cfpassword ${checkValidate.colorRed5}`}>Cfpassword</p>
+          </div>
 
           <button type="submit">Register</button>
           <p>

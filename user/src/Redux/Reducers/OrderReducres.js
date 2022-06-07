@@ -18,6 +18,9 @@ import {
   ORDER_PAY_REQUEST,
   ORDER_PAY_RESET,
   ORDER_PAY_SUCCESS,
+  ORDER_LIST_ALL_FAIL,
+  ORDER_LIST_ALL_REQUEST,
+  ORDER_LIST_ALL_SUCCESS,
 } from "../Constants/OrderConstants";
 
 // CREATE ORDER
@@ -96,6 +99,22 @@ export const orderAddressMyReducer = (state = { orderAddress: {} }, action) => {
       return { loading: false, error: action.payload };
     case ORDER_ADDRESS_MY_RESET:
       return { orderAddress: {} };
+    default:
+      return state;
+  }
+};
+
+//ORDER LIST ALL
+export const productbestseller = (state = { products: [] }, action) => {
+  switch (action.type) {
+    case ORDER_LIST_ALL_REQUEST:
+      return { loading: true, products: [...state.products]};
+    case ORDER_LIST_ALL_SUCCESS:
+      return {
+        products: action.payload,
+      };
+    case ORDER_LIST_ALL_FAIL:
+      return { loading: false, error: action.payload };
     default:
       return state;
   }

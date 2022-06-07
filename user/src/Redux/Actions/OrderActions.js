@@ -14,6 +14,9 @@ import {
   ORDER_PAY_FAIL,
   ORDER_PAY_REQUEST,
   ORDER_PAY_SUCCESS,
+  ORDER_LIST_ALL_FAIL,
+  ORDER_LIST_ALL_REQUEST,
+  ORDER_LIST_ALL_SUCCESS,
 } from "../Constants/OrderConstants";
 import axios from "axios";
 import { CART_CLEAR_ITEMS } from "../Constants/CartConstants";
@@ -189,3 +192,25 @@ export const orderGetAddress = () => async (dispatch, getState) => {
     });
   }
 };
+
+// ODERS LIST ALL
+export const listAllOrder =
+  () =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: ORDER_LIST_ALL_REQUEST });
+      const { data } = await axios.get(
+        `/api/orders/productbestseller`
+      );
+      dispatch({ type: ORDER_LIST_ALL_SUCCESS, payload: data });
+    } catch (error) {
+      
+      dispatch({
+        type: ORDER_LIST_ALL_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
