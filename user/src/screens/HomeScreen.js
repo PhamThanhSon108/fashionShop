@@ -5,6 +5,8 @@ import ContactInfo from "./../components/homeComponents/ContactInfo";
 import CalltoActionSection from "./../components/homeComponents/CalltoActionSection";
 import Footer from "./../components/Footer";
 import Silder from "../components/Silder";
+import Corousel from "../components/Corousel"
+import CorouselOder from "../components/CourouselOder";
 
 const HomeScreen = ({ match }) => {
   window.scrollTo(0, 0);
@@ -14,6 +16,8 @@ const HomeScreen = ({ match }) => {
     <div>
       <Header />
       <Silder />
+      <Corousel />
+      <CorouselOder />
       <ShopSection keyword={keyword} pagenumber={pagenumber} />
 
       <CalltoActionSection />
