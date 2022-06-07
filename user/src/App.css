@@ -468,6 +468,9 @@ textarea:focus {
 .Login input:focus~.Login-from__email{
   color: #1a73e8;
 }
+.from-login__email-pass-color{
+  top: 5px;
+}
 .Login-from__phone{
   position: absolute;
   top: 179px;
@@ -497,6 +500,9 @@ textarea:focus {
 }
 .Login input:focus~.Login-from__password{
   color: #1a73e8;
+}
+.from-login__email-pass-color1{
+  top: 92px;
 }
 .Login-from__cfpassword{
   position: absolute;

@@ -69,6 +69,8 @@ const Login = ({ location, history }) => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
+            <p className="from-login__email-pass noti-validate">{loginCheck.email}</p>
+            <p className={`from-login__email-pass-color Login-from__email`}>Email</p>
           </div>
           <div className="Login-from from-login">
             <input
@@ -77,6 +79,8 @@ const Login = ({ location, history }) => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
+            <p className="from-login__email-pass noti-validate">{loginCheck.password}</p>
+            <p className={`from-login__email-pass-color1 Login-from__password`}>Password</p>
           </div>
           <button type="submit">Login</button>
           <p>
