@@ -5,8 +5,9 @@ import ContactInfo from "./../components/homeComponents/ContactInfo";
 import CalltoActionSection from "./../components/homeComponents/CalltoActionSection";
 import Footer from "./../components/Footer";
 import Silder from "../components/Silder";
-import Corousel from "../components/Corousel"
-import CorouselOder from "../components/CourouselOder";
+import Sliders from "../components/Sliders";
+import Corousel from "../components/SlideCorousel/Corousel";
+import CorouselOder from "../components/SlideCorousel/CourouselOder";
 
 const HomeScreen = ({ match }) => {
   window.scrollTo(0, 0);
@@ -15,7 +16,8 @@ const HomeScreen = ({ match }) => {
   return (
     <div>
       <Header />
-      <Silder />
+      {/* <Silder /> */}
+      <Sliders />
       <Corousel />
       <CorouselOder />
       <ShopSection keyword={keyword} pagenumber={pagenumber} />
