@@ -31,7 +31,7 @@ const LatestOrder = (props) => {
                       </span>
                     ) : (
                       <span className="badge rounded-pill alert-danger">
-                        Not Paid
+                        Awaiting payment
                       </span>
                     )}
                   </td>

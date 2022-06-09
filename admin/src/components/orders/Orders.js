@@ -34,7 +34,7 @@ const Orders = (props) => {
                 </span>
               ) : (
                 <span className="badge rounded-pill alert-danger">
-                  Not Paid
+                  Awaiting payment
                 </span>
               )}
             </td>
@@ -43,7 +43,7 @@ const Orders = (props) => {
               {order.isDelivered ? (
                 <span className="badge btn-success">Delivered</span>
               ) : (
-                <span className="badge btn-dark">Not delivered</span>
+                <span className="badge btn-dark">Awaiting confirm</span>
               )}
             </td>
             <td className="d-flex justify-content-end align-item-center">
