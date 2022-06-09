@@ -6,6 +6,7 @@ import { createOrder } from "../Redux/Actions/OrderActions";
 import { ORDER_CREATE_RESET } from "../Redux/Constants/OrderConstants";
 import Header from "./../components/Header";
 import Message from "./../components/LoadingError/Error";
+import PayModal from "../components/Modal/PayModal";
 
 const PlaceOrderScreen = ({ history }) => {
   window.scrollTo(0, 0);
@@ -41,8 +42,8 @@ const PlaceOrderScreen = ({ history }) => {
     }
   }, [history, dispatch, success, order]);
 
-
   const placeOrderHandler = () => {
+    //if (window.confirm("Are you sure"))
     dispatch(
       createOrder({
         orderItems: cart.cartItems,
@@ -54,13 +55,18 @@ const PlaceOrderScreen = ({ history }) => {
         totalPrice: cart.totalPrice,
       })
     );
-    dispatch(clearFromCart(userInfo._id))
+    dispatch(clearFromCart(userInfo._id));
   };
 
   return (
     <>
       <Header />
       <div className="container">
+        <PayModal
+          Title="PAY"
+          Body="Do you agree to pay?"
+          Submit={placeOrderHandler}
+        ></PayModal>
         <div className="row  order-detail">
           <div className="col-lg-4 col-sm-4 mb-lg-4 mb-5 mb-sm-0">
             <div className="row ">
@@ -176,10 +182,15 @@ const PlaceOrderScreen = ({ history }) => {
                 </tr>
               </tbody>
             </table>
-            {
-            cart.cartItems.length === 0 ? null : 
-            (
-              <button type="submit" onClick={placeOrderHandler}>
+            {cart.cartItems.length === 0 ? null : (
+              <button
+                type="submit"
+                //onClick={placeOrderHandler}
+                type="button"
+                class="btn btn-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#staticBackdrop"
+              >
                 PLACE ORDER
               </button>
             )}
