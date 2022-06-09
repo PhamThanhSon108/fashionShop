@@ -107,7 +107,7 @@ const OrderDetailmain = (props) => {
                         onClick={deliverHandler}
                         className="btn btn-dark col-12"
                       >
-                        MARK AS DELIVERED
+                        CONFIRM AND DELIVERY
                       </button>
                     </>
                   )}

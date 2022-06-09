@@ -35,7 +35,35 @@ export default function AddSlider() {
   return (
     <>
       <Toast />
-      <form onSubmit={submitHandler} style={{ maxWidth: "1000px" }}>
+      {error && (
+        <div class="alert alert-danger" role="alert">
+          {error}
+        </div>
+      )}
+      {loading && <Loading />}
+      <div class="input-group mb-3">
+        <input
+          type="url"
+          class="form-control"
+          placeholder="Please type url"
+          aria-label="dsasd"
+          aria-describedby="basic-addon1"
+          required
+          value={url}
+          onChange={(e) => setUrl(e.target.value)}
+        />
+        <div class="input-group-prepend">
+          <button
+            class="btn btn-outline-secondary"
+            type="button"
+            onClick={submitHandler}
+          >
+            Add
+          </button>
+        </div>
+      </div>
+
+      {/* <form onSubmit={submitHandler} style={{ maxWidth: "1000px" }}>
         <div className="row mb-4">
           <div className="col-xl-8 col-lg-8">
             <div className="card mb-8 shadow-sm ">
@@ -62,13 +90,12 @@ export default function AddSlider() {
                   </button>
                 </div>
                 <div></div>
-                {error && <Message variant="alert-danger">{error}</Message>}
-                {loading && <Loading />}
+                
               </div>
             </div>
           </div>
         </div>
-      </form>
+      </form> */}
     </>
   );
 }

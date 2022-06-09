@@ -30,9 +30,9 @@ const OrderScreen = ({ match }) => {
       order.orderItems.reduce((acc, item) => acc + item.price * item.qty, 0)
     );
   }
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(getOrderDetails(orderId));
-  },[])
+  }, []);
   useEffect(() => {
     // const addPayPalScript = async () => {
     //   const { data: clientId } = await axios.get("/api/config/paypal");
@@ -48,13 +48,13 @@ const OrderScreen = ({ match }) => {
     if (!order || successPay) {
       dispatch({ type: ORDER_PAY_RESET });
       dispatch(getOrderDetails(orderId));
-    } 
+    }
     // else if (!order.isPaid) {
-      // if (!window.paypal) {
-      //   addPayPalScript();
-      // } else {
-      //   setSdkReady(true);
-      // }
+    // if (!window.paypal) {
+    //   addPayPalScript();
+    // } else {
+    //   setSdkReady(true);
+    // }
     // }
   }, [dispatch, orderId, order]);
   //[dispatch, orderId, successPay, order]);
@@ -67,13 +67,11 @@ const OrderScreen = ({ match }) => {
     <>
       <Header />
       <div className="container">
-        {
-        loading ? (
+        {loading ? (
           <Loading />
         ) : error ? (
           <Message variant="alert-danger">{error}</Message>
-        ) : 
-        (
+        ) : (
           <>
             <div className="row  order-detail">
               <div className="col-lg-4 col-sm-4 mb-lg-4 mb-5 mb-sm-0">
@@ -119,7 +117,7 @@ const OrderScreen = ({ match }) => {
                     ) : (
                       <div className="bg-danger p-2 col-12">
                         <p className="text-white text-center text-sm-start">
-                          Not Paid
+                          Awaiting payment
                         </p>
                       </div>
                     )}
@@ -152,7 +150,7 @@ const OrderScreen = ({ match }) => {
                     ) : (
                       <div className="bg-danger p-2 col-12">
                         <p className="text-white text-center text-sm-start">
-                          Not Delivered
+                          Awaiting delivery
                         </p>
                       </div>
                     )}
@@ -223,44 +221,50 @@ const OrderScreen = ({ match }) => {
                   </tbody>
                 </table>
                 {
-                // !order.isPaid && (
-                //   <div className="col-12">
-                //     {loadingPay && <Loading />}
-                //     <span>Đang chờ giao hàng</span>
-                //     {
-                    
-                //     /* {!sdkReady ? (
-                //       <Loading />
-                //     ) : (
-                //       <PayPalButton
-                //         amount={order.totalPrice}
-                //         onSuccess={successPaymentHandler}
-                //       />
-                //     )} */}
-                //   </div>
-                // )
-                
-                 !order.isPaid &&(!order.isDelivered? <div className="col-12">
-                  {loadingPay && <Loading />}
-                  <span>Pending approval</span></div> : <div className="col-12">
-                  {loadingPay && <Loading />}
-                  <div className="bg-danger p-2 col-12">
-                        <p className="text-white text-center text-sm-start">
-                          Not Paid
-                        </p>
+                  // !order.isPaid && (
+                  //   <div className="col-12">
+                  //     {loadingPay && <Loading />}
+                  //     <span>Đang chờ giao hàng</span>
+                  //     {
+
+                  //     /* {!sdkReady ? (
+                  //       <Loading />
+                  //     ) : (
+                  //       <PayPalButton
+                  //         amount={order.totalPrice}
+                  //         onSuccess={successPaymentHandler}
+                  //       />
+                  //     )} */}
+                  //   </div>
+                  // )
+
+                  !order.isPaid &&
+                    (!order.isDelivered ? (
+                      <div className="col-12">
+                        {loadingPay && <Loading />}
+                        <span>Awaiting confirm</span>
                       </div>
-                 </div>)
-                }
-                {
-                  order.isPaid &&( <div className="col-12">
-                  {loadingPay && <Loading />}
-                  <div className="bg-success p-2 col-12">
-                        <p className="text-white text-center text-sm-start">
-                          Pay success
-                        </p>
+                    ) : (
+                      <div className="col-12">
+                        {loadingPay && <Loading />}
+                        <div className="bg-danger p-2 col-12">
+                          <p className="text-white text-center text-sm-start">
+                            Not Paid
+                          </p>
+                        </div>
                       </div>
-                  </div>)
+                    ))
                 }
+                {order.isPaid && (
+                  <div className="col-12">
+                    {loadingPay && <Loading />}
+                    <div className="bg-success p-2 col-12">
+                      <p className="text-white text-center text-sm-start">
+                        Pay success
+                      </p>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </>

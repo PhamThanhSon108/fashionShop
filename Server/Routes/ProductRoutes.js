@@ -14,11 +14,11 @@ productRoute.get(
     const page = Number(req.query.pageNumber) || 1;
     const keyword = req.query.keyword
       ? {
-        name: {
-          $regex: req.query.keyword,
-          $options: "i",
-        },
-      }
+          name: {
+            $regex: req.query.keyword,
+            $options: "i",
+          },
+        }
       : {};
     const count = await Product.countDocuments({ ...keyword });
     const products = await Product.find({ ...keyword })
@@ -34,22 +34,21 @@ productRoute.get(
   "/ProductAll",
   asyncHandler(async (req, res) => {
     const products = await Product.find({}).sort({ _id: -1 });
-    const productSlice = products.slice(0,10);
+    const productSlice = products.slice(0, 10);
     res.json(productSlice);
   })
 );
 
-
 // ADMIN GET ALL PRODUCT WITHOUT SEARCH AND PEGINATION
 productRoute.get(
   "/all",
-  // protect,
-  // admin,
+  protect,
+  admin,
   asyncHandler(async (req, res) => {
     // const products = await Product.find({}).sort({ _id: -1 });
     const products = await Product.find().populate(`category`);
 
-    res.json(products)
+    res.json(products);
   })
 );
 
@@ -128,8 +127,20 @@ productRoute.post(
   protect,
   admin,
   asyncHandler(async (req, res) => {
-    const { name, price, description, category, image, countInStock } = req.body;
+    const { name, price, description, category, image, countInStock } =
+      req.body;
     const productExist = await Product.findOne({ name });
+    if (
+      price <= 0 ||
+      countInStock < 0 ||
+      price >= 10000 ||
+      countInStock >= 10000
+    ) {
+      res.status(400);
+      throw new Error(
+        "Price or Count in stock is not valid, please correct it and try again"
+      );
+    }
     if (productExist) {
       res.status(400);
       throw new Error("Product name already exist");
@@ -160,8 +171,20 @@ productRoute.put(
   protect,
   admin,
   asyncHandler(async (req, res) => {
-    const { name, price, description, category, image, countInStock } = req.body;
+    const { name, price, description, category, image, countInStock } =
+      req.body;
     const product = await Product.findById(req.params.id);
+    if (
+      price <= 0 ||
+      countInStock < 0 ||
+      price >= 10000 ||
+      countInStock >= 10000
+    ) {
+      res.status(400);
+      throw new Error(
+        "Price or Count in stock is not valid, please correct it and try again"
+      );
+    }
     if (product) {
       product.name = name || product.name;
       product.price = price || product.price;
