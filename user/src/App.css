@@ -651,7 +651,7 @@ textarea:focus {
 .form input {
   padding: 20px 10px;
   font-size: 17px;
-  background-color: #e5fee9;
+  background-color: #fff;
 }
 .form-container button {
   padding: 15px 0;

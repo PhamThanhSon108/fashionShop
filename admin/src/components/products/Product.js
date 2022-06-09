@@ -5,6 +5,7 @@ import { deleteProduct } from "../../Redux/Actions/ProductActions";
 
 const Product = (props) => {
   const { product } = props;
+  console.log(product);
   const dispatch = useDispatch();
 
   const deletehandler = (id) => {
@@ -15,7 +16,7 @@ const Product = (props) => {
 
   return (
     <>
-      <div className="col-md-6 col-sm-6 col-lg-3 mb-5">
+      <div className="col-md-4 col-sm-4 col-lg-2-5 mb-5">
         <div className="card card-product-grid shadow-sm">
           <Link to="#" className="img-wrap">
             <img src={product.image} alt="Product" />
@@ -24,7 +25,15 @@ const Product = (props) => {
             <Link to="#" className="title text-truncate">
               {product.name}
             </Link>
-            <div className="price mb-2">${product.price}</div>
+            <div
+              className="countInStock-price"
+              style={{ display: "flex", justifyContent: "space-between" }}
+            >
+              <div className="price mb-2">Price: ${product.price}</div>
+              <div className="stock mb-2">
+                Count Stock: ${product.countInStock}
+              </div>
+            </div>
             <div className="row">
               <Link
                 to={`/product/${product._id}/edit`}

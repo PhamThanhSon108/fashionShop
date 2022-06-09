@@ -908,3 +908,9 @@ ul.row-sm {
   line-height: 0.7;
   vertical-align: bottom;
 }
+.col-md-6,
+.col-sm-6,
+.col-lg-3,
+.mb-5 {
+  padding: 0 4px;
+}
