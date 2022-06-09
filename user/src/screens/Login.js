@@ -28,16 +28,18 @@ const Login = ({ location, history }) => {
     const msg = {};
     if (isEmpty(email)) {
       msg.email = "Plesae input your email"
+      msg.borderRed1 = "border-red";
+      msg.colorRed1 = "color-red";
     }
     if (isEmpty(password)) {
       msg.password = "Please input your password";
-      // msg.borderRed4 = "border-red";
-      // msg.colorRed4 = "color-red";
+      msg.borderRed2 = "border-red";
+      msg.colorRed2 = "color-red";
     } else {
       if (password.length < 6) {
         msg.password = "Password must be at least 6 characters"
-        // msg.borderRed4 = "border-red";
-        // msg.colorRed4 = "color-red";
+        msg.borderRed2 = "border-red";
+        msg.colorRed2 = "color-red";
       }
     }
     setLoginCheck(msg);
@@ -66,17 +68,41 @@ const Login = ({ location, history }) => {
             <input
               type="email"
               //placeholder="Email"
+              className={loginCheck.borderRed1}
               value={email}
+              onClick={() => {
+                setLoginCheck((object) => {
+                  const x = { ...object }
+                  x.borderRed1 = " ";
+                  x.colorRed1 = " ";
+                  x.email = " ";
+                  return x
+                })
+              }}
               onChange={(e) => setEmail(e.target.value)}
             />
+            <p className="from-login__email-pass noti-validate">{loginCheck.email}</p>
+            <p className={`from-login__email-pass-color Login-from__email ${loginCheck.colorRed1}`}>Email</p>
           </div>
           <div className="Login-from from-login">
             <input
               type="password"
               //placeholder="Password"
+              className={loginCheck.borderRed2}
               value={password}
+              onClick={() => {
+                setLoginCheck((object) => {
+                  const x = { ...object }
+                  x.borderRed2 = " ";
+                  x.colorRed2 = " ";
+                  x.password = " ";
+                  return x
+                })
+              }}
               onChange={(e) => setPassword(e.target.value)}
             />
+            <p className="from-login__email-pass noti-validate">{loginCheck.password}</p>
+            <p className={`from-login__email-pass-color1 Login-from__password ${loginCheck.colorRed2}`}>Password</p>
           </div>
           <button type="submit">Login</button>
           <p>
