@@ -65,7 +65,8 @@ const PlaceOrderScreen = ({ history }) => {
         <PayModal
           Title="PAY"
           Body="Do you agree to pay?"
-          Submit={placeOrderHandler}
+          HandleSubmit={placeOrderHandler}
+          Close="modal"
         ></PayModal>
         <div className="row  order-detail">
           <div className="col-lg-4 col-sm-4 mb-lg-4 mb-5 mb-sm-0">
