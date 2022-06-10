@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function PayModal({ Title, Body, Submit }) {
+export default function PayModal({ Title, Body, HandleSubmit }) {
   return (
     <>
       <button
@@ -44,7 +44,12 @@ export default function PayModal({ Title, Body, Submit }) {
               >
                 Close
               </button>
-              <button type="button" class="btn btn-primary" onClick={Submit}>
+              <button
+                type="button"
+                class="btn btn-primary"
+                onClick={HandleSubmit}
+                data-bs-dismiss="modal"
+              >
                 YES
               </button>
             </div>
