@@ -11,14 +11,17 @@ import CategorySection from './CategorySection';
 
 const ShopSection = (props) => {
     const { keyword, pagenumber } = props;
+    console.log(props);
     const dispatch = useDispatch();
 
     const productList = useSelector((state) => state.productList);
     const { loading, error, products, page, pages } = productList;
 
-    useEffect(() => {
-        dispatch(listCart());
-    }, []);
+    // console.log(productList);
+    // console.log(props);
+    // useEffect(() => {
+    //     dispatch(listCart());
+    // }, []);
 
     useEffect(() => {
         dispatch(listProduct(keyword, pagenumber));
