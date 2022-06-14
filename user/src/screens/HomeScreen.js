@@ -12,7 +12,7 @@ import CorouselOder from '../components/SlideCorousel/CourouselOder';
 const HomeScreen = ({ match }) => {
     window.scrollTo(0, 0);
     const keyword = match.params.keyword;
-    const pagenumber = match.params.pagenumber;
+    const pagenumber = match.params.pagenumber !== undefined ? match.params.pagenumber : match.params.pageNumber;
     return (
         <div>
             <Header />
@@ -21,7 +21,6 @@ const HomeScreen = ({ match }) => {
             <Corousel />
             <CorouselOder />
             <ShopSection keyword={keyword} pagenumber={pagenumber} />
-
             <CalltoActionSection />
             <ContactInfo />
             <Footer />

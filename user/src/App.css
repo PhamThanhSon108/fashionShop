@@ -1,3 +1,6 @@
+:root {
+    --white-color: #fff;
+}
 body {
     margin: 0;
     font-family: 'Josefin Sans', sans-serif;
@@ -904,10 +907,11 @@ textarea:focus {
     border-radius: 10px;
 }
 .slick-dots {
-    bottom: -3% !important;
+    bottom: 4% !important;
 }
 .slick-dots li button::before {
     font-size: 12px !important;
+    color: red !important;
 }
 .slider-list {
     min-width: 900px;
