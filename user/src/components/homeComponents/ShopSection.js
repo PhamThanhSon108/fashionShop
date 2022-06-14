@@ -11,6 +11,7 @@ import CategorySection from './CategorySection';
 
 const ShopSection = (props) => {
     const { keyword, pagenumber } = props;
+
     const dispatch = useDispatch();
 
     const productList = useSelector((state) => state.productList);
