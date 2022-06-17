@@ -12,7 +12,6 @@ const CartScreen = ({ match, location, history }) => {
 
     const cart = useSelector((state) => state.cart);
     const { cartItems } = cart;
-
     const cartDel = useSelector((state) => state.cartDelete);
     const { loading: loa, success: suc, mesage: mes } = cartDel;
 
@@ -21,6 +20,7 @@ const CartScreen = ({ match, location, history }) => {
     const total = cartItems ? cartItems.reduce((a, i) => a + i.qty * i.price, 0).toFixed(2) : 0;
     const userLogin = useSelector((state) => state.userLogin);
     const { userInfo } = userLogin;
+    console.log(cartItems);
     // useEffect(() => {
     //   if (productId) {
     //     console.log("1use")

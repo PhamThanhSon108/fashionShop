@@ -18,11 +18,7 @@ import {
 export const productListAllReducer = (state = { products: [] }, action) => {
     switch (action.type) {
         case PRODUCT_LIST_ALL_REQUEST:
-<<<<<<< HEAD
-            return { loading: true };
-=======
             return { loading: true, products: [...state.products] };
->>>>>>> e4c563b26f0b4c59cfc37cb8aafcb0833d5cf00b
         case PRODUCT_LIST_ALL_SUCCESS:
             return {
                 loading: false,

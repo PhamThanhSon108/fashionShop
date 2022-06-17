@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { clearFromCart } from '../Redux/Actions/cartActions';
+import { clearFromCart, listCart } from '../Redux/Actions/cartActions';
 import { createOrder } from '../Redux/Actions/OrderActions';
 import { ORDER_CREATE_RESET } from '../Redux/Constants/OrderConstants';
 import Header from './../components/Header';
@@ -23,13 +23,12 @@ const PlaceOrderScreen = ({ history }) => {
     };
     console.log(cart);
     cart.itemsPrice = addDecimals(cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0));
-    cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 0 : 100);
+    cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 0 : 20);
     cart.taxPrice = addDecimals(Number((0.15 * cart.itemsPrice).toFixed(2)));
     cart.totalPrice = (Number(cart.itemsPrice) + Number(cart.shippingPrice) + Number(cart.taxPrice)).toFixed(2);
 
     const orderCreate = useSelector((state) => state.orderCreate);
     const { order, success, error } = orderCreate;
-
     useEffect(() => {
         if (success) {
             history.push(`/order/${order._id}`);
@@ -110,8 +109,9 @@ const PlaceOrderScreen = ({ history }) => {
                                     <strong>Deliver to</strong>
                                 </h5>
                                 <p>
-                                    Address: {cart.shippingAddress.city}, {cart.shippingAddress.address},{' '}
-                                    {cart.shippingAddress.postalCode}
+                                    Address: {cart.shippingAddress.city}, {cart.shippingAddress.address}
+                                    {/* ,{' '}
+                                    {cart.shippingAddress.postalCode} */}
                                 </p>
                             </div>
                         </div>
