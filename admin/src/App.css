@@ -915,3 +915,11 @@ ul.row-sm {
 .mb-5 {
     padding: 0 4px;
 }
+
+/* add product */
+.product_validate {
+    color: red;
+}
+.border-red {
+    border: 1px solid red;
+}

@@ -8,6 +8,7 @@ import Toast from '../LoadingError/Toast';
 import Message from '../LoadingError/Error';
 import Loading from '../LoadingError/Loading';
 import { ListCategory } from '../../Redux/Actions/categoryActions';
+import isEmpty from 'validator/lib/isEmpty';
 
 const ToastObjects = {
     pauseOnFocusLoss: false,
@@ -17,11 +18,12 @@ const ToastObjects = {
 };
 const AddProductMain = () => {
     const [name, setName] = useState('');
-    const [price, setPrice] = useState(0);
+    const [price, setPrice] = useState('');
     const [category, setCategory] = useState('');
     const [image, setImage] = useState('');
-    const [countInStock, setCountInStock] = useState(0);
+    const [countInStock, setCountInStock] = useState('');
     const [description, setDescription] = useState('');
+    const [validate, setValidate] = useState({});
 
     const dispatch = useDispatch();
 
@@ -44,9 +46,53 @@ const AddProductMain = () => {
     useEffect(() => {
         dispatch(ListCategory());
     }, []);
+
+    const isEmptyCheckEdit = () => {
+        const msg = {};
+        if (isEmpty(category)) {
+            msg.category = 'Plesae input your category';
+            msg.borderRed1 = 'border-red';
+        }
+        if (isEmpty(name)) {
+            msg.name = 'Please input your name';
+            msg.borderRed2 = 'border-red';
+        }
+        if (isEmpty(price)) {
+            msg.price = 'Plesae input your price';
+            msg.borderRed3 = 'border-red';
+        } else {
+            if (price < 0) {
+                msg.price = 'Please enter the positive value';
+                msg.borderRed3 = 'border-red';
+            }
+        }
+        if (isEmpty(image)) {
+            msg.image = 'Please input your image';
+            msg.borderRed4 = 'border-red';
+        }
+        if (isEmpty(countInStock)) {
+            msg.countInStock = 'Plesae input your countInStock';
+            msg.borderRed5 = 'border-red';
+        } else {
+            if (countInStock < 0) {
+                msg.countInStock = 'Please enter the positive value';
+                msg.borderRed5 = 'border-red';
+            }
+        }
+        if (isEmpty(description)) {
+            msg.description = 'Please input your description';
+            msg.borderRed6 = 'border-red';
+        }
+        setValidate(msg);
+        if (Object.keys(msg).length > 0) return false;
+        return true;
+    };
+
     const submitHandler = (e) => {
         e.preventDefault();
-        console.log(category);
+        const isEmptyValidate = isEmptyCheckEdit();
+        if (!isEmptyValidate) return;
+        // console.log(category);
         if (category != -1) {
             dispatch(createProduct(name, price, description, category, image, countInStock));
         }
@@ -82,12 +128,21 @@ const AddProductMain = () => {
                                         <input
                                             type="text"
                                             placeholder="Type here"
-                                            className="form-control"
+                                            className={`form-control ${validate.borderRed2}`}
                                             id="product_title"
-                                            required
+                                            //required
                                             value={name}
+                                            onClick={() => {
+                                                setValidate((values) => {
+                                                    const x = { ...values };
+                                                    x.borderRed2 = '';
+                                                    x.name = '';
+                                                    return x;
+                                                });
+                                            }}
                                             onChange={(e) => setName(e.target.value)}
                                         />
+                                        <p className="product_validate">{validate.name}</p>
                                     </div>
                                     <div className="mb-4">
                                         <label htmlFor="product_price" className="form-label">
@@ -96,12 +151,21 @@ const AddProductMain = () => {
                                         <input
                                             type="number"
                                             placeholder="Type here"
-                                            className="form-control"
+                                            className={`form-control ${validate.borderRed3}`}
                                             id="product_price"
-                                            required
+                                            //required
                                             value={price}
+                                            onClick={() => {
+                                                setValidate((values) => {
+                                                    const x = { ...values };
+                                                    x.borderRed3 = '';
+                                                    x.price = '';
+                                                    return x;
+                                                });
+                                            }}
                                             onChange={(e) => setPrice(e.target.value)}
                                         />
+                                        <p className="product_validate">{validate.price}</p>
                                     </div>
 
                                     <div className="mb-4">
@@ -111,10 +175,19 @@ const AddProductMain = () => {
                                         <select
                                             type="text"
                                             id="product_category"
-                                            className="form-select"
+                                            //className="form-select"
+                                            className={`form-select ${validate.borderRed1}`}
                                             aria-label=".form-select-lg example"
-                                            required
+                                            //required
                                             value={category}
+                                            onClick={() => {
+                                                setValidate((values) => {
+                                                    const x = { ...values };
+                                                    x.borderRed1 = '';
+                                                    x.category = '';
+                                                    return x;
+                                                });
+                                            }}
                                             onChange={(e) => setCategory(e.target.value)}
                                             title="Please select category"
                                             placeholder="Please select category"
@@ -128,6 +201,7 @@ const AddProductMain = () => {
                                                 </option>
                                             ))}
                                         </select>
+                                        <p className="product_validate">{validate.category}</p>
                                     </div>
 
                                     <div className="mb-4">
@@ -137,34 +211,61 @@ const AddProductMain = () => {
                                         <input
                                             type="number"
                                             placeholder="Type here"
-                                            className="form-control"
+                                            className={`form-control ${validate.borderRed5}`}
                                             id="product_price"
-                                            required
+                                            //required
                                             value={countInStock}
+                                            onClick={() => {
+                                                setValidate((values) => {
+                                                    const x = { ...values };
+                                                    x.borderRed5 = '';
+                                                    x.countInStock = '';
+                                                    return x;
+                                                });
+                                            }}
                                             onChange={(e) => setCountInStock(e.target.value)}
                                         />
+                                        <p className="product_validate">{validate.countInStock}</p>
                                     </div>
                                     <div className="mb-4">
                                         <label className="form-label">Description</label>
                                         <textarea
                                             placeholder="Type here"
-                                            className="form-control"
+                                            className={`form-control ${validate.borderRed6}`}
                                             rows="7"
-                                            required
+                                            //required
                                             value={description}
+                                            onClick={() => {
+                                                setValidate((values) => {
+                                                    const x = { ...values };
+                                                    x.borderRed6 = '';
+                                                    x.description = '';
+                                                    return x;
+                                                });
+                                            }}
                                             onChange={(e) => setDescription(e.target.value)}
                                         ></textarea>
+                                        <p className="product_validate">{validate.description}</p>
                                     </div>
                                     <div className="mb-4">
                                         <label className="form-label">Images</label>
                                         <input
-                                            className="form-control"
+                                            className={`form-control ${validate.borderRed4}`}
                                             type="text"
                                             placeholder="Enter Image URL"
                                             value={image}
-                                            required
+                                            //required
+                                            onClick={() => {
+                                                setValidate((values) => {
+                                                    const x = { ...values };
+                                                    x.borderRed4 = '';
+                                                    x.image = '';
+                                                    return x;
+                                                });
+                                            }}
                                             onChange={(e) => setImage(e.target.value)}
                                         />
+                                        <p className="product_validate">{validate.image}</p>
                                         <input className="form-control mt-3" type="file" />
                                     </div>
                                 </div>

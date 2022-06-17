@@ -7,6 +7,10 @@
     .slider-image {
         height: 350px !important;
     }
+    .single-image,
+    .single-image img {
+        height: 500px;
+    }
 }
 @media (max-width: 991.98px) {
     .display-none {
@@ -31,7 +35,7 @@
     }
     .single-image,
     .single-image img {
-        height: 400px;
+        height: 480px;
     }
     .author-card-avatar img {
         margin-top: -20%;
@@ -139,11 +143,12 @@
     }
 
     .single-image {
-        margin-bottom: 50px;
+        margin-bottom: 25px;
         margin-right: 0;
     }
     .product-name {
         font-size: 23px;
+        line-height: 1.2;
     }
     .author-card-avatar {
         display: none;
@@ -249,7 +254,10 @@
 
     .single-image,
     .single-image img {
-        height: 200px;
+        height: 300px;
+    }
+    .product-count {
+        margin-top: 20px;
     }
     .slider {
         height: 143px;
@@ -276,5 +284,14 @@
     .corousel-img {
         height: 125px !important;
         margin: auto;
+    }
+    .round-black-btn {
+        position: relative;
+    }
+    .rating-review {
+        height: 62vh;
+    }
+    .write-review {
+        margin-top: 10px;
     }
 }
