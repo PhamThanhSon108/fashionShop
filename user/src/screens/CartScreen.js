@@ -18,7 +18,7 @@ const CartScreen = ({ match, location, history }) => {
 
     const cartCreate = useSelector((state) => state.cartCreate);
     const { loading: loadingCreate, success: successCreate } = cartCreate;
-    const total = cartItems ? cartItems.reduce((a, i) => a + i.qty * i.price, 0).toFixed(2) : 0;
+    const total = cartItems ? cartItems.reduce((a, i) => a + i.qty * i.product.price, 0).toFixed(2) : 0;
     const userLogin = useSelector((state) => state.userLogin);
     const { userInfo } = userLogin;
     // useEffect(() => {
@@ -30,6 +30,7 @@ const CartScreen = ({ match, location, history }) => {
 
     //   // }, [dispatch, productId, qty]);
     // }, [dispatch, productId, qty]);
+    console.log(cartItems);
     const checkOutHandler = () => {
         history.push('/login?redirect=shipping');
     };
@@ -83,33 +84,42 @@ const CartScreen = ({ match, location, history }) => {
                         <div className="cart-scroll">
                             {cartItems?.map((item) => (
                                 <div className="cart-iterm row">
-                                    {/*check box */}
-                                    <div className="col-md-1 cart-check">
-                                        <input type="checkbox"></input>
-                                    </div>
-                                    {/* hết hàng */}
-                                    {/* <div className="col-md-1 cart-check">
-                                    <span className="span" style={{ fontSize: '12px', color: 'red' }}>
-                                        Hết hàng
-                                    </span>
-                                </div> */}
+                                    {item.product.countInStock > 0 ? (
+                                        <div className="col-md-1 cart-check">
+                                            <input
+                                                type="checkbox"
+                                                checked={item.isBuy}
+                                                onChange={(e) => {
+                                                    console.log(e.target.value);
+                                                    dispatch(addToCart(item.product._id, e.target.value, userInfo._id));
+                                                }}
+                                            ></input>
+                                        </div>
+                                    ) : (
+                                        <div className="col-md-1 cart-check">
+                                            <span className="span" style={{ fontSize: '12px', color: 'red' }}>
+                                                Hết hàng
+                                            </span>
+                                        </div>
+                                    )}
                                     <div className="cart-image col-md-2">
-                                        <img src={item.image} alt={item.name} />
+                                        <img src={item.product.image} alt={item.product.name} />
                                     </div>
                                     <div className="cart-text col-md-4 d-flex align-items-center">
-                                        <Link to={`/products/${item.product}`}>
-                                            <h4>{item.name}</h4>
+                                        <Link to={`/products/${item.product._id}`}>
+                                            <h4>{item.product.name}</h4>
                                         </Link>
                                     </div>
                                     <div className="cart-qty col-md-2 col-sm-5 mt-3 mt-md-0 d-flex flex-column justify-content-center quantity-css">
                                         <h6>QUANTITY</h6>
                                         <select
+                                            disabled={item.product.countInStock <= 0}
                                             value={item.qty}
                                             onChange={(e) => {
-                                                dispatch(addToCart(item.product, e.target.value, userInfo._id));
+                                                dispatch(addToCart(item.product._id, e.target.value, userInfo._id));
                                             }}
                                         >
-                                            {[...Array(item.countInStock).keys()].map((x) => (
+                                            {[...Array(item.product.countInStock).keys()].map((x) => (
                                                 <option key={x + 1} value={x + 1}>
                                                     {x + 1}
                                                 </option>
@@ -118,12 +128,12 @@ const CartScreen = ({ match, location, history }) => {
                                     </div>
                                     <div className="cart-price mt-3 mt-md-0 col-md-2 align-items-sm-end align-items-start  d-flex flex-column justify-content-center col-sm-7 quantity-css">
                                         <h6>PRICE</h6>
-                                        <h4>${item.price}</h4>
+                                        <h4>${item.product.price}</h4>
                                     </div>
                                     <div
                                         className=" col-md-1 delete-cart"
                                         onClick={() => {
-                                            removeFromCartHandle(item.product);
+                                            removeFromCartHandle(item.product._id);
                                         }}
                                         style={{ display: 'flex', justifyContent: 'right', cursor: 'pointer' }}
                                     >

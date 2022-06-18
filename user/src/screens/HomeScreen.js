@@ -21,7 +21,6 @@ const HomeScreen = ({ match }) => {
             <Corousel />
             <CorouselOder />
             <ShopSection keyword={keyword} pagenumber={pagenumber} />
-
             <CalltoActionSection />
             <ContactInfo />
             <Footer />

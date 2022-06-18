@@ -131,13 +131,14 @@ const OrderScreen = ({ match }) => {
                                             <strong>Deliver to</strong>
                                         </h5>
                                         <p>
-                                            Address: {order.shippingAddress.city}, {order.shippingAddress.address},{' '}
-                                            {order.shippingAddress.postalCode}
+                                            Address: {order.shippingAddress.city}, {order.shippingAddress.address}
+                                            {/* ,{' '}
+                                            {order.shippingAddress.postalCode} */}
                                         </p>
                                         {order.isDelivered ? (
                                             <div className="bg-info p-2 col-12">
                                                 <p className="text-white text-center text-sm-start">
-                                                    Delivered on {moment(order.deliveredAt).calendar()}
+                                                    Start shipping from {moment(order.deliveredAt).calendar()}
                                                 </p>
                                             </div>
                                         ) : (
