@@ -9,7 +9,8 @@ const cartRoutes = express.Router();
 cartRoutes.get(
     '/:id',
     asyncHandler(async (req, res) => {
-        const cart = await Cart.findOne({ user: req.params.id }).populate('product');
+        const cart = await Cart.findOne({ user: req.params.id }).populate('cartItems.product');
+        // .select('"name" "image" "price" "qty" "countInStock" "description"');
         if (cart) {
             res.json(cart.cartItems);
         } else {
@@ -38,7 +39,7 @@ cartRoutes.post(
                 cartExist.cartItems = newArray;
                 await cartExist.save();
 
-                res.status(201).json(cartExist.cartItems);
+                res.status(201).json('success');
                 return;
             }
             const cartadd = {
@@ -60,11 +61,11 @@ cartRoutes.post(
                 cartItems: [
                     {
                         product: productId,
-                        name: product.name,
-                        image: product.image,
-                        price: product.price,
+                        // name: product.name,
+                        // image: product.image,
+                        // price: product.price,
                         qty,
-                        countInStock: product.countInStock,
+                        // countInStock: product.countInStock,
                     },
                 ],
             });
