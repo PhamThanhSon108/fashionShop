@@ -851,7 +851,7 @@ textarea:focus {
     color: orange;
 }
 .cart-scroll {
-    height: 70.5vh;
+    max-height: 70.5vh;
     overflow-y: scroll;
 }
 .cart-scroll::-webkit-scrollbar {
