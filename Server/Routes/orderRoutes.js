@@ -1,11 +1,10 @@
-import express from "express";
-import asyncHandler from "express-async-handler";
-import { admin, protect } from "../Middleware/AuthMiddleware.js";
-import Product from "../Models/ProductModel.js";
-import Order from "./../Models/OrderModel.js";
+import express from 'express';
+import asyncHandler from 'express-async-handler';
+import { admin, protect } from '../Middleware/AuthMiddleware.js';
+import Product from '../Models/ProductModel.js';
+import Order from './../Models/OrderModel.js';
 
 const orderRouter = express.Router();
-
 
 // orderRouter.get(
 //   "/productbestseller",
@@ -22,8 +21,8 @@ const orderRouter = express.Router();
 //       }
 //     }
 //     for(let i = 0 ;i<AllOrder.length - 1;i++) {
-//         if (Arr[AllOrder[i].name]!= undefined) Arr[AllOrder[i].name]++ 
-//         else Arr[AllOrder[i].name] = 1 
+//         if (Arr[AllOrder[i].name]!= undefined) Arr[AllOrder[i].name]++
+//         else Arr[AllOrder[i].name] = 1
 //     }
 //     let newarr = []
 //     ArrQuatity = Object.entries(Arr).sort(function(a, b){return b[1] - a[1]})
@@ -32,7 +31,7 @@ const orderRouter = express.Router();
 //               if(ArrQuatity[i][0] === products[j].name) {
 //               newarr.push(products[j])
 //               break
-             
+
 //               }
 //       }
 //     }
@@ -42,196 +41,188 @@ const orderRouter = express.Router();
 
 // CREATE ORDER
 orderRouter.post(
-  "/",
-  protect,
-  asyncHandler(async (req, res) => {
-    const {
-      orderItems,
-      shippingAddress,
-      paymentMethod,
-      itemsPrice,
-      taxPrice,
-      shippingPrice,
-      totalPrice,
-    } = req.body;
+    '/',
+    protect,
+    asyncHandler(async (req, res) => {
+        const { orderItems, shippingAddress, paymentMethod, itemsPrice, taxPrice, shippingPrice, totalPrice } =
+            req.body;
 
-    if (orderItems && orderItems.length === 0) {
-      res.status(400);
-      throw new Error("No order items");
-      return;
-    } else {
-      const order = new Order({
-        orderItems,
-        user: req.user._id,
-        shippingAddress,
-        paymentMethod,
-        itemsPrice,
-        taxPrice,
-        shippingPrice,
-        totalPrice,
-      });
-
-      const createOrder = await order.save();
-      res.status(201).json(createOrder);
-    }
-  })
+        if (orderItems && orderItems.length === 0) {
+            res.status(400);
+            throw new Error('No order items');
+            return;
+        } else {
+            const order = new Order({
+                orderItems,
+                user: req.user._id,
+                shippingAddress,
+                paymentMethod,
+                itemsPrice,
+                taxPrice,
+                shippingPrice,
+                totalPrice,
+            });
+            for (let i = 0; i < orderItems.length; i++) {
+                await Product.findOneAndUpdate(
+                    { _id: orderItems[i].product },
+                    { $inc: { countInStock: -orderItems[i].qty } },
+                );
+            }
+            const createOrder = await order.save();
+            res.status(201).json(createOrder);
+        }
+    }),
 );
 
 // GET ALL ORDERS
 orderRouter.get(
-  "/productbestseller",
-  //protect,
-  asyncHandler(async (req, res) => {
-    const orders = await Order.find({})
-    const products = await Product.find({}).sort({ _id: -1 });
-    let AllOrder = [];
-    let Arr = {};
-    let ArrQuatity = [];
-    for (let order of orders) {
-      for (let ordr of order.orderItems) {
-        AllOrder.push(ordr)
-      }
-    }
-    for (let i = 0; i < AllOrder.length - 1; i++) {
-      if (Arr[AllOrder[i].name] != undefined) Arr[AllOrder[i].name]++
-      else Arr[AllOrder[i].name] = 1
-    }
-    let newarr = []
-    ArrQuatity = Object.entries(Arr).sort(function (a, b) { return b[1] - a[1] })
-    for (let i = 0; i < ArrQuatity.length; i++) {
-      for (let j = 0; j < products.length; j++) {
-        if (ArrQuatity[i][0] === products[j].name) {
-          newarr.push(products[j])
-          break
+    '/productbestseller',
+    //protect,
+    asyncHandler(async (req, res) => {
+        const orders = await Order.find({});
+        const products = await Product.find({}).sort({ _id: -1 });
+        let AllOrder = [];
+        let Arr = {};
+        let ArrQuatity = [];
+        for (let order of orders) {
+            for (let ordr of order.orderItems) {
+                AllOrder.push(ordr);
+            }
         }
-      }
-    }
-    res.json(newarr);
-  })
+        for (let i = 0; i < AllOrder.length - 1; i++) {
+            if (Arr[AllOrder[i].name] != undefined) Arr[AllOrder[i].name]++;
+            else Arr[AllOrder[i].name] = 1;
+        }
+        let newarr = [];
+        ArrQuatity = Object.entries(Arr).sort(function (a, b) {
+            return b[1] - a[1];
+        });
+        for (let i = 0; i < ArrQuatity.length; i++) {
+            for (let j = 0; j < products.length; j++) {
+                if (ArrQuatity[i][0] === products[j].name) {
+                    newarr.push(products[j]);
+                    break;
+                }
+            }
+        }
+        res.json(newarr);
+    }),
 );
 
 // ADMIN GET ALL ORDERS
 orderRouter.get(
-  "/all",
-  // protect,
-  // admin,
-  asyncHandler(async (req, res) => {
-    const orders = await Order.find({})
-      .sort({ _id: -1 })
-      .populate("user", "id name email");
-    res.json(orders);
-  })
+    '/all',
+    // protect,
+    // admin,
+    asyncHandler(async (req, res) => {
+        const orders = await Order.find({}).sort({ _id: -1 }).populate('user', 'id name email');
+        res.json(orders);
+    }),
 );
 // USER LOGIN ORDERS
 orderRouter.get(
-  "/",
-  protect,
-  asyncHandler(async (req, res) => {
-    const order = await Order.find({ user: req.user._id }).sort({ _id: -1 });
-    res.json(order);
-  })
+    '/',
+    protect,
+    asyncHandler(async (req, res) => {
+        const order = await Order.find({ user: req.user._id }).sort({ _id: -1 });
+        res.json(order);
+    }),
 );
 
 // GET ORDER BY ID
 orderRouter.get(
-  "/:id",
-  protect,
-  asyncHandler(async (req, res) => {
-    const order = await Order.findById(req.params.id).populate(
-      "user",
-      "name email"
-    );
+    '/:id',
+    protect,
+    asyncHandler(async (req, res) => {
+        const order = await Order.findById(req.params.id).populate('user', 'name email');
 
-    if (order) {
-      res.json(order);
-    } else {
-      res.status(404);
-      throw new Error("Order Not Found");
-    }
-  })
+        if (order) {
+            res.json(order);
+        } else {
+            res.status(404);
+            throw new Error('Order Not Found');
+        }
+    }),
 );
 
 // ORDER IS PAID
 orderRouter.put(
-  "/:id/pay",
-  protect,
-  asyncHandler(async (req, res) => {
-    const order = await Order.findById(req.params.id);
+    '/:id/pay',
+    protect,
+    asyncHandler(async (req, res) => {
+        const order = await Order.findById(req.params.id);
 
-    if (order) {
-      order.isPaid = true;
-      order.paidAt = Date.now();
-      order.paymentResult = {
-        id: req.body.id,
-        status: req.body.status,
-        update_time: req.body.update_time,
-        email_address: req.body.email_address,
-      };
+        if (order) {
+            order.isPaid = true;
+            order.paidAt = Date.now();
+            order.paymentResult = {
+                id: req.body.id,
+                status: req.body.status,
+                update_time: req.body.update_time,
+                email_address: req.body.email_address,
+            };
 
-      const updatedOrder = await order.save();
-      res.json(updatedOrder);
-    } else {
-      res.status(404);
-      throw new Error("Order Not Found");
-    }
-  })
+            const updatedOrder = await order.save();
+            res.json(updatedOrder);
+        } else {
+            res.status(404);
+            throw new Error('Order Not Found');
+        }
+    }),
 );
 
 // ORDER IS DELIVERED
 orderRouter.put(
-  "/:id/delivered",
-  protect,
-  asyncHandler(async (req, res) => {
-    const order = await Order.findById(req.params.id);
+    '/:id/delivered',
+    protect,
+    asyncHandler(async (req, res) => {
+        const order = await Order.findById(req.params.id);
 
-    if (order) {
-      order.isDelivered = true;
-      order.deliveredAt = Date.now();
+        if (order) {
+            order.isDelivered = true;
+            order.deliveredAt = Date.now();
 
-      const updatedOrder = await order.save();
-      res.json(updatedOrder);
-    } else {
-      res.status(404);
-      throw new Error("Order Not Found");
-    }
-  })
+            const updatedOrder = await order.save();
+            res.json(updatedOrder);
+        } else {
+            res.status(404);
+            throw new Error('Order Not Found');
+        }
+    }),
 );
 
 orderRouter.put(
-  "/:id/paid",
-  protect,
-  asyncHandler(async (req, res) => {
-    const order = await Order.findById(req.params.id);
+    '/:id/paid',
+    protect,
+    asyncHandler(async (req, res) => {
+        const order = await Order.findById(req.params.id);
 
-    if (order) {
-      order.isPaid = true;
-      order.deliveredAt = Date.now();
+        if (order) {
+            order.isPaid = true;
+            order.deliveredAt = Date.now();
 
-      const updatedOrder = await order.save();
-      res.json(updatedOrder);
-    } else {
-      res.status(404);
-      throw new Error("Order Not Found");
-    }
-  })
+            const updatedOrder = await order.save();
+            res.json(updatedOrder);
+        } else {
+            res.status(404);
+            throw new Error('Order Not Found');
+        }
+    }),
 );
 
 orderRouter.get(
-  "/:id/address",
-  protect,
-  asyncHandler(async (req, res) => {
-    const order = await Order.find({ user: req.params.id })
+    '/:id/address',
+    protect,
+    asyncHandler(async (req, res) => {
+        const order = await Order.find({ user: req.params.id });
 
-    if (order) {
-      res.json(order[order.length - 1].shippingAddress);
-    } else {
-      res.status(404);
-      throw new Error("Not found order of user");
-    }
-  })
+        if (order) {
+            res.json(order[order.length - 1].shippingAddress);
+        } else {
+            res.status(404);
+            throw new Error('Not found order of user');
+        }
+    }),
 );
-
-
-
 
 export default orderRouter;
