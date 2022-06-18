@@ -9,7 +9,7 @@ const cartRoutes = express.Router();
 cartRoutes.get(
     '/:id',
     asyncHandler(async (req, res) => {
-        const cart = await Cart.findOne({ user: req.params.id });
+        const cart = await Cart.findOne({ user: req.params.id }).populate('product');
         if (cart) {
             res.json(cart.cartItems);
         } else {
