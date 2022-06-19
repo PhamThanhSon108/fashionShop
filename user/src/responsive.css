@@ -3,6 +3,14 @@
         display: none;
     }
 }
+@media (min-width: 992px) {
+    .fix-bottom {
+        margin-bottom: 0 !important;
+    }
+    .fix-padding {
+        padding: 0 !important;
+    }
+}
 @media (max-width: 1200px) {
     .slider-image {
         height: 350px !important;
@@ -49,7 +57,7 @@
         font-size: 12px;
     }
     .order-detail {
-        padding: 20px 0;
+        padding: 10px 0;
     }
     .order-detail h5 {
         font-size: 13px;
@@ -154,7 +162,7 @@
         display: none;
     }
     .order-detail {
-        margin-top: 20px;
+        margin-top: 10px;
     }
     .header {
         padding: 10px 0 20px 0;
@@ -320,5 +328,13 @@
     .quantity-css h6 {
         height: 30px;
         line-height: 50px;
+    }
+    .pay-button {
+        position: relative;
+    }
+    .fix-right {
+        display: flex;
+        justify-content: right;
+        padding: 0;
     }
 }
