@@ -15,7 +15,6 @@ const CartScreen = ({ match, location, history }) => {
 
     const cartDel = useSelector((state) => state.cartDelete);
     const { loading: loa, success: suc, mesage: mes } = cartDel;
-
     const cartCreate = useSelector((state) => state.cartCreate);
     const { loading: loadingCreate, success: successCreate } = cartCreate;
     const total = cartItems
