@@ -904,6 +904,9 @@ textarea:focus {
 .order-detail h5 {
     margin-bottom: 6px;
 }
+.table td {
+    border-bottom: none;
+}
 .order-box {
     border-radius: 50%;
     width: 50px;
@@ -1414,8 +1417,11 @@ textarea:focus {
 /* .modal-backdrop.show {
   opacity: 0;
 } */
-.pay-button {
-    position: absolute;
-    bottom: 0;
-    right: 10px;
+
+.fix-right {
+    display: flex;
+    justify-content: right;
+    padding: 0;
+    padding-right: 10px;
+    align-items: center;
 }

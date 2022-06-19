@@ -337,4 +337,13 @@
         justify-content: right;
         padding: 0;
     }
+    .fix-none {
+        display: none;
+    }
+    .fix-display {
+        display: flex;
+    }
+    .fix-display p {
+        padding-right: 10px;
+    }
 }

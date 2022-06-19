@@ -41,7 +41,7 @@ const PlaceOrderScreen = ({ history }) => {
             .reduce((a, i) => a + i.qty * i.product.price, 0)
             .toFixed(2),
     );
-    cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 0 : 20);
+    cart.shippingPrice = addDecimals(cart.itemsPrice > 0 ? (cart.itemsPrice > 100 ? 0 : 20) : 0);
     cart.taxPrice = addDecimals(Number((0.15 * cart.itemsPrice).toFixed(2)));
     cart.totalPrice =
         cart?.cartItems.length > 0
@@ -86,15 +86,12 @@ const PlaceOrderScreen = ({ history }) => {
                 <div className="row  order-detail">
                     <div className="col-lg-4 col-sm-4 mb-lg-4 mb-2 mb-sm-0 fix-bottom">
                         <div className="row " style={{ display: 'flex', alignItems: 'center' }}>
-                            <div className="col-md-2 center">
-                                <div className="alert-success order-box">
+                            <div className="col-lg-3 col-sm-3 mb-lg-3 center fix-bottom">
+                                <div className="alert-success order-box fix-none">
                                     <i class="fas fa-user"></i>
                                 </div>
                             </div>
-                            <div className="col-md-10 center">
-                                {/* <h5>
-                                    <strong>Customer</strong>
-                                </h5> */}
+                            <div className="col-lg-9 col-sm-9 mb-lg-9 fix-display">
                                 <p>{`Name: ${userInfo.name}`}</p>
                                 <p>{`Phone: ${userInfo.phone}`}</p>
                             </div>
@@ -106,40 +103,30 @@ const PlaceOrderScreen = ({ history }) => {
                             className="row"
                             style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-around' }}
                         >
-                            <div className="col-md-2 center">
-                                <div className="alert-success order-box">
+                            <div className="col-lg-3 col-sm-3 mb-lg-3 center fix-bottom">
+                                <div className="alert-success order-box fix-none">
                                     <i className="fas fa-map-marker-alt"></i>
                                 </div>
                             </div>
-                            <div className="col-md-10 center">
-                                {/* <h5>
-                                    <strong>Order info</strong>
-                                </h5> */}
+                            <div className="col-lg-9 col-sm-9 mb-lg-9">
                                 <p>
                                     Address:{' '}
                                     {`${cart.shippingAddress.city}, ${cart.shippingAddress.address}, ${cart.shippingAddress.country}`}
                                 </p>
-                                {/* <p>Pay method: {cart.paymentMethod}</p> */}
                             </div>
                         </div>
                     </div>
                     {/* 3 */}
                     <div className="col-lg-4 col-sm-4 mb-lg-4 mb-2 mb-sm-0 fix-bottom">
                         <div className="row" style={{ display: 'flex', alignItems: 'center' }}>
-                            <div className="col-md-2 center">
-                                <div className="alert-success order-box">
+                            <div className="col-lg-3 col-sm-3 mb-lg-3 center fix-bottom">
+                                <div className="alert-success order-box fix-none">
                                     <i class="fab fa-paypal"></i>
                                 </div>
                             </div>
-                            <div className="col-md-10 center">
-                                {/* <h5>
-                                    <strong>Deliver to</strong>
-                                </h5> */}
+                            <div className="col-lg-9 col-sm-9 mb-lg-9">
                                 <p>
                                     <p>Pay method: {cart.paymentMethod}</p>
-                                    {/* Address: {cart.shippingAddress.city}, {cart.shippingAddress.address} */}
-                                    {/* ,{' '}
-                                    {cart.shippingAddress.postalCode} */}
                                 </p>
                             </div>
                         </div>
@@ -152,25 +139,6 @@ const PlaceOrderScreen = ({ history }) => {
                             <Message variant="alert-info mt-5">Your cart is empty</Message>
                         ) : (
                             <>
-<<<<<<< HEAD
-                                {cart.cartItems.map((item, index) => (
-                                    <div className="order-product row" key={index}>
-                                        <div className="col-md-3 col-6">
-                                            <img src={item.product.image} alt={item.product.name} />
-                                        </div>
-                                        <div className="col-md-5 col-6 d-flex align-items-center">
-                                            <Link to={`/products/${item.product}`}>
-                                                <h6>{item.product.name}</h6>
-                                            </Link>
-                                        </div>
-                                        <div className="mt-3 mt-md-0 col-md-2 col-6  d-flex align-items-center flex-column justify-content-center ">
-                                            <h4>QUANTITY</h4>
-                                            <h6>{item.qty}</h6>
-                                        </div>
-                                        <div className="mt-3 mt-md-0 col-md-2 col-6 align-items-end  d-flex flex-column justify-content-center ">
-                                            <h4>SUBTOTAL</h4>
-                                            <h6>${item.qty * item.product.price}</h6>
-=======
                                 {cart.cartItems
                                     .filter((item) => item.isBuy == true)
                                     .map((item, index) => (
@@ -191,7 +159,6 @@ const PlaceOrderScreen = ({ history }) => {
                                                 <h4>SUBTOTAL</h4>
                                                 <h6>${item.qty * item.product.price}</h6>
                                             </div>
->>>>>>> f3c7627cf13e973d47f1aef19d33339ff65176cc
                                         </div>
                                     ))}
                             </>
@@ -200,28 +167,25 @@ const PlaceOrderScreen = ({ history }) => {
                 </div>
                 <div className="row" style={{ padding: '10px 0', backgroundColor: '#fff', marginTop: '10px' }}>
                     {/* total */}
-                    <div className="col-lg-6 d-flex align-items-end flex-column subtotal-order">
-                        <table className="table table-bordered fix-bottom">
+                    <div className="col-lg-12 d-flex align-items-end flex-column subtotal-order">
+                        <table className="table fix-bottom">
                             <tbody>
                                 <tr>
                                     <td>
                                         <strong>Products</strong>
                                     </td>
                                     <td>${cart.itemsPrice}</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <strong>Shipping</strong>
-                                    </td>
-                                    <td>${cart.shippingPrice}</td>
-                                </tr>
-                                <tr>
                                     <td>
                                         <strong>Tax</strong>
                                     </td>
                                     <td>${cart.taxPrice}</td>
                                 </tr>
                                 <tr>
+                                    <td>
+                                        <strong>Shipping</strong>
+                                    </td>
+                                    <td>${cart.shippingPrice}</td>
+
                                     <td>
                                         <strong>Total</strong>
                                     </td>
@@ -230,7 +194,15 @@ const PlaceOrderScreen = ({ history }) => {
                             </tbody>
                         </table>
                     </div>
-                    <div className="col-lg-6 fix-right" style={{ position: 'relative' }}>
+                </div>
+                <div className="row" style={{ padding: '10px 0', backgroundColor: '#fff', marginTop: '10px' }}>
+                    {error && (
+                        <div className="">
+                            <Message variant="alert-danger">{error}</Message>
+                        </div>
+                    )}
+                    <div className="col-lg-12 fix-right">
+                        <div style={{ fontWeight: '600', paddingRight: '10px' }}>Total: ${cart.totalPrice}</div>
                         {cart.cartItems.length === 0 ? null : (
                             <button
                                 type="submit"
@@ -242,11 +214,6 @@ const PlaceOrderScreen = ({ history }) => {
                             >
                                 PLACE ORDER
                             </button>
-                        )}
-                        {error && (
-                            <div className="my-3 col-12">
-                                <Message variant="alert-danger">{error}</Message>
-                            </div>
                         )}
                     </div>
                 </div>
