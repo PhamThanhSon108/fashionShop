@@ -126,7 +126,7 @@ const CartScreen = ({ match, location, history }) => {
                                             <h4>{item.product.name}</h4>
                                         </Link>
                                     </div>
-                                    <div className="cart-qty col-md-2 col-sm-5 mt-3 mt-md-0 d-flex flex-column justify-content-center">
+                                    <div className="cart-qty col-md-2 col-sm-5 mt-3 mt-md-0 d-flex flex-column justify-content-center quantity-css">
                                         <h6>QUANTITY</h6>
                                         <select
                                             disabled={item.product.countInStock <= 0}
@@ -142,7 +142,7 @@ const CartScreen = ({ match, location, history }) => {
                                             ))}
                                         </select>
                                     </div>
-                                    <div className="cart-price mt-3 mt-md-0 col-md-2 align-items-sm-end align-items-start  d-flex flex-column justify-content-center col-sm-7">
+                                    <div className="cart-price mt-3 mt-md-0 col-md-2 align-items-sm-end align-items-start  d-flex flex-column justify-content-center col-sm-7 quantity-css">
                                         <h6>PRICE</h6>
                                         <h4>${item.product.price}</h4>
                                     </div>
