@@ -18,9 +18,15 @@ const CartScreen = ({ match, location, history }) => {
 
     const cartCreate = useSelector((state) => state.cartCreate);
     const { loading: loadingCreate, success: successCreate } = cartCreate;
-    const total = cartItems ? cartItems.reduce((a, i) => a + i.qty * i.product.price, 0).toFixed(2) : 0;
+    const total = cartItems
+        ? cartItems
+              .filter((item) => item.isBuy == true)
+              .reduce((a, i) => a + i.qty * i.product.price, 0)
+              .toFixed(2)
+        : 0;
     const userLogin = useSelector((state) => state.userLogin);
     const { userInfo } = userLogin;
+    let currentChooseProduct = [];
     // useEffect(() => {
     //   if (productId) {
     //     console.log("1use")
@@ -90,8 +96,19 @@ const CartScreen = ({ match, location, history }) => {
                                                 type="checkbox"
                                                 checked={item.isBuy}
                                                 onChange={(e) => {
-                                                    console.log(e.target.value);
-                                                    dispatch(addToCart(item.product._id, e.target.value, userInfo._id));
+                                                    dispatch(addToCart(item.product._id, true, userInfo._id));
+                                                    // let check = -1;
+                                                    // if (
+                                                    //     currentChooseProduct.find((pr, i) => {
+                                                    //         check = i;
+                                                    //         return pr.product._id === item.product._id;
+                                                    //     })
+                                                    // ) {
+                                                    //     currentChooseProduct.splice(check, 1);
+                                                    // } else {
+                                                    //     currentChooseProduct.push(item);
+                                                    // }
+                                                    // console.log(currentChooseProduct, 'Hi');
                                                 }}
                                             ></input>
                                         </div>

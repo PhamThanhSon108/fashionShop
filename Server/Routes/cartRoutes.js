@@ -32,8 +32,11 @@ cartRoutes.post(
             if (productExit) {
                 const newArray = cartExist.cartItems;
                 for (let i = 0; i <= newArray.length - 1; i++) {
-                    if (newArray[i].product == productId) {
+                    if (newArray[i].product == productId && typeof qty != 'boolean') {
                         newArray[i].qty = qty;
+                    }
+                    if (newArray[i].product == productId && typeof qty == 'boolean') {
+                        newArray[i].isBuy = !newArray[i].isBuy;
                     }
                 }
                 cartExist.cartItems = newArray;
@@ -44,11 +47,11 @@ cartRoutes.post(
             }
             const cartadd = {
                 product: productId,
-                name: product.name,
-                image: product.image,
-                price: product.price,
+                // name: product.name,
+                // image: product.image,
+                // price: product.price,
                 qty: qty,
-                countInStock: product.countInStock,
+                // countInStock: product.countInStock,
             };
             cartExist.cartItems.push(cartadd);
             await cartExist.save();

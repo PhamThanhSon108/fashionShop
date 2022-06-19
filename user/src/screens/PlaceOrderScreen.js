@@ -14,6 +14,19 @@ const PlaceOrderScreen = ({ history }) => {
     const dispatch = useDispatch();
     const cart = useSelector((state) => state.cart);
     const { cartItems } = cart;
+    const currenCartItems = cartItems
+        .filter((item) => item.isBuy == true)
+        .reduce((arr, pro) => {
+            arr.push({
+                name: pro.product.name,
+                qty: pro.qty,
+                image: pro.product.image,
+                price: pro.product.price,
+                product: pro.product._id,
+            });
+            return arr;
+        }, []);
+    console.log(currenCartItems, 'curendcart');
     const userLogin = useSelector((state) => state.userLogin);
     const { userInfo } = userLogin;
 
@@ -22,7 +35,12 @@ const PlaceOrderScreen = ({ history }) => {
         return (Math.round(num * 100) / 100).toFixed(2);
     };
     console.log(cart);
-    cart.itemsPrice = addDecimals(cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0));
+    cart.itemsPrice = addDecimals(
+        cart.cartItems
+            .filter((item) => item.isBuy == true)
+            .reduce((a, i) => a + i.qty * i.product.price, 0)
+            .toFixed(2),
+    );
     cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 0 : 20);
     cart.taxPrice = addDecimals(Number((0.15 * cart.itemsPrice).toFixed(2)));
     cart.totalPrice =
@@ -43,7 +61,7 @@ const PlaceOrderScreen = ({ history }) => {
         //if (window.confirm("Are you sure"))
         dispatch(
             createOrder({
-                orderItems: cart.cartItems,
+                orderItems: currenCartItems,
                 shippingAddress: cart.shippingAddress,
                 paymentMethod: cart.paymentMethod,
                 itemsPrice: cart.itemsPrice,
@@ -134,6 +152,7 @@ const PlaceOrderScreen = ({ history }) => {
                             <Message variant="alert-info mt-5">Your cart is empty</Message>
                         ) : (
                             <>
+<<<<<<< HEAD
                                 {cart.cartItems.map((item, index) => (
                                     <div className="order-product row" key={index}>
                                         <div className="col-md-3 col-6">
@@ -151,9 +170,30 @@ const PlaceOrderScreen = ({ history }) => {
                                         <div className="mt-3 mt-md-0 col-md-2 col-6 align-items-end  d-flex flex-column justify-content-center ">
                                             <h4>SUBTOTAL</h4>
                                             <h6>${item.qty * item.product.price}</h6>
+=======
+                                {cart.cartItems
+                                    .filter((item) => item.isBuy == true)
+                                    .map((item, index) => (
+                                        <div className="order-product row" key={index}>
+                                            <div className="col-md-3 col-6">
+                                                <img src={item.product.image} alt={item.name} />
+                                            </div>
+                                            <div className="col-md-5 col-6 d-flex align-items-center">
+                                                <Link to={`/products/${item.product}`}>
+                                                    <h6>{item.product.name}</h6>
+                                                </Link>
+                                            </div>
+                                            <div className="mt-3 mt-md-0 col-md-2 col-6  d-flex align-items-center flex-column justify-content-center ">
+                                                <h4>QUANTITY</h4>
+                                                <h6>{item.qty}</h6>
+                                            </div>
+                                            <div className="mt-3 mt-md-0 col-md-2 col-6 align-items-end  d-flex flex-column justify-content-center ">
+                                                <h4>SUBTOTAL</h4>
+                                                <h6>${item.qty * item.product.price}</h6>
+                                            </div>
+>>>>>>> f3c7627cf13e973d47f1aef19d33339ff65176cc
                                         </div>
-                                    </div>
-                                ))}
+                                    ))}
                             </>
                         )}
                     </div>
