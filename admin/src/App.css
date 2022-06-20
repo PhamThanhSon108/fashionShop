@@ -926,3 +926,6 @@ ul.row-sm {
 .border-red {
     border: 1px solid red;
 }
+.fix-bottom {
+    margin-bottom: 0px !important;
+}

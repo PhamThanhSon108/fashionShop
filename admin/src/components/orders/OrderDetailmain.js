@@ -28,11 +28,15 @@ const OrderDetailmain = (props) => {
     }, [dispatch, orderId, successDelivered, successPaid]);
 
     const deliverHandler = () => {
-        dispatch(deliverOrder(order));
+        if (window.confirm('Are you sure??')) {
+            dispatch(deliverOrder(order));
+        }
     };
 
     const paidHandler = () => {
-        dispatch(paidOrder(order));
+        if (window.confirm('Are you sure??')) {
+            dispatch(paidOrder(order));
+        }
     };
 
     return (
@@ -85,20 +89,24 @@ const OrderDetailmain = (props) => {
                             </div>
                             {/* Payment Info */}
                             <div className="col-lg-3">
-                                <div className="box shadow-sm bg-light">
+                                <div className="shadow-sm bg-light">
                                     {order.isDelivered ? (
-                                        <button className="btn btn-success col-12">
-                                            DELIVERED AT ( {moment(order.isDeliveredAt).format('MMM Do YY')})
+                                        <button className="btn btn-success col-12" style={{ marginBottom: '15px' }}>
+                                            START DELIVERY ( {moment(order.isDeliveredAt).format('MMM Do YY')})
                                         </button>
                                     ) : (
                                         <>
                                             {loadingDelivered && <Loading />}
-                                            <button onClick={deliverHandler} className="btn btn-dark col-12">
+                                            <button
+                                                onClick={deliverHandler}
+                                                className="btn btn-dark col-12"
+                                                style={{ marginBottom: '15px' }}
+                                            >
                                                 CONFIRM AND DELIVERY
                                             </button>
                                         </>
                                     )}
-                                    <div>MARK</div>
+
                                     {order.isPaid ? (
                                         <button className="btn btn-success col-12">
                                             PAID AT ( {moment(order.isDeliveredAt).format('MMM Do YY')})
