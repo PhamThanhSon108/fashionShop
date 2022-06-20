@@ -3,7 +3,7 @@ import asyncHandler from 'express-async-handler';
 import Product from './../Models/ProductModel.js';
 import { admin, protect } from './../Middleware/AuthMiddleware.js';
 import Category from '../Models/CategoryModel.js';
-
+import Order from './../Models/OrderModel.js';
 const productRoute = express.Router();
 
 // GET PRODUCT
@@ -73,7 +73,11 @@ productRoute.post(
     asyncHandler(async (req, res) => {
         const { rating, comment } = req.body;
         const product = await Product.findById(req.params.id);
-
+        const order = await Order.findOne({ user: req.user._id });
+        if (!order || !!order?.orderItems.find((i) => i.product == req.params.id) || order?.isPaid != true) {
+            res.status(400);
+            throw new Error('Can not review!');
+        }
         if (product) {
             const alreadyReviewed = product.reviews.find((r) => r.user.toString() === req.user._id.toString());
             if (alreadyReviewed) {
