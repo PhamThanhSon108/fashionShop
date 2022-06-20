@@ -69,6 +69,7 @@ const PlaceOrderScreen = ({ history }) => {
                 shippingPrice: cart.shippingPrice,
                 taxPrice: cart.taxPrice,
                 totalPrice: cart.totalPrice,
+                phone: userInfo.phone,
             }),
         );
         dispatch(clearFromCart(userInfo._id));

@@ -225,7 +225,7 @@ const SingleProduct = ({ history, match }) => {
                                                         <Link to="/login">
                                                             " <strong>Login</strong> "
                                                         </Link>{' '}
-                                                        to write a review{' '}
+                                                        and buy this product to write a review{' '}
                                                     </Message>
                                                 </div>
                                             )}
