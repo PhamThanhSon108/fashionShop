@@ -26,7 +26,7 @@ const PlaceOrderScreen = ({ history }) => {
             });
             return arr;
         }, []);
-    console.log(currenCartItems, 'curendcart');
+
     const userLogin = useSelector((state) => state.userLogin);
     const { userInfo } = userLogin;
 
@@ -51,6 +51,7 @@ const PlaceOrderScreen = ({ history }) => {
     const orderCreate = useSelector((state) => state.orderCreate);
     const { order, success, error } = orderCreate;
     useEffect(() => {
+        // dispatch(listCart());
         if (success) {
             history.push(`/order/${order._id}`);
             dispatch({ type: ORDER_CREATE_RESET });
@@ -111,7 +112,7 @@ const PlaceOrderScreen = ({ history }) => {
                             <div className="col-lg-9 col-sm-9 mb-lg-9">
                                 <p>
                                     Address:{' '}
-                                    {`${cart.shippingAddress.city}, ${cart.shippingAddress.address}, ${cart.shippingAddress.country}`}
+                                    {`${cart.shippingAddress?.city}, ${cart.shippingAddress?.address}, ${cart.shippingAddress?.country}`}
                                 </p>
                             </div>
                         </div>
@@ -136,7 +137,7 @@ const PlaceOrderScreen = ({ history }) => {
                 <div className="row order-products justify-content-between">
                     <div className="col-lg-12 fix-padding cart-scroll">
                         {cart.cartItems.length === 0 ? (
-                            <Message variant="alert-info mt-5">Your cart is empty</Message>
+                            <Message variant="alert-info mt-5">No product is selected</Message>
                         ) : (
                             <>
                                 {cart.cartItems
