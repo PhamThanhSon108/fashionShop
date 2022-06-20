@@ -23,6 +23,8 @@ const MainProducts = () => {
         }
     };
     handleFilter();
+    // console.log(products);
+    // console.log(productss);
     const productDelete = useSelector((state) => state.productDelete);
     const { error: errorDelete, success: successDelete } = productDelete;
     //category
@@ -33,9 +35,9 @@ const MainProducts = () => {
         dispatch(ListCategory());
     }, [dispatch, successDelete]);
 
-    const handleSearch = (e) => {
-        e.preventDefault();
-    };
+    // const handleSearch = (e) => {
+    //     e.preventDefault();
+    // };
     return (
         <section className="content-main">
             <div className="content-header">
@@ -50,11 +52,11 @@ const MainProducts = () => {
             <div className="card mb-4 shadow-sm">
                 <header className="card-header bg-white ">
                     <div className="row gx-3 py-3">
-                        <div className="col-lg-4 col-md-6 me-auto ">
+                        {/* <div className="col-lg-4 col-md-6 me-auto ">
                             <form onSubmit={handleSearch}>
                                 <input type="search" placeholder="Search..." className="form-control p-2" />
                             </form>
-                        </div>
+                        </div> */}
                         <div className="col-lg-2 col-6 col-md-3">
                             <select
                                 className="form-select"
