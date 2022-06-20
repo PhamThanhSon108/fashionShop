@@ -36,7 +36,7 @@ import { logout } from './userActions';
 // };
 export const listCart = () => async (dispatch, getState) => {
     try {
-        // dispatch({ type: CART_LIST_REQUEST });
+        dispatch({ type: CART_LIST_REQUEST });
 
         const {
             userLogin: { userInfo },
