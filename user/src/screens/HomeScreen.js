@@ -12,15 +12,18 @@ import CorouselOder from "../components/SlideCorousel/CourouselOder";
 const HomeScreen = ({ match }) => {
   window.scrollTo(0, 0);
   const keyword = match.params.keyword;
-  const pagenumber = match.params.pagenumber;
+  const pageNumber = match.params.pageNumber;
+  const category = match.params.category;
+
   return (
     <div>
       <Header />
       {/* <Silder /> */}
-      <Sliders />
-      <Corousel />
-      <CorouselOder />
-      <ShopSection keyword={keyword} pagenumber={pagenumber} />
+      {(!keyword&&!category)?<Sliders />:""}
+      {(!keyword&&!category)?<Corousel />:""}
+      {(!keyword&&!category)?<CorouselOder />:""}
+      
+      <ShopSection category={category} keyword={keyword} pageNumber={pageNumber} />
 
       <CalltoActionSection />
       <ContactInfo />

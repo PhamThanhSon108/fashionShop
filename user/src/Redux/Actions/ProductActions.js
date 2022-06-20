@@ -39,12 +39,12 @@ export const ListProductAll =
 
 // PRODUCT LIST
 export const listProduct =
-  (keyword = " ", pageNumber = " ") =>
+  (category = "", keyword = "", pageNumber = "", rating = "",minPrice="",maxPrice="") =>
   async (dispatch) => {
     try {
       dispatch({ type: PRODUCT_LIST_REQUEST });
       const { data } = await axios.get(
-        `/api/products?keyword=${keyword}&pageNumber=${pageNumber}`
+        `/api/products?&category=${category}&keyword=${keyword}&pageNumber=${pageNumber}&rating=${rating}&minPrice=${minPrice}&maxPrice=${maxPrice}`
       );
       dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
     } catch (error) {
@@ -58,6 +58,7 @@ export const listProduct =
       });
     }
   };
+
 
 // SINGLE PRODUCT
 export const listProductDetails = (id) => async (dispatch) => {

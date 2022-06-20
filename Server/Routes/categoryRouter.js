@@ -1,92 +1,95 @@
-import express from "express";
-import Category from "./../Models/CategoryModel.js";
-import { admin, protect } from "./../Middleware/AuthMiddleware.js";
-import asyncHandler from "express-async-handler";
-import Product from "../Models/ProductModel.js";
+import express from 'express';
+import Category from './../Models/CategoryModel.js';
+import { admin, protect } from './../Middleware/AuthMiddleware.js';
+import asyncHandler from 'express-async-handler';
+import Product from '../Models/ProductModel.js';
 const CategoryRouter = express.Router();
 
 CategoryRouter.get(
-    "/",
-    protect,
+    '/',
+    //protect,
     asyncHandler(async (req, res) => {
         const categories = await Category.find({}).sort({ _id: -1 });
         if (categories) {
             res.json(categories);
         } else {
             res.status(404);
-            throw new Error("Category not Found");
+            throw new Error('Category not Found');
         }
-    }
-    ))
- CategoryRouter.delete(
-    "/:id",
+    }),
+);
+CategoryRouter.delete(
+    '/:id',
     // admin,
     // protect,
     asyncHandler(async (req, res) => {
-        const categories = await Category.findById(req.params.id)
+        const categories = await Category.findById(req.params.id);
         if (categories) {
-            const cateInProduct = await Product.findOne({category: categories._id })
-            if(cateInProduct) {
-                 res.status(404);
-                 throw new Error("Exit products of category");
+            const cateInProduct = await Product.findOne({ category: categories._id });
+            if (cateInProduct) {
+                res.status(404);
+                throw new Error('Exit products of category');
             }
-            await categories.remove()
-            res.json({message: "Category deleted"})
+            await categories.remove();
+            res.json({ message: 'Category deleted' });
         } else {
             res.status(404);
-            throw new Error("Can delete category");
+            throw new Error('Can delete category');
         }
-    }
-    ))
-export default CategoryRouter
+    }),
+);
+export default CategoryRouter;
 
 CategoryRouter.post(
-    "/",
-  protect,
-  asyncHandler(async (req, res) => {
-    const { name, image, description } = req.body;
-    const category = await Category.findOne({name: name.trim() });
+    '/',
+    protect,
+    asyncHandler(async (req, res) => {
+        const { name, image, description } = req.body;
+        const category = await Category.findOne({ name: name.trim() });
 
-    if (category) {
-        res.status(404);
-      throw new Error("This category already exists");
-    }
-     
-    const newCategory = new Category({
-        name : name.trim(),
-        image : image.trim(),
-        description: description.trim()
-    })
-      await newCategory.save();
-      res.status(201).json({ message: "Category Added" });
-  })
+        if (category) {
+            res.status(404);
+            throw new Error('This category already exists');
+        }
+
+        const newCategory = new Category({
+            name: name.trim(),
+            image: image.trim(),
+            description: description.trim(),
+        });
+        await newCategory.save();
+        res.status(201).json({ message: 'Category Added' });
+    }),
 );
 CategoryRouter.put(
     '/',
     protect,
-    asyncHandler(async (req, res)=> {
-        const {idCategory,name,image,description} = req.body;
-        const exitCategory = await Category.findOne({name: name.trim()})
-        const oldCategory = await Category.findById(idCategory.trim())
-        if(oldCategory.name === name.trim() &&  oldCategory.image === image && oldCategory.description === description) {
+    asyncHandler(async (req, res) => {
+        const { idCategory, name, image, description } = req.body;
+        const exitCategory = await Category.findOne({ name: name.trim() });
+        const oldCategory = await Category.findById(idCategory.trim());
+        if (
+            oldCategory.name === name.trim() &&
+            oldCategory.image === image &&
+            oldCategory.description === description
+        ) {
             res.status(404);
-            throw new Error("No thing to update")
+            throw new Error('No thing to update');
         }
-        if(exitCategory) {
+        if (exitCategory) {
             res.status(404);
-            throw new Error("Category already exists")
-            
+            throw new Error('Category already exists');
         }
-        if(oldCategory) {
-            oldCategory.name = name || oldCategory.name
-            oldCategory.image = image || oldCategory.image
-            oldCategory.description = description || oldCategory.description
-        const updateCategory = await oldCategory.save();
+        if (oldCategory) {
+            oldCategory.name = name || oldCategory.name;
+            oldCategory.image = image || oldCategory.image;
+            oldCategory.description = description || oldCategory.description;
+            const updateCategory = await oldCategory.save();
 
-        res.json(updateCategory)}
-        else {
+            res.json(updateCategory);
+        } else {
             res.status(404);
-            throw new Error("Update category fail")
+            throw new Error('Update category fail');
         }
-    })
-)
+    }),
+);

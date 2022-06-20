@@ -1,24 +1,30 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
+import { ListCategory } from '../Redux/Actions/categoryActions';
+import { listProduct } from '../Redux/Actions/ProductActions';
 
 export default function NavBar({ onRemove }) {
+    let history = useHistory();
+    const dispatch = useDispatch();
+
+    const lcategories = useSelector((state) => state.CategoryList);
+    const { categories } = lcategories;
+    
+    useEffect(() => {
+        dispatch(ListCategory());
+    }, []);
     return (
-        < >
+        <>
             {/* Pc-navbar */}
+
             <div className="navbar-menu">
                 <ul className="navbar-list">
-                    <li className="navbar-list__li">
-                        <Link to={'#'}>Dress</Link>
-                    </li>
-                    <li className="navbar-list__li">
-                        <Link to={'#'}>Shirt Men</Link>
-                    </li>
-                    <li className="navbar-list__li">
-                        <Link to={'#'}>Shirt Woman</Link>
-                    </li>
-                    <li className="navbar-list__li">
-                        <Link to={'#'}>Prant</Link>
-                    </li>
+                    {categories.map((category) => (
+                        <li className="navbar-list__li">
+                            <Link to={`/category/${category._id}`}>{category.name}</Link>
+                        </li>
+                    ))}
                 </ul>
             </div>
             {/* tablet-mobile modal */}
@@ -29,18 +35,11 @@ export default function NavBar({ onRemove }) {
                         <img src="/images/logo.png"></img>
                     </div>
                     <ul className="modal-nav__list">
-                        <li className="modal-nav__li">
-                            <Link to={'#'}>Dress</Link>
-                        </li>
-                        <li className="modal-nav__li">
-                            <Link to={'#'}>Shirt Men</Link>
-                        </li>
-                        <li className="modal-nav__li">
-                            <Link to={'#'}>Shirt Woman</Link>
-                        </li>
-                        <li className="modal-nav__li">
-                            <Link to={'#'}>Prant</Link>
-                        </li>
+                        {categories.map((category) => (
+                            <li className="navbar-list__li">
+                                <label>{category.name}</label>
+                            </li>
+                        ))}
                     </ul>
                     <div className="modal-icon" onClick={onRemove}>
                         <i class="fas fa-times-circle"></i>
@@ -48,5 +47,5 @@ export default function NavBar({ onRemove }) {
                 </div>
             </div>
         </>
-    )
+    );
 }
