@@ -112,13 +112,16 @@ cartRoutes.delete(
     protect,
     // admin,
     asyncHandler(async (req, res) => {
-        const cart = await Cart.findOne({ user: req.params.id });
+        const cart = await Cart.findOne({ user: req.user._id });
         if (cart) {
-            await cart.remove();
-            res.json({ message: 'Cart deleted' });
+            for (let i = 0; i <= cart.cartItems.length - 1; i++) {
+                cart.cartItems[i].isBuy = false;
+            }
+            await cart.save();
+            res.json({ message: 'Cart clear' });
         } else {
             res.status(404);
-            throw new Error('Product not Found');
+            throw new Error('Can not clear this cart');
         }
     }),
 );
