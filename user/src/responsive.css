@@ -257,6 +257,15 @@
     /* .cart-scroll {
         max-height: 66.5vh;
     } */
+    .fix-none {
+        display: none;
+    }
+    .fix-display {
+        display: flex;
+    }
+    .fix-display p {
+        padding-right: 10px;
+    }
 }
 @media (max-width: 450px) {
     .subscribe-head h2 {

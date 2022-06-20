@@ -16,13 +16,13 @@ const Product = (props) => {
 
     return (
         <>
-            <div className="col-md-4 col-sm-4 col-lg-2-5 mb-5">
-                <div className="card card-product-grid shadow-sm">
+            <div className="col-md-4 col-sm-4 col-lg-2-5 mb-5 fix-bottom">
+                <div className="card card-product-grid">
                     <Link to="#" className="img-wrap">
                         <img src={product.image} alt="Product" />
                     </Link>
                     <div className="info-wrap">
-                        <Link to="#" className="title text-truncate" style={{ color: '#121112', padding: '5px 0' }}>
+                        <Link to="#" className="title text-truncate" style={{ color: 'black', padding: '5px 0' }}>
                             {product.name}
                         </Link>
                         <div
@@ -35,16 +35,20 @@ const Product = (props) => {
                         <div className="row">
                             <Link
                                 to={`/product/${product._id}/edit`}
-                                className="btn btn-sm btn-outline-success p-2 pb-3 col-md-6"
+                                className="btn btn-sm btn-outline-success col-md-6"
+                                style={{ fontSize: '18px', fontWeight: '600', padding: '8px' }}
                             >
-                                <i className="fas fa-pen"></i>
+                                {/* <i className="fas fa-pen"></i> */}
+                                Edit
                             </Link>
                             <Link
                                 to="#"
                                 onClick={() => deletehandler(product._id)}
-                                className="btn btn-sm btn-outline-danger p-2 pb-3 col-md-6"
+                                className="btn btn-sm btn-outline-danger col-md-6"
+                                style={{ fontSize: '18px', fontWeight: '600', padding: '8px' }}
                             >
-                                <i className="fas fa-trash-alt"></i>
+                                {/* <i className="fas fa-trash-alt"></i> */}
+                                Delete
                             </Link>
                         </div>
                     </div>

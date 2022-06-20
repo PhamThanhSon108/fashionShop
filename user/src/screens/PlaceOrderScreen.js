@@ -26,7 +26,6 @@ const PlaceOrderScreen = ({ history }) => {
             });
             return arr;
         }, []);
-
     const userLogin = useSelector((state) => state.userLogin);
     const { userInfo } = userLogin;
 
@@ -197,7 +196,10 @@ const PlaceOrderScreen = ({ history }) => {
                         </table>
                     </div>
                 </div>
-                <div className="row" style={{ padding: '10px 0', backgroundColor: '#fff', marginTop: '10px' }}>
+                <div
+                    className="row"
+                    style={{ padding: '10px 0', backgroundColor: '#fff', marginTop: '10px', marginBottom: '30px' }}
+                >
                     {error && (
                         <div className="">
                             <Message variant="alert-danger">{error}</Message>

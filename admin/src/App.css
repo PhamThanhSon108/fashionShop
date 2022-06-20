@@ -28,8 +28,11 @@ a.disabled {
     background-color: #1cb803 !important;
     border: 1px solid #ee2624 !important;
 }
-.Header-green {
-    background-color: #e6a331;
+.Header-white {
+    background-color: #fff;
+}
+.text-black {
+    color: rgba(0, 0, 0, 0.822) !important;
 }
 /* .screen-overlay {
   width: 0%;
@@ -922,4 +925,7 @@ ul.row-sm {
 }
 .border-red {
     border: 1px solid red;
+}
+.fix-bottom {
+    margin-bottom: 0px !important;
 }
