@@ -832,6 +832,7 @@ textarea:focus {
 .cart-buttons {
     padding: 20px 0;
     background-color: #fff;
+    margin-bottom: 30px;
 }
 .cart-buttons a button,
 .cart-buttons div button {
@@ -1424,4 +1425,17 @@ textarea:focus {
     padding: 0;
     padding-right: 10px;
     align-items: center;
+}
+.fix-padding {
+    padding: 0 !important;
+}
+.dropdown-menu {
+    background-color: #fff !important;
+}
+.dropdown-menu a {
+    color: black !important;
+}
+.dropdown-menu a:hover {
+    background-color: orangered !important;
+    color: #fff !important;
 }
