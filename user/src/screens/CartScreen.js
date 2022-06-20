@@ -25,7 +25,6 @@ const CartScreen = ({ match, location, history }) => {
         : 0;
     const userLogin = useSelector((state) => state.userLogin);
     const { userInfo } = userLogin;
-    let currentChooseProduct = [];
     // useEffect(() => {
     //   if (productId) {
     //     console.log("1use")
@@ -35,7 +34,6 @@ const CartScreen = ({ match, location, history }) => {
 
     //   // }, [dispatch, productId, qty]);
     // }, [dispatch, productId, qty]);
-    console.log(cartItems);
     const checkOutHandler = () => {
         history.push('/login?redirect=shipping');
     };
@@ -44,7 +42,6 @@ const CartScreen = ({ match, location, history }) => {
     }, [suc, successCreate]);
 
     const removeFromCartHandle = (id) => {
-        console.log(id);
         dispatch(removefromcart(id));
     };
     return (
