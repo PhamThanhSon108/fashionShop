@@ -29,12 +29,19 @@ const ProfileScreen = () => {
                 <div className="row align-items-start">
                     <div className="col-lg-4 p-0 ">
                         <div className="author-card pb-0">
-                            <div className="row fix-culum" style={{ display: 'flex', alignItems: 'center' }}>
+                            <div
+                                className="row fix-culum"
+                                style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                }}
+                            >
                                 <div className="col-md-4" style={{ marginTop: '12px' }}>
                                     <img
                                         src="./images/user.png"
                                         alt="userprofileimage"
                                         style={{ height: '100px', width: '100px' }}
+                                        className="fix-none"
                                     />
                                 </div>
                                 <div className="col-md-8">
@@ -47,7 +54,7 @@ const ProfileScreen = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="wizard pt-3 " style={{ marginTop: '10px' }}>
+                        <div className="wizard pt-3 fix-top" style={{ marginTop: '10px' }}>
                             <div class="d-flex align-items-start">
                                 <div
                                     class="nav align-items-start flex-column col-12 nav-pills me-3 "
@@ -64,11 +71,15 @@ const ProfileScreen = () => {
                                         role="tab"
                                         aria-controls="v-pills-home"
                                         aria-selected="true"
+                                        style={{ display: 'flex', alignItems: 'center' }}
                                     >
+                                        <div style={{ fontSize: '18px', paddingRight: '10px' }}>
+                                            <i class="fas fa-cogs"></i>
+                                        </div>
                                         Profile Settings
                                     </button>
                                     <button
-                                        class="nav-link d-flex justify-content-between"
+                                        class="nav-link d-flex"
                                         id="v-pills-profile-tab"
                                         data-bs-toggle="pill"
                                         data-bs-target="#v-pills-profile"
@@ -76,7 +87,11 @@ const ProfileScreen = () => {
                                         role="tab"
                                         aria-controls="v-pills-profile"
                                         aria-selected="false"
+                                        style={{ display: 'flex', alignItems: 'center' }}
                                     >
+                                        <div style={{ fontSize: '18px', paddingRight: '10px' }}>
+                                            <i class="fas fa-shopping-cart"></i>
+                                        </div>
                                         Orders List
                                         <span className="badge2">{orders ? orders.length : 0}</span>
                                     </button>

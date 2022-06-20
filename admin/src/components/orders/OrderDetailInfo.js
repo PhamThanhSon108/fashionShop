@@ -2,6 +2,7 @@ import React from 'react';
 
 const OrderDetailInfo = (props) => {
     const { order } = props;
+    console.log(order);
     return (
         <div className="row mb-5 order-info-wrap">
             <div className="col-md-6 col-lg-4">

@@ -1439,3 +1439,18 @@ textarea:focus {
     background-color: orangered !important;
     color: #fff !important;
 }
+.fix-culum {
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1.2px solid #53535321;
+}
+.fix-top {
+    padding-top: 0 !important;
+}
+.wizard .nav button {
+    border-top: none;
+    background-color: #f5f5f5 !important;
+}
+.alert-danger {
+    background-color: #f5f5f5 !important;
+}
