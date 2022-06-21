@@ -111,7 +111,7 @@ const ProfileTabs = () => {
         return true;
     }
     useEffect(() => {
-        dispatch(listCart());
+        // dispatch(listCart());
         if (!toast.isActive(toastId.current)) {
             if (updatesuccessPass === true) {
                 toastId.current = toast.success('Password Updated', Toastobjects);

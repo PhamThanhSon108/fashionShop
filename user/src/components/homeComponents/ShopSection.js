@@ -17,9 +17,9 @@ const ShopSection = (props) => {
     const productList = useSelector((state) => state.productList);
     const { loading, error, products, page, pages } = productList;
 
-    useEffect(() => {
-        dispatch(listCart());
-    }, []);
+    // useEffect(() => {
+    //     dispatch(listCart());
+    // }, []);
 
     useEffect(() => {
         dispatch(listProduct(keyword, pagenumber));

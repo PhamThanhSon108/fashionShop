@@ -74,7 +74,7 @@ productRoute.post(
         const { rating, comment } = req.body;
         const product = await Product.findById(req.params.id);
         const order = await Order.findOne({ user: req.user._id });
-        if (!order || !!order?.orderItems.find((i) => i.product == req.params.id) || order?.isPaid != true) {
+        if (!order || !!order?.orderItems.find((i) => i.product === req.params.id) || order?.isPaid != true) {
             res.status(400);
             throw new Error('Can not review!');
         }
@@ -111,6 +111,7 @@ productRoute.delete(
     admin,
     asyncHandler(async (req, res) => {
         const product = await Product.findById(req.params.id);
+        // const cart = await Product.ca.find(req.params.id);
         if (product) {
             await product.remove();
             res.json({ message: 'Product deleted' });

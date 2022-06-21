@@ -28,15 +28,15 @@ cartRoutes.post(
         const cartExist = await Cart.findOne({ user: _id });
         if (cartExist) {
             //update
-            const productExit = cartExist.cartItems.find((value) => value.product == productId);
+            const productExit = cartExist?.cartItems?.find((value) => value.product == productId);
             if (productExit) {
-                const newArray = cartExist.cartItems;
+                const newArray = cartExist?.cartItems;
                 for (let i = 0; i <= newArray.length - 1; i++) {
                     if (newArray[i].product == productId && typeof qty != 'boolean') {
                         newArray[i].qty = qty;
                     }
                     if (newArray[i].product == productId && typeof qty == 'boolean') {
-                        newArray[i].isBuy = !newArray[i].isBuy;
+                        newArray[i].isBuy = !newArray[i]?.isBuy;
                     }
                 }
                 cartExist.cartItems = newArray;
