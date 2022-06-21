@@ -3,51 +3,42 @@ import { useDispatch, useSelector } from 'react-redux';
 import Header from '../components/Header';
 import { listCart, saveShippingAddress } from '../Redux/Actions/cartActions';
 import { listMyOrders, orderGetAddress } from '../Redux/Actions/OrderActions';
+import { getUserDetails, updateUserProfile } from '../Redux/Actions/userActions';
 import { ORDER_ADDRESS_MY_RESET } from '../Redux/Constants/OrderConstants';
 
 const ShippingScreen = ({ history }) => {
     window.scrollTo(0, 0);
     const dispatch = useDispatch();
-    const orderListMy = useSelector((state) => state.orderAddress);
-    const { success: successOrder, orderAddress, loading: loadingOrder } = orderListMy;
+    // const orderListMy = useSelector((state) => state.orderAddress);
+    // const { success: successOrder, orderAddress, loading: loadingOrder } = orderListMy;
     // const cart = useSelector((state) => state.cart);
     // const { shippingAddress } = cart;
-
-    console.log(orderAddress);
-    // const [address, setAddress] = useState(orders.length!=0  ? (orders[orders.length-1].shippingAddress.address):'');
-    // const [city, setCity] = useState(orders.length!=0 ? (orders[orders.length-1].shippingAddress.city):'');
-    // const [postalCode, setPostalCode] = useState(orders.length!=0  ? (orders[orders.length-1].shippingAddress.postalCode):'');
-    // const [country, setCountry] = useState(orders.length!=0  ? (orders[orders.length-1].shippingAddress.postalCode): '');
-
+    const userDetails = useSelector((state) => state.userDetails);
+    const { loading, error, user } = userDetails;
+    // const userLogin = useSelector((state) => state.userLogin);
+    // const { userInfo, success } = userLogin;
     const [address, setAddress] = useState('');
     const [city, setCity] = useState('');
-    const [postalCode, setPostalCode] = useState('');
+    // const [postalCode, setPostalCode] = useState('');
     const [country, setCountry] = useState('');
 
-    // useEffect(() => {
-    //   dispatch(orderGetAddress());
-    //   console.log("lần 2 nè")
-    // }, []);
-    //console.log("Bug")
     useEffect(() => {
-        dispatch(orderGetAddress());
+        dispatch(getUserDetails('profile'));
+        dispatch(listCart());
     }, []);
     useEffect(() => {
-        if (successOrder) {
-            dispatch({ type: ORDER_ADDRESS_MY_RESET });
-        } else {
-            if (orderAddress?.address != undefined) {
-                setAddress(orderAddress.address);
-                setCity(orderAddress.city);
-                setPostalCode(orderAddress.postalCode);
-                setCountry(orderAddress.country);
-            }
+        if (user.address != undefined) {
+            setAddress(user.address);
+            setCity(user.city);
+            setCountry(user.country);
         }
-    }, [dispatch, orderAddress, successOrder]);
-    const submitHandler = (e) => {
+    }, [dispatch, user]);
+
+    const submitHandler = async (e) => {
         e.preventDefault();
-        dispatch(saveShippingAddress({ address, city, postalCode, country }));
         history.push('/payment');
+        dispatch(saveShippingAddress({ address, city, country }));
+        dispatch(updateUserProfile({ id: user._id, address, city, country }));
     };
     return (
         <>
