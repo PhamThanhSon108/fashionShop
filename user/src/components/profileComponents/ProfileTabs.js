@@ -14,6 +14,9 @@ const ProfileTabs = () => {
     const [phone, setPhone] = useState('');
     const [oldPassword, setOldPassword] = useState('');
     const [password, setPassword] = useState('');
+    const [address, setAddress] = useState('');
+    const [city, setCity] = useState('');
+    const [country, setCountry] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [uploadProfile, setUploadProfile] = useState(true); //ghi chú
     const [uploadPassword, setUploadPassword] = useState(false); //ghi chú
@@ -92,6 +95,15 @@ const ProfileTabs = () => {
                 profileObj.phone = 'Incorrect phone number';
             }
         }
+        if (isEmpty(address)) {
+            profileObj.address = 'Please input your address';
+        }
+        if (isEmpty(city)) {
+            profileObj.city = 'Please input your city';
+        }
+        if (isEmpty(country)) {
+            profileObj.country = 'Please input your country';
+        }
         setObjProfile(profileObj);
         if (Object.keys(profileObj).length > 0) return false;
         return true;
@@ -138,6 +150,9 @@ const ProfileTabs = () => {
             setName(user.name);
             setEmail(user.email);
             setPhone(user.phone);
+            setAddress(user.address);
+            setCity(user.city);
+            setCountry(user.country);
         }
         if (errorUpdate) {
             toastId.current = toast.error(error, Toastobjects);
@@ -150,7 +165,7 @@ const ProfileTabs = () => {
     const submitUpdateProfile = (e) => {
         e.preventDefault();
         if (!checkObjProfile()) return;
-        dispatch(updateUserProfile({ id: user._id, name, email, phone }));
+        dispatch(updateUserProfile({ id: user._id, name, email, phone, country, city, address }));
 
         if (!toast.isActive(toastId.current)) {
             toastId.current = toast.success('Profile Updated', Toastobjects);
@@ -268,6 +283,47 @@ const ProfileTabs = () => {
                             </div>
                         </div>
 
+                        <div className="col-md-12">
+                            <div className="form">
+                                <label>Address</label>
+                                <input
+                                    className="form-control"
+                                    type="text"
+                                    value={address}
+                                    // required
+                                    onChange={(e) => setAddress(e.target.value)}
+                                />
+                                <p className="noti-validate">{objProfile.address}</p>
+                            </div>
+                        </div>
+
+                        <div className="col-md-12">
+                            <div className="form">
+                                <label>City</label>
+                                <input
+                                    className="form-control"
+                                    type="text"
+                                    value={city}
+                                    // required
+                                    onChange={(e) => setCity(e.target.value)}
+                                />
+                                <p className="noti-validate">{objProfile.city}</p>
+                            </div>
+                        </div>
+
+                        <div className="col-md-12">
+                            <div className="form">
+                                <label>country</label>
+                                <input
+                                    className="form-control"
+                                    type="text"
+                                    value={country}
+                                    // required
+                                    onChange={(e) => setCountry(e.target.value)}
+                                />
+                                <p className="noti-validate">{objProfile.country}</p>
+                            </div>
+                        </div>
                         <div className="button-submit">
                             <button type="submit">Update Profile</button>
                         </div>

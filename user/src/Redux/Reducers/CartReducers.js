@@ -21,7 +21,7 @@ export const cartReducer = (state = { cartItems: [], shippingAddress: {} }, acti
     switch (action.type) {
         //LIST
         case CART_LIST_REQUEST:
-            return { loading: true, cartItems: [...state.cartItems] };
+            return { loading: true, cartItems: [...state?.cartItems] };
         case CART_LIST_SUCCESS:
             return { loading: false, cartItems: action.payload };
         case CART_LIST_FAIL:

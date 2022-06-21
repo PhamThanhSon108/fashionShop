@@ -65,7 +65,7 @@ const CreateCategory = () => {
     return (
         <>
             <Toast />
-            <div className="col-md-12 col-lg-4">
+            <div className="col-md-4 col-lg-4">
                 <form>
                     {loading && <Loading />}
                     <div className="mb-4">
