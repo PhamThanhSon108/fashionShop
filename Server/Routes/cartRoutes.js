@@ -21,7 +21,7 @@ cartRoutes.get(
 
 cartRoutes.post(
     '/',
-    // protect,
+    protect,
     asyncHandler(async (req, res) => {
         const { productId, qty, _id } = req.body;
         const product = await Product.findById(productId);
