@@ -1454,3 +1454,6 @@ textarea:focus {
 .alert-color-white {
     background-color: #f5f5f5 !important;
 }
+.color-red {
+    color: orangered;
+}

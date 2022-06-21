@@ -156,7 +156,7 @@ const CreateCategory = () => {
                     </div>
 
                     <div className="d-grid">
-                        <button className="btn btn-primary py-3" onClick={handleCreateCategory}>
+                        <button className="btn btn-primary py-3 color-orange" onClick={handleCreateCategory}>
                             Create category
                         </button>
                     </div>

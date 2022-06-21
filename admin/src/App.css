@@ -231,6 +231,7 @@ body.offcanvas-active {
 
 .nav-item img.rounded-circle {
     border: 2px solid #eee;
+    background-color: #fff;
 }
 .nav-item img.rounded-circle:hover {
     border-color: #ee2624;
@@ -928,4 +929,14 @@ ul.row-sm {
 }
 .fix-bottom {
     margin-bottom: 0px !important;
+}
+.color-orange {
+    background-color: orangered !important;
+}
+.table-slide {
+    max-height: 200px;
+    overflow-y: scroll;
+}
+.header-color {
+    background-color: #ee2624;
 }
