@@ -30,7 +30,7 @@ const Header = () => {
     };
 
     return (
-        <header className="main-header navbar">
+        <header className="main-header navbar header-color">
             <div className="col-search">
                 <form className="searchform">
                     {/* <div className="input-group">

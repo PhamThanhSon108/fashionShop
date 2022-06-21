@@ -65,7 +65,7 @@ const CreateCategory = () => {
     return (
         <>
             <Toast />
-            <div className="col-md-12 col-lg-4">
+            <div className="col-md-4 col-lg-4">
                 <form>
                     {loading && <Loading />}
                     <div className="mb-4">
@@ -156,7 +156,7 @@ const CreateCategory = () => {
                     </div>
 
                     <div className="d-grid">
-                        <button className="btn btn-primary py-3" onClick={handleCreateCategory}>
+                        <button className="btn btn-primary py-3 color-orange" onClick={handleCreateCategory}>
                             Create category
                         </button>
                     </div>
