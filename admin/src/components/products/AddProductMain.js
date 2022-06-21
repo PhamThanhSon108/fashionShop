@@ -109,7 +109,7 @@ const AddProductMain = () => {
                         </Link>
                         <h2 className="content-title">Add product</h2>
                         <div>
-                            <button type="submit" className="btn btn-primary">
+                            <button type="submit" className="btn btn-primary color-orange">
                                 Add Product
                             </button>
                         </div>

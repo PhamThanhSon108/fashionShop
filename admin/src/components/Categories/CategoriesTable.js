@@ -49,10 +49,10 @@ const CategoriesTable = ({ handleEditInfo, handleCurrentCategory }) => {
         dispatch(ListCategory());
     }, [csuccess, success, updateSuccess]);
     return (
-        <div className="col-md-12 col-lg-8">
+        <div className="col-md-8 col-lg-8">
             {loadingUpdate && <Loading />}
             <Toast />
-            <table className="table">
+            <table className="table slider-data">
                 <thead>
                     <tr>
                         <th>
@@ -71,7 +71,7 @@ const CategoriesTable = ({ handleEditInfo, handleCurrentCategory }) => {
                     {categories &&
                         categories.map((category, index) => (
                             <tr>
-                                <td>
+                                <td className="">
                                     {/* <div className="form-check">
                     <input className="form-check-input" type="checkbox" value="" />
                   </div> */}
@@ -80,7 +80,9 @@ const CategoriesTable = ({ handleEditInfo, handleCurrentCategory }) => {
                                 <td>
                                     <b>{category.name}</b>
                                 </td>
-                                <td>{category.description}</td>
+                                <td>
+                                    <span>{category.description}</span>
+                                </td>
                                 <td className="text-end">
                                     <div className="dropdown">
                                         <Link to="#" data-bs-toggle="dropdown" className="btn btn-light">

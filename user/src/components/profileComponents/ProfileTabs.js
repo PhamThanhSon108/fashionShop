@@ -81,6 +81,33 @@ const ProfileTabs = () => {
         }
         console.log(y);
     }
+    // xư lý profile validate
+    const [objProfile, setObjProfile] = useState({});
+    function checkObjProfile() {
+        const profileObj = {};
+        if (isEmpty(name)) {
+            profileObj.name = 'Please input your phone';
+        }
+        if (isEmpty(phone)) {
+            profileObj.phone = 'Please input your phone';
+        } else {
+            if (isNaN(phone)) {
+                profileObj.phone = 'Incorrect phone number';
+            }
+        }
+        if (isEmpty(address)) {
+            profileObj.address = 'Please input your address';
+        }
+        if (isEmpty(city)) {
+            profileObj.city = 'Please input your city';
+        }
+        if (isEmpty(country)) {
+            profileObj.country = 'Please input your country';
+        }
+        setObjProfile(profileObj);
+        if (Object.keys(profileObj).length > 0) return false;
+        return true;
+    }
     // xử lý login validate profile upload
     const [objFormPass, setObjFromPass] = useState({});
     function checkPassword() {
@@ -137,7 +164,7 @@ const ProfileTabs = () => {
     // },[dispatch, success])
     const submitUpdateProfile = (e) => {
         e.preventDefault();
-
+        if (!checkObjProfile()) return;
         dispatch(updateUserProfile({ id: user._id, name, email, phone, country, city, address }));
 
         if (!toast.isActive(toastId.current)) {
@@ -219,11 +246,11 @@ const ProfileTabs = () => {
                                 <input
                                     className="form-control"
                                     type="text"
-                                    required
+                                    // required
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
                                 />
-                                <p className="noti-validate"></p>
+                                <p className="noti-validate">{objProfile.name}</p>
                             </div>
                         </div>
 
@@ -235,7 +262,7 @@ const ProfileTabs = () => {
                                     type="email"
                                     disabled
                                     value={email}
-                                    required
+                                    // required
                                     onChange={(e) => setEmail(e.target.value)}
                                 />
                                 <p className="noti-validate"></p>
@@ -249,10 +276,10 @@ const ProfileTabs = () => {
                                     className="form-control"
                                     type="text"
                                     value={phone}
-                                    required
+                                    // required
                                     onChange={(e) => setPhone(e.target.value)}
                                 />
-                                <p className="noti-validate"></p>
+                                <p className="noti-validate">{objProfile.phone}</p>
                             </div>
                         </div>
 
@@ -263,10 +290,10 @@ const ProfileTabs = () => {
                                     className="form-control"
                                     type="text"
                                     value={address}
-                                    required
+                                    // required
                                     onChange={(e) => setAddress(e.target.value)}
                                 />
-                                <p className="noti-validate"></p>
+                                <p className="noti-validate">{objProfile.address}</p>
                             </div>
                         </div>
 
@@ -277,10 +304,10 @@ const ProfileTabs = () => {
                                     className="form-control"
                                     type="text"
                                     value={city}
-                                    required
+                                    // required
                                     onChange={(e) => setCity(e.target.value)}
                                 />
-                                <p className="noti-validate"></p>
+                                <p className="noti-validate">{objProfile.city}</p>
                             </div>
                         </div>
 
@@ -291,10 +318,10 @@ const ProfileTabs = () => {
                                     className="form-control"
                                     type="text"
                                     value={country}
-                                    required
+                                    // required
                                     onChange={(e) => setCountry(e.target.value)}
                                 />
-                                <p className="noti-validate"></p>
+                                <p className="noti-validate">{objProfile.country}</p>
                             </div>
                         </div>
                         <div className="button-submit">

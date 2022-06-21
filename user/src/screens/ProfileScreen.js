@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Header from '../components/Header';
 import ProfileTabs from '../components/profileComponents/ProfileTabs';
@@ -16,6 +16,8 @@ const ProfileScreen = () => {
     const { userInfo } = userLogin;
     const orderListMy = useSelector((state) => state.orderListMy);
     const { loading, error, orders } = orderListMy;
+    const [buleanProfile, setBuleanProfile] = useState(true);
+    const [buleanOrder, setBuleanOrder] = useState(false);
 
     useEffect(() => {
         dispatch(listMyOrders());
@@ -63,7 +65,7 @@ const ProfileScreen = () => {
                                     aria-orientation="vertical"
                                 >
                                     <button
-                                        class="nav-link active"
+                                        class={buleanProfile ? 'nav-link active color-red' : 'nav-link'}
                                         id="v-pills-home-tab"
                                         data-bs-toggle="pill"
                                         data-bs-target="#v-pills-home"
@@ -72,6 +74,10 @@ const ProfileScreen = () => {
                                         aria-controls="v-pills-home"
                                         aria-selected="true"
                                         style={{ display: 'flex', alignItems: 'center' }}
+                                        onClick={() => {
+                                            setBuleanProfile(true);
+                                            setBuleanOrder(false);
+                                        }}
                                     >
                                         <div style={{ fontSize: '18px', paddingRight: '10px' }}>
                                             <i class="fas fa-cogs"></i>
@@ -79,7 +85,8 @@ const ProfileScreen = () => {
                                         Profile Settings
                                     </button>
                                     <button
-                                        class="nav-link d-flex"
+                                        // class="nav-link d-flex"
+                                        className={buleanOrder ? 'nav-link d-flex color-red' : 'nav-link d-flex'}
                                         id="v-pills-profile-tab"
                                         data-bs-toggle="pill"
                                         data-bs-target="#v-pills-profile"
@@ -88,6 +95,10 @@ const ProfileScreen = () => {
                                         aria-controls="v-pills-profile"
                                         aria-selected="false"
                                         style={{ display: 'flex', alignItems: 'center' }}
+                                        onClick={() => {
+                                            setBuleanProfile(false);
+                                            setBuleanOrder(true);
+                                        }}
                                     >
                                         <div style={{ fontSize: '18px', paddingRight: '10px' }}>
                                             <i class="fas fa-shopping-cart"></i>
