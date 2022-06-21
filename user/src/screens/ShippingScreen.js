@@ -24,7 +24,7 @@ const ShippingScreen = ({ history }) => {
 
     useEffect(() => {
         dispatch(getUserDetails('profile'));
-        dispatch(listCart());
+        // dispatch(listCart());
     }, []);
     useEffect(() => {
         if (user.address != undefined) {
