@@ -21,7 +21,6 @@ const ShopSection = (props) => {
     const [sortProducts, setSortProducts] = useState('1');
 
     useEffect(() => {
-        // dispatch(listCart());
         dispatch(listProduct(category, keyword, pageNumber, rating, minPrice, maxPrice, sortProducts));
     }, [dispatch, category, keyword, pageNumber, rating, minPrice, maxPrice, sortProducts]);
 

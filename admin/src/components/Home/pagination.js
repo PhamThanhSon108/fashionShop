@@ -6,15 +6,15 @@ const Pagination = (props) => {
     const { page, pages, category = '', keyword = '' } = props;
     return (
         pages > 1 && (
-            <nav className="pagination-flex">
+            <nav className="float-end mt-4" aria-label="Page navigation">
                 <div className="icon-left">
                     <Link
                         to={
                             keyword
-                                ? `/search/${keyword}/page/${page > 1 ? page - 1 : page}`
+                                ? `/products/search/${keyword}/page/${page > 1 ? page - 1 : page}`
                                 : category
-                                ? `/category/${category}/page/${page > 1 ? page - 1 : page}`
-                                : `/page/${page > 1 ? page - 1 : page}`
+                                ? `/products/category/${category}/page/${page > 1 ? page - 1 : page}`
+                                : `/products/page/${page > 1 ? page - 1 : page}`
                         }
                     >
                         <i class="fas fa-angle-double-left"></i>
@@ -27,10 +27,10 @@ const Pagination = (props) => {
                                 className="page-link"
                                 to={
                                     keyword
-                                        ? `/search/${keyword}/page/${x + 1}`
+                                        ? `/products/search/${keyword}/page/${x + 1}`
                                         : category
-                                        ? `/category/${category}/page/${x + 1}`
-                                        : `/page/${x + 1}`
+                                        ? `/products/category/${category}/page/${x + 1}`
+                                        : `/products/page/${x + 1}`
                                 }
                             >
                                 {x + 1}
@@ -42,10 +42,10 @@ const Pagination = (props) => {
                     <Link
                         to={
                             keyword
-                                ? `/search/${keyword}/page/${page < pages ? page + 1 : pages}`
+                                ? `/products/search/${keyword}/page/${page < pages ? page + 1 : pages}`
                                 : category
-                                ? `/category/${category}/page/${page < pages ? page + 1 : pages}`
-                                : `/page/${page < pages ? page + 1 : pages}`
+                                ? `/products/category/${category}/page/${page < pages ? page + 1 : pages}`
+                                : `/products/page/${page < pages ? page + 1 : pages}`
                         }
                     >
                         <i class="fas fa-angle-double-right"></i>

@@ -10,7 +10,7 @@ const productRoute = express.Router();
 productRoute.get(
     '/',
     asyncHandler(async (req, res) => {
-        const pageSize = Number(req.query.pageSize) || 8;
+        const pageSize = 8;
         const page = Number(req.query.pageNumber) || 1;
         const rating = Number(req.query.rating) || 0;
         const maxPrice = Number(req.query.maxPrice) || 0;
@@ -65,14 +65,31 @@ productRoute.get(
 
 // ADMIN GET ALL PRODUCT WITHOUT SEARCH AND PEGINATION
 productRoute.get(
-    '/all',
+    '/admin',
     protect,
     admin,
     asyncHandler(async (req, res) => {
-        // const products = await Product.find({}).sort({ _id: -1 });
-        const products = await Product.find().populate(`category`).sort({ _id: -1 });
-
-        res.json(products);
+        const pageSize = 10;
+        const page = Number(req.query.pageNumber) || 1;
+        const sortProducts = Number(req.query.sortProducts) || 1;
+        let search = {},
+            sort = {};
+        if (req.query.keyword) {
+            search.name = {
+                $regex: req.query.keyword,
+                $options: 'i',
+            };
+        }
+        if (req.query.category) {
+            search.category = req.query.category;
+        }
+        const count = await Product.countDocuments({ ...search });
+        const products = await Product.find({ ...search })
+            .populate(`category`)
+            .limit(pageSize)
+            .skip(pageSize * (page - 1))
+            .sort({ createdAt: -1 });
+        res.json({ products, page, pages: Math.ceil(count / pageSize) });
     }),
 );
 
@@ -97,14 +114,19 @@ productRoute.post(
     asyncHandler(async (req, res) => {
         const { rating, comment } = req.body;
         const product = await Product.findById(req.params.id);
-        const order = await Order.findOne({ user: req.user._id });
-        if (
-            order != undefined ||
-            order?.orderItems.find((i) => i.product === req.params.id) === undefined ||
-            order?.isPaid != true
-        ) {
-            res.status(400);
-            throw new Error('Can not review!');
+        const order = await Order.find({ user: req.user._id });
+        if (order) {
+            let listOrder = [];
+            for (let i = 0; i < order.length; i++) {
+                if (order[i].isPaid == true) {
+                    listOrder = [...listOrder, ...order[i].orderItems];
+                }
+            }
+            if (listOrder.filter((i) => i.product == req.params.id).length == 0) {
+                res.status(400);
+                // res.status(400).json(order);
+                throw new Error(`Can not review`);
+            }
         }
         if (product) {
             const alreadyReviewed = product.reviews.find((r) => r.user.toString() === req.user._id.toString());
