@@ -29,7 +29,7 @@ const orderSchema = mongoose.Schema(
         paymentMethod: {
             type: String,
             required: true,
-            default: 'Paypal',
+            default: 'Payment in cash',
         },
         paymentResult: {
             id: { type: String },

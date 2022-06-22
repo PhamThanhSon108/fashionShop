@@ -28,19 +28,21 @@ const ShopSection = (props) => {
         <>
             <div className="container">
                 <div className="section">
-                    <div className="col-lg-2 col-6 col-md-3">
-                        <select
-                            className="form-select"
-                            value={sortProducts}
-                            onChange={(e) => {
-                                setSortProducts(e.target.value);
-                            }}
-                        >
-                            <option value="1">Newest</option>
-                            <option value="2">Most prominent</option>
-                            <option value="3">Prices gradually increase</option>
-                            <option value="4">Price descending</option>
-                        </select>
+                    <div style={{ display: 'flex', justifyContent: 'left', marginBottom: '10px', width: '250px' }}>
+                        <div className="">
+                            <select
+                                className="form-select"
+                                value={sortProducts}
+                                onChange={(e) => {
+                                    setSortProducts(e.target.value);
+                                }}
+                            >
+                                <option value="1">Newest</option>
+                                <option value="2">Most prominent</option>
+                                <option value="3">Prices gradually increase</option>
+                                <option value="4">Price descending</option>
+                            </select>
+                        </div>
                     </div>
 
                     <div className="row">
@@ -60,29 +62,36 @@ const ShopSection = (props) => {
                                     <Message variant="alert-danger">{error}</Message>
                                 ) : (
                                     <>
-                                        {products.map((product) => (
-                                            <div className="shop col-lg-3 col-md-6 col-sm-12" key={product._id}>
-                                                <div className="border-product">
-                                                    <Link to={`/products/${product._id}`}>
-                                                        <div className="shopBack">
-                                                            <img src={product.image} alt={product.name} />
+                                        {' '}
+                                        {products.length !== 0 ? (
+                                            products?.map((product) => (
+                                                <div className="shop col-lg-3 col-md-6 col-sm-12" key={product._id}>
+                                                    <div className="border-product">
+                                                        <Link to={`/products/${product._id}`}>
+                                                            <div className="shopBack">
+                                                                <img src={product.image} alt={product.name} />
+                                                            </div>
+                                                        </Link>
+
+                                                        <div className="shoptext">
+                                                            <p>
+                                                                <Link to={`/products/${product._id}`}>
+                                                                    {product.name}
+                                                                </Link>
+                                                            </p>
+
+                                                            <Rating
+                                                                value={product.rating}
+                                                                text={`${product.numReviews} reviews`}
+                                                            />
+                                                            <h3>${product.price}</h3>
                                                         </div>
-                                                    </Link>
-
-                                                    <div className="shoptext">
-                                                        <p>
-                                                            <Link to={`/products/${product._id}`}>{product.name}</Link>
-                                                        </p>
-
-                                                        <Rating
-                                                            value={product.rating}
-                                                            text={`${product.numReviews} reviews`}
-                                                        />
-                                                        <h3>${product.price}</h3>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        ))}
+                                            ))
+                                        ) : (
+                                            <div className="alert-warning">Not found product</div>
+                                        )}
                                     </>
                                 )}
 
