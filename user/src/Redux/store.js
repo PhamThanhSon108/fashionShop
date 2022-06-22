@@ -23,6 +23,7 @@ import {
     productbestseller,
 } from './Reducers/OrderReducres';
 import { Sliderload } from './Reducers/SliderReducer';
+import { categoryListReducer } from './Reducers/CategoryReducers';
 
 const reducer = combineReducers({
     listAllOrder: productbestseller,
@@ -43,11 +44,12 @@ const reducer = combineReducers({
     orderPay: orderPayReducer,
     orderListMy: orderListMyReducer,
     sliderLoad: Sliderload,
+    CategoryList: categoryListReducer,
 });
 
-// const cartItemsFromLocalStorage = localStorage.getItem('cartItems')
-//     ? JSON.parse(localStorage.getItem('cartItems'))
-//     : [];
+const cartItemsFromLocalStorage = localStorage.getItem('cartItems')
+    ? JSON.parse(localStorage.getItem('cartItems'))
+    : [];
 
 // login
 const userInfoFromLocalStorage = localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : null;
