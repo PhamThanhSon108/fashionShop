@@ -15,34 +15,36 @@ import {
     userUpdateProfileReducer,
 } from './Reducers/userReducers';
 import {
-    orderAddressMyReducer,
-    orderCreateReducer,
-    orderDetailsReducer,
-    orderListMyReducer,
-    orderPayReducer,
-    productbestseller,
-} from './Reducers/OrderReducres';
-import { Sliderload } from './Reducers/SliderReducer';
+  orderAddressMyReducer,
+  orderCreateReducer,
+  orderDetailsReducer,
+  orderListMyReducer,
+  orderPayReducer,
+  productbestseller,
+} from "./Reducers/OrderReducres";
+import { Sliderload } from "./Reducers/SliderReducer";
+import{categoryListReducer} from "./Reducers/CategoryReducers"
 
 const reducer = combineReducers({
-    listAllOrder: productbestseller,
-    productList: productListReducer,
-    productAll: productListAllReducer,
-    productDetails: productDetailsReducer,
-    productReviewCreate: productCreateReviewReducer,
-    cart: cartReducer,
-    cartCreate: CreateCartReducer,
-    cartDelete: DeleteCartReducer,
-    userLogin: userLoginReducer,
-    userRegister: userRegisterReducer,
-    userDetails: userDetailsReducer,
-    userUpdateProfile: userUpdateProfileReducer,
-    orderCreate: orderCreateReducer,
-    orderDetails: orderDetailsReducer,
-    orderAddress: orderAddressMyReducer,
-    orderPay: orderPayReducer,
-    orderListMy: orderListMyReducer,
-    sliderLoad: Sliderload,
+  listAllOrder: productbestseller,
+  productList: productListReducer,
+  productAll: productListAllReducer,
+  productDetails: productDetailsReducer,
+  productReviewCreate: productCreateReviewReducer,
+  cart: cartReducer,
+  cartCreate: CreateCartReducer, 
+  cartDelete: DeleteCartReducer,
+  userLogin: userLoginReducer,
+  userRegister: userRegisterReducer,
+  userDetails: userDetailsReducer,
+  userUpdateProfile: userUpdateProfileReducer,
+  orderCreate: orderCreateReducer,
+  orderDetails: orderDetailsReducer,
+  orderAddress: orderAddressMyReducer,
+  orderPay: orderPayReducer,
+  orderListMy: orderListMyReducer,
+  sliderLoad: Sliderload,
+  CategoryList: categoryListReducer,
 });
 
 const cartItemsFromLocalStorage = localStorage.getItem('cartItems')

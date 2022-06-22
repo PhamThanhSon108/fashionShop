@@ -1,35 +1,44 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Rating from './Rating';
 import Pagination from './pagination';
 import { useDispatch, useSelector } from 'react-redux';
-import { listProduct } from '../../Redux/Actions/ProductActions';
+import { listProduct} from '../../Redux/Actions/ProductActions';
 import Loading from '../LoadingError/Loading';
 import Message from '../LoadingError/Error';
 import { listCart } from '../../Redux/Actions/cartActions';
-import CategorySection from './CategorySection';
+import FilterSection from './FilterSection';
 
 const ShopSection = (props) => {
-    const { keyword, pagenumber } = props;
-
+    const { category, keyword, pageNumber} = props;
     const dispatch = useDispatch();
 
     const productList = useSelector((state) => state.productList);
     const { loading, error, products, page, pages } = productList;
-
-    // useEffect(() => {
-    //     dispatch(listCart());
-    // }, []);
-
     useEffect(() => {
-        dispatch(listProduct(keyword, pagenumber));
-    }, [dispatch, keyword, pagenumber]);
+        dispatch(listCart());
+    }, []);
+    const rating = "3", minPrice="8", maxPrice = "11";
+    useEffect(() => {
+        dispatch(listProduct(category, keyword, pageNumber,rating,minPrice,maxPrice));
+    }, [dispatch, category, keyword, pageNumber,rating, minPrice,maxPrice]);
+
     return (
         <>
             <div className="container">
                 <div className="section">
+                    <div className="col-lg-2 col-6 col-md-3">
+                        <select className="form-select" onChange={(e) => {}}>
+                            <option>Newest</option>
+                            <option>Price descending</option>
+                            <option>Prices gradually increase</option>
+                            <option>Most prominent</option>
+                        </select>
+                    </div>
+
                     <div className="row">
-                        <CategorySection></CategorySection>
+                        <FilterSection></FilterSection>
+
                         <div className="col-lg-10 col-md-9 article">
                             <div className="shopcontainer row">
                                 {loading ? (
@@ -67,7 +76,7 @@ const ShopSection = (props) => {
                                 )}
 
                                 {/* Pagination */}
-                                <Pagination pages={pages} page={page} keyword={keyword ? keyword : ''} />
+                                <Pagination pages={pages} page={page} category={category? category: ''} keyword={keyword ? keyword : ''} />
                             </div>
                         </div>
                     </div>

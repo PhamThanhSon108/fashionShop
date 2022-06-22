@@ -12,16 +12,32 @@ productRoute.get(
     asyncHandler(async (req, res) => {
         const pageSize = 8;
         const page = Number(req.query.pageNumber) || 1;
-        const keyword = req.query.keyword
-            ? {
-                  name: {
-                      $regex: req.query.keyword,
-                      $options: 'i',
-                  },
-              }
-            : {};
-        const count = await Product.countDocuments({ ...keyword });
-        const products = await Product.find({ ...keyword })
+        const rating = Number(req.query.rating) || 0;
+        const maxPrice = Number(req.query.maxPrice) || 0;
+        const minPrice = Number(req.query.minPrice) || 0;
+        let search = {};
+        if (req.query.keyword) {
+            search.name = {
+                $regex: req.query.keyword,
+                $options: 'i',
+            };
+        }
+        if (req.query.category) {
+            search.category = req.query.category;
+        }
+        if (rating) {
+            search.rating = { $gte: rating };
+        }
+        if (maxPrice && minPrice) {
+            search = {
+                ...search,
+                price: { $gte: minPrice },
+                price: { $lte: maxPrice },
+            };
+        }
+
+        const count = await Product.countDocuments({ ...search });
+        const products = await Product.find({ ...search })
             .limit(pageSize)
             .skip(pageSize * (page - 1))
             .sort({ _id: -1 });

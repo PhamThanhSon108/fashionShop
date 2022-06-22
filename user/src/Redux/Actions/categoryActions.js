@@ -1,6 +1,5 @@
-import React from 'react'
-import axios from 'axios'
-import { SLIDER_FAIL, SLIDER_REQUEST, SLIDER_SUCCESS } from '../Constants/SliderConstants'
+import React from 'react';
+import axios from 'axios';
 import { CATEGORY_FAIL, CATEGORY_REQUEST, CATEGORY_SUCCESS } from '../Constants/CategoryConstants';
 
 export const ListCategory = () => async (dispatch) => {
@@ -18,8 +17,5 @@ export const ListCategory = () => async (dispatch) => {
                     ? error.response.data.message
                     : error.message,
         })
-
     }
-
-
-}
+};

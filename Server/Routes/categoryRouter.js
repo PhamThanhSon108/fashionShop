@@ -7,7 +7,7 @@ const CategoryRouter = express.Router();
 
 CategoryRouter.get(
     '/',
-    protect,
+    //protect,
     asyncHandler(async (req, res) => {
         const categories = await Category.find({}).sort({ _id: -1 });
         if (categories) {
