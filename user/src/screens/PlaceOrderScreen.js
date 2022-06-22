@@ -7,10 +7,12 @@ import { ORDER_CREATE_RESET } from '../Redux/Constants/OrderConstants';
 import Header from './../components/Header';
 import Message from './../components/LoadingError/Error';
 import PayModal from '../components/Modal/PayModal';
+import { getUserDetails } from '../Redux/Actions/userActions';
 
 const PlaceOrderScreen = ({ history }) => {
     window.scrollTo(0, 0);
-
+    // const userDetails = useSelector((state) => state.userDetails);
+    // const { loading, user } = userDetails;
     const dispatch = useDispatch();
     const cart = useSelector((state) => state.cart);
     const { cartItems } = cart;
@@ -50,7 +52,8 @@ const PlaceOrderScreen = ({ history }) => {
     const orderCreate = useSelector((state) => state.orderCreate);
     const { order, success, error } = orderCreate;
     useEffect(() => {
-        // dispatch(listCart());
+        // dispatch(getUserDetails('profile'));
+        dispatch(listCart());
         if (success) {
             history.push(`/order/${order._id}`);
             dispatch({ type: ORDER_CREATE_RESET });
@@ -62,8 +65,15 @@ const PlaceOrderScreen = ({ history }) => {
         dispatch(
             createOrder({
                 orderItems: currenCartItems,
-                shippingAddress: cart.shippingAddress,
-                paymentMethod: cart.paymentMethod,
+                // shippingAddress: cart.shippingAddress,
+                shippingAddress: {
+                    address: userInfo.address,
+                    city: userInfo.city,
+                    postalCode: '',
+                    country: userInfo.country,
+                },
+                // paymentMethod: cart.paymentMethod,
+                paymentMethod: 'Payment in cash',
                 itemsPrice: cart.itemsPrice,
                 shippingPrice: cart.shippingPrice,
                 taxPrice: cart.taxPrice,

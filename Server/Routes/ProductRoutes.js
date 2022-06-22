@@ -162,10 +162,13 @@ productRoute.delete(
     admin,
     asyncHandler(async (req, res) => {
         const product = await Product.findById(req.params.id);
-        // await Cart.deleteMany({ product: req.params.id });
+        // const cart = await Cart.find({ 'cartItems.product': req.params.id });
+
         if (product) {
+            await Cart.updateMany({}, { $pull: { cartItems: { product: req.params.id } } });
             await product.remove();
             res.json({ message: 'Product deleted' });
+            // res.json(newCart);
         } else {
             res.status(404);
             throw new Error('Product not Found');
