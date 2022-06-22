@@ -28,19 +28,21 @@ const ShopSection = (props) => {
         <>
             <div className="container">
                 <div className="section">
-                    <div className="col-lg-2 col-6 col-md-3">
-                        <select
-                            className="form-select"
-                            value={sortProducts}
-                            onChange={(e) => {
-                                setSortProducts(e.target.value);
-                            }}
-                        >
-                            <option value="1">Newest</option>
-                            <option value="2">Most prominent</option>
-                            <option value="3">Prices gradually increase</option>
-                            <option value="4">Price descending</option>
-                        </select>
+                    <div style={{ display: 'flex', justifyContent: 'left', marginBottom: '10px', width: '250px' }}>
+                        <div className="">
+                            <select
+                                className="form-select"
+                                value={sortProducts}
+                                onChange={(e) => {
+                                    setSortProducts(e.target.value);
+                                }}
+                            >
+                                <option value="1">Newest</option>
+                                <option value="2">Most prominent</option>
+                                <option value="3">Prices gradually increase</option>
+                                <option value="4">Price descending</option>
+                            </select>
+                        </div>
                     </div>
 
                     <div className="row">

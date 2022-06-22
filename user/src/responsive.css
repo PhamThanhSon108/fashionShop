@@ -177,6 +177,21 @@
     .navbar-menu {
         display: none;
     }
+    .navbar-list__li {
+        list-style: none;
+        box-shadow: 0 1px 6px rgb(0 0 0 / 12%);
+        border-radius: 4px;
+        padding-top: 0;
+        display: flex;
+        align-items: center;
+        position: relative;
+        line-height: 50px;
+        margin: 0 10px 20px;
+        padding-left: 10px;
+    }
+    .navbar-list__li:hover {
+        background-color: rgba(114, 108, 96, 0.493);
+    }
 }
 @media (max-width: 767px) {
     .slider {

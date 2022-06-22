@@ -79,7 +79,6 @@ const ProfileTabs = () => {
             setUploadPassword(true);
             setCheckbox('1');
         }
-        console.log(y);
     }
     // xư lý profile validate
     const [objProfile, setObjProfile] = useState({});
@@ -170,8 +169,6 @@ const ProfileTabs = () => {
         if (!toast.isActive(toastId.current)) {
             toastId.current = toast.success('Profile Updated', Toastobjects);
         }
-        setPassword('');
-        setConfirmPassword('');
     };
 
     const submitUpdatePassword = (e) => {
