@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Product from './Product';
 import { useDispatch, useSelector } from 'react-redux';
 import { listProducts } from '../../Redux/Actions/ProductActions';
@@ -8,35 +8,46 @@ import Message from '../LoadingError/Error';
 import { ListCategory } from '../../Redux/Actions/categoryActions';
 import Pagination from '../Home/pagination';
 
-const MainProducts = () => {
+const MainProducts = (props) => {
+    const { category, keyword, pageNumber } = props;
     const dispatch = useDispatch();
-
-    const [categoryFilter, setCategoryFilter] = useState('All category');
+    let history = useHistory();
 
     const productList = useSelector((state) => state.productList);
-    const { loading, error, products } = productList;
-    let productss = [];
-    const handleFilter = () => {
-        if (categoryFilter !== 'All category') {
-            productss = products ? products.filter((value) => value.category === categoryFilter) : [];
-        } else {
-            productss = products;
-        }
-    };
-    handleFilter();
+    const { loading, error, products, page, pages } = productList;
+
     const productDelete = useSelector((state) => state.productDelete);
     const { error: errorDelete, success: successDelete } = productDelete;
     //category
     const lcategories = useSelector((state) => state.CategoryList);
     const { categories } = lcategories;
-    useEffect(() => {
-        dispatch(listProducts());
-        dispatch(ListCategory());
-    }, [dispatch, successDelete]);
 
-    // const handleSearch = (e) => {
-    //     e.preventDefault();
-    // };
+    const [kewywordSearch, setKewywordSearch] = useState('');
+    const handleSearch = (e) => {
+        e.preventDefault();
+        if (kewywordSearch !== undefined) {
+            if (kewywordSearch.trim() && kewywordSearch) {
+                history.push(`/products/search/${kewywordSearch}`);
+            } else {
+                history.push(`/products`);
+            }
+        }
+    };
+    const handleCategory = (e) => {
+        e.preventDefault();
+        if (e.target.value !== undefined) {
+            if (e.target.value.trim() && e.target.value) {
+                history.push(`/products/category/${e.target.value}`);
+            } else {
+                history.push(`/products`);
+            }
+        }
+    };
+    useEffect(() => {
+        dispatch(listProducts(category, keyword, pageNumber));
+        dispatch(ListCategory());
+    }, [dispatch, successDelete, category, keyword, pageNumber]);
+
     return (
         <section className="content-main">
             <div className="content-header">
@@ -51,32 +62,37 @@ const MainProducts = () => {
             <div className="card mb-4 shadow-sm">
                 <header className="card-header bg-white ">
                     <div className="row gx-3 py-3">
-                        {/* <div className="col-lg-4 col-md-6 me-auto ">
-                            <form onSubmit={handleSearch}>
-                                <input type="search" placeholder="Search..." className="form-control p-2" />
+                        <div className="col-lg-4 col-md-6 me-auto ">
+                            <form onSubmit={(e) => handleSearch(e)}>
+                                <div className="input-group">
+                                    <input
+                                        type="search"
+                                        placeholder="Search..."
+                                        className="form-control p-2"
+                                        onChange={(e) => {
+                                            setKewywordSearch(e.target.value);
+                                        }}
+                                    />
+                                    <button className="btn btn-light bg" type="submit">
+                                        <i className="far fa-search"></i>
+                                    </button>
+                                </div>
                             </form>
-                        </div> */}
+                        </div>
                         <div className="col-lg-2 col-6 col-md-3">
                             <select
                                 className="form-select"
-                                value={categoryFilter}
+                                value={category}
                                 onChange={(e) => {
-                                    setCategoryFilter(e.target.value);
+                                    handleCategory(e);
                                 }}
                             >
-                                <option>All category</option>
+                                <option value={''}>All category</option>
                                 {categories.map((category) => (
                                     <option value={category._id}>{category.name}</option>
                                 ))}
                             </select>
                         </div>
-                        {/* <div className="col-lg-2 col-6 col-md-3">
-              <select className="form-select">
-                <option>Latest added</option>
-                <option>Cheap first</option>
-                <option>Most viewed</option>
-              </select>
-            </div> */}
                     </div>
                 </header>
 
@@ -89,18 +105,18 @@ const MainProducts = () => {
                     ) : (
                         <div className="row">
                             {/* Products */}
-                            {productss.map((product) => (
+                            {products.map((product) => (
                                 <Product product={product} key={product._id} />
                             ))}
                         </div>
                     )}
 
-                    
-                        <Pagination pages={2}
-                                    page={1}
-                                    category={categoryFilter?categoryFilter:''}
-                                    keyword={''}></Pagination>
-                        
+                    <Pagination
+                        pages={pages}
+                        page={page}
+                        category={category ? category : ''}
+                        keyword={keyword ? keyword : ''}
+                    ></Pagination>
                 </div>
             </div>
         </section>

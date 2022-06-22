@@ -6,7 +6,7 @@ const Pagination = (props) => {
     const { page, pages, category = '', keyword = '' } = props;
     return (
         pages > 1 && (
-            <nav className="float-end mt-4" aria-label="Page navigation">
+            <nav className="pagination-flex">
                 <div className="icon-left">
                     <Link
                         to={
