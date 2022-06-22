@@ -3,7 +3,7 @@ import asyncHandler from 'express-async-handler';
 import Product from './../Models/ProductModel.js';
 import { admin, protect } from './../Middleware/AuthMiddleware.js';
 import Category from '../Models/CategoryModel.js';
-
+import Order from './../Models/OrderModel.js';
 const productRoute = express.Router();
 
 // GET PRODUCT
@@ -62,7 +62,7 @@ productRoute.get(
     admin,
     asyncHandler(async (req, res) => {
         // const products = await Product.find({}).sort({ _id: -1 });
-        const products = await Product.find().populate(`category`);
+        const products = await Product.find().populate(`category`).sort({ _id: -1 });
 
         res.json(products);
     }),
@@ -89,7 +89,11 @@ productRoute.post(
     asyncHandler(async (req, res) => {
         const { rating, comment } = req.body;
         const product = await Product.findById(req.params.id);
-
+        const order = await Order.findOne({ user: req.user._id });
+        if (!order || !!order?.orderItems.find((i) => i.product === req.params.id) || order?.isPaid != true) {
+            res.status(400);
+            throw new Error('Can not review!');
+        }
         if (product) {
             const alreadyReviewed = product.reviews.find((r) => r.user.toString() === req.user._id.toString());
             if (alreadyReviewed) {
@@ -123,6 +127,7 @@ productRoute.delete(
     admin,
     asyncHandler(async (req, res) => {
         const product = await Product.findById(req.params.id);
+        // const cart = await Product.ca.find(req.params.id);
         if (product) {
             await product.remove();
             res.json({ message: 'Product deleted' });

@@ -21,6 +21,9 @@ const OrderScreen = ({ match }) => {
     const orderPay = useSelector((state) => state.orderPay);
     const { loading: loadingPay, success: successPay } = orderPay;
 
+    //gọi thêm userLogin để lấy số điện thoại
+    const userLogin = useSelector((state) => state.userLogin);
+    const { userInfo } = userLogin;
     if (!loading) {
         const addDecimals = (num) => {
             return (Math.round(num * 100) / 100).toFixed(2);
@@ -72,38 +75,65 @@ const OrderScreen = ({ match }) => {
                 ) : (
                     <>
                         <div className="row  order-detail">
-                            <div className="col-lg-4 col-sm-4 mb-lg-4 mb-5 mb-sm-0">
-                                <div className="row">
-                                    <div className="col-md-4 center">
-                                        <div className="alert-success order-box">
-                                            <i className="fas fa-user"></i>
+                            <div className="col-lg-4 col-sm-4 mb-lg-4 mb-2 mb-sm-0 fix-bottom">
+                                <div className="row " style={{ display: 'flex', alignItems: 'center' }}>
+                                    <div className="col-lg-3 col-sm-3 mb-lg-3 center fix-bottom">
+                                        <div className="alert-success order-box fix-none">
+                                            <i class="fas fa-user"></i>
                                         </div>
                                     </div>
-                                    <div className="col-md-8 center">
-                                        <h5>
-                                            <strong>Customer</strong>
-                                        </h5>
-                                        <p>{order.user.name}</p>
-                                        <p>
-                                            <a href={`mailto:${order.user.email}`}>{order.user.email}</a>
-                                        </p>
+                                    <div className="col-lg-9 col-sm-9 mb-lg-9 fix-display">
+                                        <p>{`Name: ${order.user.name}`}</p>
+                                        <p>{`Phone: ${userInfo.phone}`}</p>
                                     </div>
                                 </div>
                             </div>
                             {/* 2 */}
-                            <div className="col-lg-4 col-sm-4 mb-lg-4 mb-5 mb-sm-0">
-                                <div className="row">
-                                    <div className="col-md-4 center">
-                                        <div className="alert-success order-box">
-                                            <i className="fas fa-truck-moving"></i>
+
+                            <div className="col-lg-4 col-sm-4 mb-lg-4 mb-2 mb-sm-0 fix-bottom">
+                                <div
+                                    className="row"
+                                    style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-around' }}
+                                >
+                                    <div className="col-lg-3 col-sm-3 mb-lg-3 center fix-bottom">
+                                        <div className="alert-success order-box fix-none">
+                                            <i className="fas fa-map-marker-alt"></i>
                                         </div>
                                     </div>
-                                    <div className="col-md-8 center">
-                                        <h5>
-                                            <strong>Order info</strong>
-                                        </h5>
-                                        <p>Shipping: {order.shippingAddress.country}</p>
-                                        <p>Pay method: {order.paymentMethod}</p>
+                                    <div className="col-lg-9 col-sm-9 mb-lg-9">
+                                        <p>
+                                            Address:{' '}
+                                            {`${order.shippingAddress.city}, ${order.shippingAddress.address}, ${order.shippingAddress.country}`}
+                                        </p>
+                                        {order.isDelivered ? (
+                                            <div className="bg-info p-2 col-12">
+                                                <p className="text-white text-center text-sm-start">
+                                                    Start shipping from {moment(order.deliveredAt).calendar()}
+                                                </p>
+                                            </div>
+                                        ) : (
+                                            <div className="bg-danger p-2 col-12">
+                                                <p className="text-white text-center text-sm-start">
+                                                    Awaiting delivery
+                                                </p>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                            {/* 3 */}
+
+                            <div className="col-lg-4 col-sm-4 mb-lg-4 mb-2 mb-sm-0 fix-bottom">
+                                <div className="row" style={{ display: 'flex', alignItems: 'center' }}>
+                                    <div className="col-lg-3 col-sm-3 mb-lg-3 center fix-bottom">
+                                        <div className="alert-success order-box fix-none">
+                                            <i class="fab fa-paypal"></i>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-9 col-sm-9 mb-lg-9">
+                                        <p>
+                                            <p>Pay method: {order.paymentMethod}</p>
+                                        </p>
                                         {order.isPaid ? (
                                             <div className="bg-info p-2 col-12">
                                                 <p className="text-white text-center text-sm-start">
@@ -118,42 +148,10 @@ const OrderScreen = ({ match }) => {
                                     </div>
                                 </div>
                             </div>
-                            {/* 3 */}
-                            <div className="col-lg-4 col-sm-4 mb-lg-4 mb-5 mb-sm-0">
-                                <div className="row">
-                                    <div className="col-md-4 center">
-                                        <div className="alert-success order-box">
-                                            <i className="fas fa-map-marker-alt"></i>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-8 center">
-                                        <h5>
-                                            <strong>Deliver to</strong>
-                                        </h5>
-                                        <p>
-                                            Address: {order.shippingAddress.city}, {order.shippingAddress.address},{' '}
-                                            {order.shippingAddress.postalCode}
-                                        </p>
-                                        {order.isDelivered ? (
-                                            <div className="bg-info p-2 col-12">
-                                                <p className="text-white text-center text-sm-start">
-                                                    Delivered on {moment(order.deliveredAt).calendar()}
-                                                </p>
-                                            </div>
-                                        ) : (
-                                            <div className="bg-danger p-2 col-12">
-                                                <p className="text-white text-center text-sm-start">
-                                                    Awaiting delivery
-                                                </p>
-                                            </div>
-                                        )}
-                                    </div>
-                                </div>
-                            </div>
                         </div>
 
-                        <div className="row order-products justify-content-between">
-                            <div className="col-lg-8">
+                        <div className="row order-products justify-content-between" style={{ marginBottom: '30px' }}>
+                            <div className="col-lg-8 fix-padding cart-scroll">
                                 {order.orderItems.length === 0 ? (
                                     <Message variant="alert-info mt-5">Your order is empty</Message>
                                 ) : (

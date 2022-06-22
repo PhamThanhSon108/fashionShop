@@ -70,13 +70,13 @@ CategoryRouter.put(
         const oldCategory = await Category.findById(idCategory.trim());
         if (
             oldCategory.name === name.trim() &&
-            oldCategory.image === image &&
-            oldCategory.description === description
+            oldCategory.image === image.trim() &&
+            oldCategory.description === description.trim()
         ) {
             res.status(404);
             throw new Error('No thing to update');
         }
-        if (exitCategory) {
+        if (exitCategory && exitCategory.name != oldCategory.name) {
             res.status(404);
             throw new Error('Category already exists');
         }

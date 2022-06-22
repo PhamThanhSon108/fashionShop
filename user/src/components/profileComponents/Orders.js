@@ -40,7 +40,7 @@ const Orders = (props) => {
                                 <tbody>
                                     {orders.map((order) => (
                                         <tr
-                                            className={`${order.isPaid ? 'alert-success' : 'alert-danger'}`}
+                                            className={`${order.isPaid ? 'alert-success' : 'alert-color-white'}`}
                                             key={order._id}
                                         >
                                             <td>
