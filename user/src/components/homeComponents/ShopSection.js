@@ -3,41 +3,70 @@ import { Link } from 'react-router-dom';
 import Rating from './Rating';
 import Pagination from './pagination';
 import { useDispatch, useSelector } from 'react-redux';
-import { listProduct} from '../../Redux/Actions/ProductActions';
+import { listProduct, filterAndSort } from '../../Redux/Actions/ProductActions';
 import Loading from '../LoadingError/Loading';
 import Message from '../LoadingError/Error';
 import { listCart } from '../../Redux/Actions/cartActions';
 import FilterSection from './FilterSection';
 
 const ShopSection = (props) => {
-    const { category, keyword, pageNumber} = props;
+    const { category, keyword, pageNumber } = props;
     const dispatch = useDispatch();
 
+    const filter = useSelector((state) => state.filterAndSort);
+    const { rating, minPrice, maxPrice, sortProducts } = filter;
     const productList = useSelector((state) => state.productList);
     const { loading, error, products, page, pages } = productList;
+    const [rating_dispatch, setRating] = useState('');
+    const [minPrice_dispatch, setMinPrice] = useState('');
+    const [maxPrice_dispatch, setMaxPrice] = useState('');
+    const [sortProducts_dispatch, setSortProducts] = useState('1');
+
+    console.log(filter);
     useEffect(() => {
         dispatch(listCart());
-    }, []);
-    const rating = "3", minPrice="8", maxPrice = "11";
-    useEffect(() => {
-        dispatch(listProduct(category, keyword, pageNumber,rating,minPrice,maxPrice));
-    }, [dispatch, category, keyword, pageNumber,rating, minPrice,maxPrice]);
+        dispatch(filterAndSort(rating_dispatch, minPrice_dispatch, maxPrice_dispatch, sortProducts_dispatch));
+        dispatch(listProduct(category, keyword, pageNumber, rating_dispatch, minPrice_dispatch, maxPrice_dispatch, sortProducts_dispatch));
+    }, [
+        dispatch,
+        category,
+        keyword,
+        pageNumber,
+        rating,
+        minPrice,
+        maxPrice,
+        sortProducts,
+        rating_dispatch,
+        minPrice_dispatch,
+        maxPrice_dispatch,
+        sortProducts_dispatch,
+    ]);
 
     return (
         <>
             <div className="container">
                 <div className="section">
                     <div className="col-lg-2 col-6 col-md-3">
-                        <select className="form-select" onChange={(e) => {}}>
-                            <option>Newest</option>
-                            <option>Price descending</option>
-                            <option>Prices gradually increase</option>
-                            <option>Most prominent</option>
+                        <select
+                            className="form-select"
+                            value={sortProducts}
+                            onChange={(e) => {
+                                setSortProducts(e.target.value);
+                            }}
+                        >
+                            <option value="1">Newest</option>
+                            <option value="2">Most prominent</option>
+                            <option value="3">Prices gradually increase</option>
+                            <option value="4">Price descending</option>
                         </select>
                     </div>
 
                     <div className="row">
-                        <FilterSection></FilterSection>
+                        <FilterSection
+                            setRating={setRating}
+                            setMinPrice={setMinPrice}
+                            setMaxPrice={setMaxPrice}
+                        ></FilterSection>
 
                         <div className="col-lg-10 col-md-9 article">
                             <div className="shopcontainer row">
@@ -76,7 +105,12 @@ const ShopSection = (props) => {
                                 )}
 
                                 {/* Pagination */}
-                                <Pagination pages={pages} page={page} category={category? category: ''} keyword={keyword ? keyword : ''} />
+                                <Pagination
+                                    pages={pages}
+                                    page={page}
+                                    category={category ? category : ''}
+                                    keyword={keyword ? keyword : ''}
+                                />
                             </div>
                         </div>
                     </div>

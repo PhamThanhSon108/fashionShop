@@ -1,80 +1,76 @@
-import { createStore, combineReducers, applyMiddleware } from "redux";
-import thunk from "redux-thunk";
-import { composeWithDevTools } from "redux-devtools-extension";
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import {
-  productCreateReviewReducer,
-  productDetailsReducer,
-  productListReducer,
-  productListAllReducer,
-} from "./Reducers/ProductReducers";
-import { cartReducer, CreateCartReducer, DeleteCartReducer } from "./Reducers/CartReducers";
+    productCreateReviewReducer,
+    productDetailsReducer,
+    productListReducer,
+    productListAllReducer,
+    filterAndSortReducer,
+} from './Reducers/ProductReducers';
+import { cartReducer, CreateCartReducer, DeleteCartReducer } from './Reducers/CartReducers';
 import {
-  userDetailsReducer,
-  userLoginReducer,
-  userRegisterReducer,
-  userUpdateProfileReducer,
-} from "./Reducers/userReducers";
+    userDetailsReducer,
+    userLoginReducer,
+    userRegisterReducer,
+    userUpdateProfileReducer,
+} from './Reducers/userReducers';
 import {
-  orderAddressMyReducer,
-  orderCreateReducer,
-  orderDetailsReducer,
-  orderListMyReducer,
-  orderPayReducer,
-  productbestseller,
-} from "./Reducers/OrderReducres";
-import { Sliderload } from "./Reducers/SliderReducer";
-import{categoryListReducer} from "./Reducers/CategoryReducers"
+    orderAddressMyReducer,
+    orderCreateReducer,
+    orderDetailsReducer,
+    orderListMyReducer,
+    orderPayReducer,
+    productbestseller,
+} from './Reducers/OrderReducres';
+import { Sliderload } from './Reducers/SliderReducer';
+import { categoryListReducer } from './Reducers/CategoryReducers';
 
 const reducer = combineReducers({
-  listAllOrder: productbestseller,
-  productList: productListReducer,
-  productAll: productListAllReducer,
-  productDetails: productDetailsReducer,
-  productReviewCreate: productCreateReviewReducer,
-  cart: cartReducer,
-  cartCreate: CreateCartReducer, 
-  cartDelete: DeleteCartReducer,
-  userLogin: userLoginReducer,
-  userRegister: userRegisterReducer,
-  userDetails: userDetailsReducer,
-  userUpdateProfile: userUpdateProfileReducer,
-  orderCreate: orderCreateReducer,
-  orderDetails: orderDetailsReducer,
-  orderAddress: orderAddressMyReducer,
-  orderPay: orderPayReducer,
-  orderListMy: orderListMyReducer,
-  sliderLoad: Sliderload,
-  CategoryList: categoryListReducer,
+    listAllOrder: productbestseller,
+    productList: productListReducer,
+    productAll: productListAllReducer,
+    productDetails: productDetailsReducer,
+    productReviewCreate: productCreateReviewReducer,
+    filterAndSort: filterAndSortReducer,
+    cart: cartReducer,
+    cartCreate: CreateCartReducer,
+    cartDelete: DeleteCartReducer,
+    userLogin: userLoginReducer,
+    userRegister: userRegisterReducer,
+    userDetails: userDetailsReducer,
+    userUpdateProfile: userUpdateProfileReducer,
+    orderCreate: orderCreateReducer,
+    orderDetails: orderDetailsReducer,
+    orderAddress: orderAddressMyReducer,
+    orderPay: orderPayReducer,
+    orderListMy: orderListMyReducer,
+    sliderLoad: Sliderload,
+    CategoryList: categoryListReducer,
 });
 
-const cartItemsFromLocalStorage = localStorage.getItem("cartItems")
-  ? JSON.parse(localStorage.getItem("cartItems"))
-  : [];
+const cartItemsFromLocalStorage = localStorage.getItem('cartItems')
+    ? JSON.parse(localStorage.getItem('cartItems'))
+    : [];
 
 // login
-const userInfoFromLocalStorage = localStorage.getItem("userInfo")
-  ? JSON.parse(localStorage.getItem("userInfo"))
-  : null;
+const userInfoFromLocalStorage = localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : null;
 
 // shippingAddress
-const shippingAddressFromLocalStorage = localStorage.getItem("shippingAddress")
-  ? JSON.parse(localStorage.getItem("shippingAddress"))
-  : {};
+const shippingAddressFromLocalStorage = localStorage.getItem('shippingAddress')
+    ? JSON.parse(localStorage.getItem('shippingAddress'))
+    : {};
 
 const initialState = {
-  cart: {
-    cartItems: cartItemsFromLocalStorage,
-    shippingAddress: shippingAddressFromLocalStorage,
-  },
-  userLogin: { userInfo: userInfoFromLocalStorage },
+    cart: {
+        cartItems: cartItemsFromLocalStorage,
+        shippingAddress: shippingAddressFromLocalStorage,
+    },
+    userLogin: { userInfo: userInfoFromLocalStorage },
 };
 
 const middleware = [thunk];
 
-const store = createStore(
-  reducer,
-  initialState,
-  composeWithDevTools(applyMiddleware(...middleware))
-);
+const store = createStore(reducer, initialState, composeWithDevTools(applyMiddleware(...middleware)));
 
 export default store;

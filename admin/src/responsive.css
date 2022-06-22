@@ -5,7 +5,13 @@
 .btn-mobile {
   display: none;
 }
-
+@media (min-width: 992px) {
+  .col-lg-2-5 {
+    flex: 0 0 auto;
+    width: 20%;
+    padding: 0 4px;
+  }
+}
 @media (max-width: 1200px) {
   /* tablet devices */
   .main-wrap {

@@ -10,12 +10,14 @@ const productRoute = express.Router();
 productRoute.get(
     '/',
     asyncHandler(async (req, res) => {
-        const pageSize = 8;
+        const pageSize = Number(req.query.pageSize) || 8;
         const page = Number(req.query.pageNumber) || 1;
         const rating = Number(req.query.rating) || 0;
         const maxPrice = Number(req.query.maxPrice) || 0;
         const minPrice = Number(req.query.minPrice) || 0;
-        let search = {};
+        const sortProducts = Number(req.query.sortProducts) || 1;
+        let search = {},
+            sort={};
         if (req.query.keyword) {
             search.name = {
                 $regex: req.query.keyword,
@@ -35,12 +37,18 @@ productRoute.get(
                 price: { $lte: maxPrice },
             };
         }
-
+        if (sortProducts == 1) sort.createdAt = -1;
+        if (sortProducts == 2) {
+            sort.numReviews = -1;
+            sort.rating = -1;
+        }
+        if (sortProducts == 3) sort.price = 1;
+        if (sortProducts == 4) sort.price = -1;
         const count = await Product.countDocuments({ ...search });
         const products = await Product.find({ ...search })
             .limit(pageSize)
             .skip(pageSize * (page - 1))
-            .sort({ _id: -1 });
+            .sort(sort);
         res.json({ products, page, pages: Math.ceil(count / pageSize) });
     }),
 );
