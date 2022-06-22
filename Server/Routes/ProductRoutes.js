@@ -97,14 +97,19 @@ productRoute.post(
     asyncHandler(async (req, res) => {
         const { rating, comment } = req.body;
         const product = await Product.findById(req.params.id);
-        const order = await Order.findOne({ user: req.user._id });
-        if (
-            order != undefined ||
-            order?.orderItems.find((i) => i.product === req.params.id) === undefined ||
-            order?.isPaid != true
-        ) {
-            res.status(400);
-            throw new Error('Can not review!');
+        const order = await Order.find({ user: req.user._id });
+        if (order) {
+            let listOrder = [];
+            for (let i = 0; i < order.length; i++) {
+                if (order[i].isPaid == true) {
+                    listOrder = [...listOrder, ...order[i].orderItems];
+                }
+            }
+            if (listOrder.filter((i) => i.product == req.params.id).length == 0) {
+                res.status(400);
+                // res.status(400).json(order);
+                throw new Error(`Can not review`);
+            }
         }
         if (product) {
             const alreadyReviewed = product.reviews.find((r) => r.user.toString() === req.user._id.toString());
