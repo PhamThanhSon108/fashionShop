@@ -5,7 +5,6 @@ import { ListCategory } from '../Redux/Actions/categoryActions';
 import { listProduct } from '../Redux/Actions/ProductActions';
 
 export default function NavBar({ onRemove }) {
-    let history = useHistory();
     const dispatch = useDispatch();
 
     const lcategories = useSelector((state) => state.CategoryList);

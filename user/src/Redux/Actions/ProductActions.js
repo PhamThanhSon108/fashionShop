@@ -31,26 +31,22 @@ export const ListProductAll = () => async (dispatch) => {
 
 // PRODUCT LIST
 export const listProduct =
-  (category = "", keyword = "", pageNumber = "", rating = "",minPrice="",maxPrice="") =>
-  async (dispatch) => {
-    try {
-      dispatch({ type: PRODUCT_LIST_REQUEST });
-      const { data } = await axios.get(
-        `/api/products?&category=${category}&keyword=${keyword}&pageNumber=${pageNumber}&rating=${rating}&minPrice=${minPrice}&maxPrice=${maxPrice}`
-      );
-      dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
-    } catch (error) {
-      
-      dispatch({
-        type: PRODUCT_LIST_FAIL,
-        payload:
-          error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message,
-      });
-    }
-  };
-
+    (category = '', keyword = '', pageNumber = '', rating = '', minPrice = '', maxPrice = '', sortProducts = '1') =>
+    async (dispatch) => {
+        try {
+            dispatch({ type: PRODUCT_LIST_REQUEST });
+            const { data } = await axios.get(
+                `/api/products?&category=${category}&keyword=${keyword}&pageNumber=${pageNumber}&rating=${rating}
+        &minPrice=${minPrice}&maxPrice=${maxPrice}&sortProducts=${sortProducts}`,
+            );
+            dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
+        } catch (error) {
+            dispatch({
+                type: PRODUCT_LIST_FAIL,
+                payload: error.response && error.response.data.message ? error.response.data.message : error.message,
+            });
+        }
+    };
 
 // SINGLE PRODUCT
 export const listProductDetails = (id) => async (dispatch) => {

@@ -6,6 +6,7 @@ import { listProducts } from '../../Redux/Actions/ProductActions';
 import Loading from '../LoadingError/Loading';
 import Message from '../LoadingError/Error';
 import { ListCategory } from '../../Redux/Actions/categoryActions';
+import Pagination from '../Home/pagination';
 
 const MainProducts = () => {
     const dispatch = useDispatch();
@@ -23,8 +24,6 @@ const MainProducts = () => {
         }
     };
     handleFilter();
-    // console.log(products);
-    // console.log(productss);
     const productDelete = useSelector((state) => state.productDelete);
     const { error: errorDelete, success: successDelete } = productDelete;
     //category
@@ -96,35 +95,12 @@ const MainProducts = () => {
                         </div>
                     )}
 
-                    <nav className="float-end mt-4" aria-label="Page navigation">
-                        <ul className="pagination">
-                            <li className="page-item disabled">
-                                <Link className="page-link" to="#">
-                                    Previous
-                                </Link>
-                            </li>
-                            <li className="page-item active">
-                                <Link className="page-link" to="#">
-                                    1
-                                </Link>
-                            </li>
-                            <li className="page-item">
-                                <Link className="page-link" to="#">
-                                    2
-                                </Link>
-                            </li>
-                            <li className="page-item">
-                                <Link className="page-link" to="#">
-                                    3
-                                </Link>
-                            </li>
-                            <li className="page-item">
-                                <Link className="page-link" to="#">
-                                    Next
-                                </Link>
-                            </li>
-                        </ul>
-                    </nav>
+                    
+                        <Pagination pages={2}
+                                    page={1}
+                                    category={categoryFilter?categoryFilter:''}
+                                    keyword={''}></Pagination>
+                        
                 </div>
             </div>
         </section>
