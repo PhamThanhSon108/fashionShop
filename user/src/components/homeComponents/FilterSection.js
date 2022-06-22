@@ -9,8 +9,7 @@ export default function FilterSection(props) {
 
     const lcategories = useSelector((state) => state.CategoryList);
     const { categories } = lcategories;
-    
-    
+
     const [rating, setRating] = useState('');
     const [minPrice, setMinPrice] = useState('');
     const [maxPrice, setMaxPrice] = useState('');
@@ -34,7 +33,7 @@ export default function FilterSection(props) {
                     <h2 className="Category-section__h2">Category</h2>
                 </div>
                 <ul className="Category-section__list">
-                {categories.map((category) => (
+                    {categories.map((category) => (
                         <li className="Category-section__li">
                             <Link to={`/category/${category._id}`}>{category.name}</Link>
                         </li>
@@ -64,6 +63,7 @@ export default function FilterSection(props) {
                         <div display={{ display: 'flex', alignItems: 'center' }}>
                             <input
                                 type="radio"
+                                style={{ display: 'none' }}
                                 className="star-none"
                                 name="star"
                                 id="five"
@@ -79,6 +79,7 @@ export default function FilterSection(props) {
                         <div display={{ display: 'flex', alignItems: 'center' }}>
                             <input
                                 type="radio"
+                                style={{ display: 'none' }}
                                 className="star-none"
                                 name="star"
                                 id="four"
@@ -94,6 +95,7 @@ export default function FilterSection(props) {
                         <div display={{ display: 'flex', alignItems: 'center' }}>
                             <input
                                 type="radio"
+                                style={{ display: 'none' }}
                                 className="star-none"
                                 name="star"
                                 id="three"
@@ -109,6 +111,7 @@ export default function FilterSection(props) {
                         <div display={{ display: 'flex', alignItems: 'center' }}>
                             <input
                                 type="radio"
+                                style={{ display: 'none' }}
                                 className="star-none"
                                 name="star"
                                 id="two"
@@ -124,6 +127,7 @@ export default function FilterSection(props) {
                         <div display={{ display: 'flex', alignItems: 'center' }}>
                             <input
                                 type="radio"
+                                style={{ display: 'none' }}
                                 className="star-none"
                                 name="star"
                                 id="one"
