@@ -44,7 +44,7 @@ orderRouter.post(
     '/',
     protect,
     asyncHandler(async (req, res) => {
-        const { orderItems, shippingAddress, paymentMethod, itemsPrice, taxPrice, shippingPrice, totalPrice } =
+        const { orderItems, shippingAddress, paymentMethod, itemsPrice, taxPrice, shippingPrice, totalPrice, phone } =
             req.body;
 
         if (orderItems && orderItems.length === 0) {
@@ -61,6 +61,7 @@ orderRouter.post(
                 taxPrice,
                 shippingPrice,
                 totalPrice,
+                phone,
             });
             for (let i = 0; i < orderItems.length; i++) {
                 await Product.findOneAndUpdate(

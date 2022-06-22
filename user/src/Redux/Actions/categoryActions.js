@@ -6,7 +6,7 @@ export const ListCategory = () => async (dispatch) => {
     try {
         dispatch({ type: CATEGORY_REQUEST });
         const { data } = await axios.get(
-            `/api/category`
+            `/api/category/`
         )
         dispatch({ type: CATEGORY_SUCCESS, payload: data })
     } catch (error) {

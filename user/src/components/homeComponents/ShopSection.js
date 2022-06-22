@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Rating from './Rating';
 import Pagination from './pagination';
 import { useDispatch, useSelector } from 'react-redux';
-import { listProduct, filterAndSort } from '../../Redux/Actions/ProductActions';
+import { listProduct } from '../../Redux/Actions/ProductActions';
 import Loading from '../LoadingError/Loading';
 import Message from '../LoadingError/Error';
 import { listCart } from '../../Redux/Actions/cartActions';
@@ -13,20 +13,19 @@ const ShopSection = (props) => {
     const { category, keyword, pageNumber } = props;
     const dispatch = useDispatch();
 
-    const filter = useSelector((state) => state.filterAndSort);
-    const { rating, minPrice, maxPrice, sortProducts } = filter;
     const productList = useSelector((state) => state.productList);
     const { loading, error, products, page, pages } = productList;
-    const [rating_dispatch, setRating] = useState('');
-    const [minPrice_dispatch, setMinPrice] = useState('');
-    const [maxPrice_dispatch, setMaxPrice] = useState('');
-    const [sortProducts_dispatch, setSortProducts] = useState('1');
+    const [rating, setRating] = useState('');
+    const [minPrice, setMinPrice] = useState('');
+    const [maxPrice, setMaxPrice] = useState('');
+    const [sortProducts, setSortProducts] = useState('1');
 
-    console.log(filter);
     useEffect(() => {
         dispatch(listCart());
-        dispatch(filterAndSort(rating_dispatch, minPrice_dispatch, maxPrice_dispatch, sortProducts_dispatch));
-        dispatch(listProduct(category, keyword, pageNumber, rating_dispatch, minPrice_dispatch, maxPrice_dispatch, sortProducts_dispatch));
+        dispatch(listProduct(category, keyword, pageNumber, rating,
+            minPrice,
+            maxPrice,
+            sortProducts));
     }, [
         dispatch,
         category,
@@ -36,10 +35,6 @@ const ShopSection = (props) => {
         minPrice,
         maxPrice,
         sortProducts,
-        rating_dispatch,
-        minPrice_dispatch,
-        maxPrice_dispatch,
-        sortProducts_dispatch,
     ]);
 
     return (

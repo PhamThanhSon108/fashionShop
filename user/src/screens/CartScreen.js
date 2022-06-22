@@ -25,7 +25,6 @@ const CartScreen = ({ match, location, history }) => {
         : 0;
     const userLogin = useSelector((state) => state.userLogin);
     const { userInfo } = userLogin;
-    let currentChooseProduct = [];
     // useEffect(() => {
     //   if (productId) {
     //     console.log("1use")

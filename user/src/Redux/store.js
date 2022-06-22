@@ -6,7 +6,6 @@ import {
     productDetailsReducer,
     productListReducer,
     productListAllReducer,
-    filterAndSortReducer,
 } from './Reducers/ProductReducers';
 import { cartReducer, CreateCartReducer, DeleteCartReducer } from './Reducers/CartReducers';
 import {
@@ -24,7 +23,7 @@ import {
     productbestseller,
 } from './Reducers/OrderReducres';
 import { Sliderload } from './Reducers/SliderReducer';
-import { categoryListReducer } from './Reducers/CategoryReducers';
+import {categoryListReducer} from './Reducers/CategoryReducers'
 
 const reducer = combineReducers({
     listAllOrder: productbestseller,
@@ -32,7 +31,6 @@ const reducer = combineReducers({
     productAll: productListAllReducer,
     productDetails: productDetailsReducer,
     productReviewCreate: productCreateReviewReducer,
-    filterAndSort: filterAndSortReducer,
     cart: cartReducer,
     cartCreate: CreateCartReducer,
     cartDelete: DeleteCartReducer,
@@ -49,9 +47,9 @@ const reducer = combineReducers({
     CategoryList: categoryListReducer,
 });
 
-const cartItemsFromLocalStorage = localStorage.getItem('cartItems')
-    ? JSON.parse(localStorage.getItem('cartItems'))
-    : [];
+// const cartItemsFromLocalStorage = localStorage.getItem('cartItems')
+//     ? JSON.parse(localStorage.getItem('cartItems'))
+//     : [];
 
 // login
 const userInfoFromLocalStorage = localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : null;
@@ -63,8 +61,8 @@ const shippingAddressFromLocalStorage = localStorage.getItem('shippingAddress')
 
 const initialState = {
     cart: {
-        cartItems: cartItemsFromLocalStorage,
-        shippingAddress: shippingAddressFromLocalStorage,
+        cartItems: [],
+        shippingAddress: [],
     },
     userLogin: { userInfo: userInfoFromLocalStorage },
 };

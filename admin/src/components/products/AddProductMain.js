@@ -109,14 +109,14 @@ const AddProductMain = () => {
                         </Link>
                         <h2 className="content-title">Add product</h2>
                         <div>
-                            <button type="submit" className="btn btn-primary">
-                                Publish now
+                            <button type="submit" className="btn btn-primary color-orange">
+                                Add Product
                             </button>
                         </div>
                     </div>
 
                     <div className="row mb-4">
-                        <div className="col-xl-8 col-lg-8">
+                        <div className="col-xl-12 col-lg-12">
                             <div className="card mb-4 shadow-sm">
                                 <div className="card-body">
                                     {error && <Message variant="alert-danger">{error}</Message>}
@@ -266,7 +266,7 @@ const AddProductMain = () => {
                                             onChange={(e) => setImage(e.target.value)}
                                         />
                                         <p className="product_validate">{validate.image}</p>
-                                        <input className="form-control mt-3" type="file" />
+                                        {/* <input className="form-control mt-3" type="file" /> */}
                                     </div>
                                 </div>
                             </div>

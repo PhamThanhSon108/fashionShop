@@ -12,9 +12,6 @@ import {
     PRODUCT_LIST_ALL_FAIL,
     PRODUCT_LIST_ALL_REQUEST,
     PRODUCT_LIST_ALL_SUCCESS,
-    FILTER_AND_SORT_REQUEST,
-    FILTER_AND_SORT_SUCCESS,
-    FILTER_AND_SORT_FAIL,
 } from '../Constants/ProductConstants';
 import { logout } from './userActions';
 
@@ -37,8 +34,6 @@ export const listProduct =
     (category = '', keyword = '', pageNumber = '', rating = '', minPrice = '', maxPrice = '', sortProducts = '1') =>
     async (dispatch) => {
         try {
-            console.log( `/api/products?&category=${category}&keyword=${keyword}&pageNumber=${pageNumber}&rating=${rating}
-            &minPrice=${minPrice}&maxPrice=${maxPrice}&sortProducts=${sortProducts}`,);
             dispatch({ type: PRODUCT_LIST_REQUEST });
             const { data } = await axios.get(
                 `/api/products?&category=${category}&keyword=${keyword}&pageNumber=${pageNumber}&rating=${rating}
@@ -96,19 +91,3 @@ export const createProductReview = (productId, review) => async (dispatch, getSt
         });
     }
 };
-
-//FILTER AND SORT
-export const filterAndSort =
-    (rating = '', minPrice = '', maxPrice = '', sortProducts = '') =>
-    async (dispatch) => {
-        try {
-            dispatch({ type: FILTER_AND_SORT_REQUEST });
-            const data = { rating: rating, minPrice: minPrice, maxPrice: maxPrice, sortProducts: sortProducts };
-            dispatch({ type: FILTER_AND_SORT_SUCCESS, payload: data });
-        } catch (error) {
-            dispatch({
-                type: FILTER_AND_SORT_FAIL,
-                payload: error.response && error.response.data.message ? error.response.data.message : error.message,
-            });
-        }
-    };

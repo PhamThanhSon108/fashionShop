@@ -12,10 +12,6 @@ import {
     PRODUCT_LIST_ALL_FAIL,
     PRODUCT_LIST_ALL_REQUEST,
     PRODUCT_LIST_ALL_SUCCESS,
-    FILTER_AND_SORT_REQUEST,
-    FILTER_AND_SORT_SUCCESS,
-    FILTER_AND_SORT_FAIL,
-    FILTER_AND_SORT_RESET,
 } from '../Constants/ProductConstants';
 
 //PRODUCT LIST ALL
@@ -78,22 +74,6 @@ export const productCreateReviewReducer = (state = {}, action) => {
         case PRODUCT_CREATE_REVIEW_FAIL:
             return { loading: false, error: action.payload };
         case PRODUCT_CREATE_REVIEW_RESET:
-            return {};
-        default:
-            return state;
-    }
-};
-
-// FILTER AND SORT
-export const filterAndSortReducer = (state = {}, action) => {
-    switch (action.type) {
-        case FILTER_AND_SORT_REQUEST:
-            return { loading: true };
-        case FILTER_AND_SORT_SUCCESS:
-            return { loading: false, filterAndSort: action.payload };
-        case FILTER_AND_SORT_FAIL:
-            return { loading: false, error: action.payload };
-        case FILTER_AND_SORT_RESET:
             return {};
         default:
             return state;

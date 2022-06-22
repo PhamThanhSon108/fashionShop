@@ -29,7 +29,7 @@ const Header = () => {
     };
     const submitHandler = (e) => {
         e.preventDefault();
-        if (keyword != undefined) {
+        if (keyword !== undefined) {
             if (keyword.trim() && keyword) {
                 history.push(`/search/${keyword}`);
             } else {
@@ -224,7 +224,7 @@ const Header = () => {
 
                                 <Link to="/cart">
                                     <i className="fas fa-shopping-bag"></i>
-                                    <span className="badge">{cartItems ? cartItems.length : 0}</span>
+                                    <span className="badge">{cartItems ? cartItems?.length : 0}</span>
                                 </Link>
                             </div>
                         </div>

@@ -85,6 +85,7 @@ const SingleProduct = ({ history, match }) => {
                                                 <img
                                                     style={{ width: '100%' }}
                                                     src="https://m.media-amazon.com/images/S/aplus-media/vc/2b83d5b5-3c19-4578-8137-7e5094bbc801.__CR0,0,970,300_PT0_SX970_V1___.jpg"
+                                                    alt=""
                                                 ></img>
                                             </div>
                                             <div className="product-count col-lg-12 ">
@@ -225,7 +226,7 @@ const SingleProduct = ({ history, match }) => {
                                                         <Link to="/login">
                                                             " <strong>Login</strong> "
                                                         </Link>{' '}
-                                                        to write a review{' '}
+                                                        and buy this product to write a review{' '}
                                                     </Message>
                                                 </div>
                                             )}

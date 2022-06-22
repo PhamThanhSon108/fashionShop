@@ -21,22 +21,22 @@ cartRoutes.get(
 
 cartRoutes.post(
     '/',
-    // protect,
+    protect,
     asyncHandler(async (req, res) => {
         const { productId, qty, _id } = req.body;
         const product = await Product.findById(productId);
         const cartExist = await Cart.findOne({ user: _id });
         if (cartExist) {
             //update
-            const productExit = cartExist.cartItems.find((value) => value.product == productId);
+            const productExit = cartExist?.cartItems?.find((value) => value.product == productId);
             if (productExit) {
-                const newArray = cartExist.cartItems;
+                const newArray = cartExist?.cartItems;
                 for (let i = 0; i <= newArray.length - 1; i++) {
                     if (newArray[i].product == productId && typeof qty != 'boolean') {
                         newArray[i].qty = qty;
                     }
                     if (newArray[i].product == productId && typeof qty == 'boolean') {
-                        newArray[i].isBuy = !newArray[i].isBuy;
+                        newArray[i].isBuy = !newArray[i]?.isBuy;
                     }
                 }
                 cartExist.cartItems = newArray;
@@ -112,13 +112,16 @@ cartRoutes.delete(
     protect,
     // admin,
     asyncHandler(async (req, res) => {
-        const cart = await Cart.findOne({ user: req.params.id });
+        const cart = await Cart.findOne({ user: req.user._id });
         if (cart) {
-            await cart.remove();
-            res.json({ message: 'Cart deleted' });
+            for (let i = 0; i <= cart.cartItems.length - 1; i++) {
+                cart.cartItems[i].isBuy = false;
+            }
+            await cart.save();
+            res.json({ message: 'Cart clear' });
         } else {
             res.status(404);
-            throw new Error('Product not Found');
+            throw new Error('Can not clear this cart');
         }
     }),
 );
