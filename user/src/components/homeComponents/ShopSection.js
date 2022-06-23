@@ -50,6 +50,9 @@ const ShopSection = (props) => {
                             setRating={setRating}
                             setMinPrice={setMinPrice}
                             setMaxPrice={setMaxPrice}
+                            rating={rating}
+                            minPrice={minPrice}
+                            maxPrice={maxPrice}
                         ></FilterSection>
 
                         <div className="col-lg-10 col-md-9 article">

@@ -5,46 +5,43 @@ import { Link } from 'react-router-dom';
 import isEmpty from 'validator/lib/isEmpty';
 import Rating from './Rating';
 
-export default function FilterSection(props) {
+export default function FilterSection({ setRating, setMinPrice, setMaxPrice, rating, minPrice, maxPrice }) {
     const dispatch = useDispatch();
 
     const lcategories = useSelector((state) => state.CategoryList);
     const { categories } = lcategories;
-
-    const [rating, setRating] = useState('');
-    const [minPrice, setMinPrice] = useState('');
-    const [maxPrice, setMaxPrice] = useState('');
-
+    const [curentMinPrice, setCurentMinPrice] = useState('');
+    const [curentMaxPrice, setCurentMaxPrice] = useState('');
     const [checkId, setCheckId] = useState('');
-    if (rating) {
-        props.setRating(rating);
-    }
+    // if (rating) {
+    //     setRating(rating);
+    // }
 
-    //xủ lí logic check from
+    //xủ lí logic check form
     const [price, SetPrice] = useState({});
     const checkPrice = () => {
         const msg = {};
-        if (isEmpty(minPrice)) {
+        if (isEmpty(curentMinPrice)) {
             msg.name = 'Please input your price';
         } else {
-            if (minPrice < 0) {
+            if (curentMinPrice < 0) {
                 msg.name = 'Please enter the positive value';
             } else {
-                if (isNaN(minPrice)) {
+                if (isNaN(curentMinPrice)) {
                     msg.name = 'Please enter the number';
                 }
             }
         }
-        if (isEmpty(maxPrice)) {
+        if (isEmpty(curentMaxPrice)) {
             msg.name = 'Please input your price';
         } else {
-            if (minPrice < 0) {
+            if (curentMaxPrice < 0) {
                 msg.name = 'Please enter the positive value';
             } else {
-                if (isNaN(minPrice)) {
+                if (isNaN(curentMaxPrice)) {
                     msg.name = 'Please enter the number';
                 } else {
-                    if (Number(minPrice) > Number(maxPrice)) {
+                    if (Number(curentMinPrice) > Number(curentMaxPrice)) {
                         msg.name = 'MinPrice is smaller MaxPrice';
                     }
                 }
@@ -54,10 +51,18 @@ export default function FilterSection(props) {
         if (Object.keys(msg).length > 0) return false;
         return true;
     };
+    const ClearHandle = () => {
+        setRating('');
+        setCheckId('');
+        setMaxPrice('');
+        setMinPrice('');
+        setCurentMaxPrice('');
+        setCurentMinPrice('');
+    };
     const ApplyHandler = () => {
         if (!checkPrice()) return;
-        props.setMinPrice(minPrice);
-        props.setMaxPrice(maxPrice);
+        setMinPrice(curentMinPrice);
+        setMaxPrice(curentMaxPrice);
     };
     useEffect(() => {
         dispatch(ListCategory());
@@ -96,9 +101,21 @@ export default function FilterSection(props) {
                 <div className="distance-price">
                     <p className="distance-price__p">Price range</p>
                     <div className="distance-price__flex" style={{ display: 'flex', alignItems: 'center' }}>
-                        <input type="text" placeholder="$Min" onChange={(e) => setMinPrice(e.target.value)}></input>
+                        <input
+                            type="number"
+                            placeholder="$Min"
+                            onChange={(e) => setCurentMinPrice(e.target.value)}
+                            value={curentMinPrice}
+                            min="0"
+                        ></input>
                         <label>-</label>
-                        <input type="text" placeholder="$Max" onChange={(e) => setMaxPrice(e.target.value)}></input>
+                        <input
+                            type="number"
+                            placeholder="$Max"
+                            onChange={(e) => setCurentMaxPrice(e.target.value)}
+                            value={curentMaxPrice}
+                            min="1"
+                        ></input>
                     </div>
                     <p style={{ fontSize: '14px', color: 'red' }}>{price.name}</p>
                     <button className="distance-price__submit" onClick={ApplyHandler}>
@@ -112,15 +129,16 @@ export default function FilterSection(props) {
                             <input
                                 type="radio"
                                 style={{ display: 'none' }}
-                                className="star-none"
+                                className="rating"
                                 name="star"
                                 id="five"
                                 value={'5'}
                                 onClick={(e) => {
+                                    console.log(e.target.value);
                                     setRating(e.target.value);
                                 }}
                             ></input>
-                            <label for="five" className={rating === '5' ? 'rating-color' : ' '}>
+                            <label for="five" className={rating == '5' ? 'rating-color' : ' '}>
                                 <Rating value="5"></Rating>
                             </label>
                         </div>
@@ -188,12 +206,24 @@ export default function FilterSection(props) {
                                 <Rating value="1" text={'& up'}></Rating>
                             </label>
                         </div>
+                        <div className="assess-star">
+                            <p className="distance-price__p">Review</p>
+                        </div>
                     </div>
                 </div>
+                {/* <div className="assess-star">
+                    <p className="distance-price__p">Review</p>
+                    <input class="rating" />
+                </div> */}
                 <div className="" display={{ display: 'flex', alignItems: 'center' }}>
-                    <button className="distance-price__submit" onClick={ApplyHandler}>
-                        <Link className="navbar-brand" to="/" style={{ fontSize: '0.85rem', color: '#fff' }}>
-                            DELETE ALL FILTER
+                    <button className="distance-price__submit">
+                        <Link
+                            className="navbar-brand"
+                            to="/"
+                            onClick={ClearHandle}
+                            style={{ fontSize: '0.85rem', color: '#fff' }}
+                        >
+                            CLEAR ALL FILTER
                         </Link>
                     </button>
                 </div>

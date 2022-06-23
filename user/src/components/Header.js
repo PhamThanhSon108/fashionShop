@@ -6,7 +6,7 @@ import { listCart } from '../Redux/Actions/cartActions';
 import NavBar from './navbar';
 
 const Header = () => {
-    const [keyword, setKeyword] = useState();
+    const [keyword, setKeyword] = useState('');
     const [navbar, setNavbar] = useState(false);
     const dispatch = useDispatch();
     let history = useHistory();

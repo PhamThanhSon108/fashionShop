@@ -114,10 +114,8 @@ cartRoutes.delete(
     asyncHandler(async (req, res) => {
         const cart = await Cart.findOne({ user: req.user._id });
         if (cart) {
-            for (let i = 0; i <= cart.cartItems.length - 1; i++) {
-                cart.cartItems[i].isBuy = false;
-            }
-            await cart.save();
+            await Cart.updateMany({ user: req.user._id }, { $pull: { cartItems: { isBuy: true } } });
+            // await cart.save();
             res.json({ message: 'Cart clear' });
         } else {
             res.status(404);
