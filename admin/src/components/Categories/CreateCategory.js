@@ -94,7 +94,7 @@ const CreateCategory = () => {
                         <p className="product_validate">{validate.name}</p>
                     </div>
 
-                    <div className="mb-4">
+                    {/* <div className="mb-4">
                         <label htmlFor="product_name" className="form-label">
                             Image
                         </label>
@@ -118,7 +118,7 @@ const CreateCategory = () => {
                             }}
                         />
                         <p className="product_validate">{validate.image}</p>
-                    </div>
+                    </div> */}
                     {/* <div className="mb-4">
           <label className="form-label">Images</label>
           <input className="form-control" type="file" />

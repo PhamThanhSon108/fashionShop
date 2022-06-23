@@ -31,10 +31,9 @@ productRoute.get(
             search.rating = { $gte: rating };
         }
         if (maxPrice && minPrice) {
-            search = {
-                ...search,
-                price: { $gte: minPrice },
-                price: { $lte: maxPrice },
+            search.price = {
+                $gte: minPrice,
+                $lte: maxPrice,
             };
         }
         if (sortProducts == 1) sort.createdAt = -1;
@@ -114,10 +113,19 @@ productRoute.post(
     asyncHandler(async (req, res) => {
         const { rating, comment } = req.body;
         const product = await Product.findById(req.params.id);
-        const order = await Order.findOne({ user: req.user._id });
-        if (!order || !!order?.orderItems.find((i) => i.product === req.params.id) || order?.isPaid != true) {
-            res.status(400);
-            throw new Error('Can not review!');
+        const order = await Order.find({ user: req.user._id });
+        if (order) {
+            let listOrder = [];
+            for (let i = 0; i < order.length; i++) {
+                if (order[i].isPaid == true) {
+                    listOrder = [...listOrder, ...order[i].orderItems];
+                }
+            }
+            if (listOrder.filter((i) => i.product == req.params.id).length == 0) {
+                res.status(400);
+                // res.status(400).json(order);
+                throw new Error(`Can not review`);
+            }
         }
         if (product) {
             const alreadyReviewed = product.reviews.find((r) => r.user.toString() === req.user._id.toString());
