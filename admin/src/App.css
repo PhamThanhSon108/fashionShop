@@ -940,3 +940,27 @@ ul.row-sm {
 .header-color {
     background-color: #ee2624;
 }
+/* pagition */
+.page-item {
+    margin: 0 8px;
+}
+.pagination .page-link {
+    padding: 10px 22px;
+    color: black;
+}
+.icon-right i {
+    margin-left: 12px;
+    font-size: 18px;
+    cursor: pointer;
+    color: #000;
+}
+.icon-left i {
+    margin-right: 12px;
+    font-size: 18px;
+    cursor: pointer;
+    color: #000;
+}
+.page-item.active .page-link {
+    background-color: #fb5533;
+    border: none;
+}
