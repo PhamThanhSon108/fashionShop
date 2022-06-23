@@ -120,10 +120,7 @@ const PlaceOrderScreen = ({ history }) => {
                                 </div>
                             </div>
                             <div className="col-lg-9 col-sm-9 mb-lg-9">
-                                <p>
-                                    Address:{' '}
-                                    {`${cart.shippingAddress?.city}, ${cart.shippingAddress?.address}, ${cart.shippingAddress?.country}`}
-                                </p>
+                                <p>Address: {`${userInfo?.city}, ${userInfo?.address}, ${userInfo?.country}`}</p>
                             </div>
                         </div>
                     </div>
@@ -137,7 +134,7 @@ const PlaceOrderScreen = ({ history }) => {
                             </div>
                             <div className="col-lg-9 col-sm-9 mb-lg-9">
                                 <p>
-                                    <p>Pay method: {cart.paymentMethod}</p>
+                                    <p>Pay method: {'Payment in cash'}</p>
                                 </p>
                             </div>
                         </div>
