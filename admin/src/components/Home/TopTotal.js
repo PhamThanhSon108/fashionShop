@@ -1,9 +1,8 @@
 import React from 'react';
 
 const TopTotal = (props) => {
-    const { orders, products } = props;
+    const { orders, countProducts,countUsers } = props;
     let totalSale = 0;
-    console.log(products);
     if (orders) {
         orders.map((order) => (order.isPaid === true ? (totalSale = totalSale + order.totalPrice) : null));
     }
@@ -42,7 +41,20 @@ const TopTotal = (props) => {
                         </span>
                         <div className="text">
                             <h6 className="mb-1">Total Products</h6>
-                            {products ? <span>{products.length}</span> : <span>0</span>}
+                            {countProducts ? <span>{countProducts}</span> : <span>0</span>}
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <div className="col-lg-4">
+                <div className="card card-body mb-4 shadow-sm">
+                    <article className="icontext">
+                        <span className="icon icon-sm rounded-circle alert-success">
+                            <i className="text-success fas fa-user"></i>
+                        </span>
+                        <div className="text">
+                            <h6 className="mb-1">Total Users</h6>
+                            {countUsers ? <span>{countUsers}</span> : <span>0</span>}
                         </div>
                     </article>
                 </div>

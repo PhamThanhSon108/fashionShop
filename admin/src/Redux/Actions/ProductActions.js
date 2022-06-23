@@ -35,9 +35,7 @@ export const listProducts =
             };
 
             const { data } = await axios.get(`/api/products/admin?category=${category}&keyword=${keyword}&pageNumber=${pageNumber}`, config);
-            // const { data } = await axios.get(
-            //     `/api/products?&category=${category}&keyword=${keyword}&pageNumber=${pageNumber}`,
-            // );
+          
             dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
         } catch (error) {
             const message = error.response && error.response.data.message ? error.response.data.message : error.message;
