@@ -211,6 +211,47 @@ orderRouter.put(
     }),
 );
 
+orderRouter.delete(
+    '/:id/cancel',
+    protect,
+    admin,
+    asyncHandler(async (req, res) => {
+        const order = await Order.findById(req.params.id);
+
+        if (order) {
+            if (order.isPaid != true) {
+                order.cancel = 1;
+                const updatedOrder = await order.save();
+                res.json(updatedOrder);
+            }
+        } else {
+            res.status(404);
+            throw new Error('Order Not Found');
+        }
+    }),
+);
+
+orderRouter.delete(
+    '/:id/ucancel',
+    protect,
+    asyncHandler(async (req, res) => {
+        const order = await Order.findById(req.params.id);
+
+        if (order != undefined) {
+            if (order.isDelivered != true && order.isPaid != true) {
+                order.cancel = 1;
+                const updatedOrder = await order.save();
+                res.json(updatedOrder);
+            } else {
+                res.status(404);
+                throw new Error('Can not cancel');
+            }
+        } else {
+            res.status(404);
+            throw new Error('Order Not Found');
+        }
+    }),
+);
 orderRouter.get(
     '/:id/address',
     protect,
