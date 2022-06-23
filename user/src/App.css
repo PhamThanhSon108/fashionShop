@@ -1461,3 +1461,6 @@ textarea:focus {
 .color-red {
     color: orangered;
 }
+.rating-color i {
+    color: red;
+}
