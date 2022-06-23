@@ -237,8 +237,8 @@ orderRouter.delete(
     asyncHandler(async (req, res) => {
         const order = await Order.findById(req.params.id);
 
-        if (order != undefined) {
-            if (order.isDelivered != true && order.isPaid != true) {
+        if (order != undefined || req.user._id == order.user) {
+            if (order.isDelivered != true) {
                 order.cancel = 1;
                 const updatedOrder = await order.save();
                 res.json(updatedOrder);

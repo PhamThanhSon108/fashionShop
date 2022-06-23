@@ -266,7 +266,7 @@ const OrderScreen = ({ match }) => {
                                         </div>
                                     </div>
                                 )}
-                                {!order?.cancel && (
+                                {!order?.isDelivered && (
                                     <div className="col-lg-12 " style={{ paddingTop: '25px' }}>
                                         <button
                                             onClick={cancelOrderHandler}
