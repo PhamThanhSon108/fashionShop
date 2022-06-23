@@ -32,10 +32,9 @@ productRoute.get(
             search.rating = { $gte: rating };
         }
         if (maxPrice && minPrice) {
-            search = {
-                ...search,
-                price: { $gte: minPrice },
-                price: { $lte: maxPrice },
+            search.price = {
+                $gte: minPrice,
+                $lte: maxPrice,
             };
         }
         if (sortProducts == 1) sort.createdAt = -1;
