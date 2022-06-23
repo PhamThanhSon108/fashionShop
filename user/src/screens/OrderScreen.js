@@ -272,7 +272,7 @@ const OrderScreen = ({ match }) => {
                                             onClick={cancelOrderHandler}
                                             className="btn btn-dark col-12"
                                             style={{ marginBottom: '15px' }}
-                                            disabled={order?.isPaid}
+                                            disabled={order?.isPaid || order?.cancel == 1}
                                         >
                                             CANCEL THIS ORDER
                                         </button>
