@@ -48,7 +48,17 @@ const Orders = (props) => {
                                                     {order._id}
                                                 </a>
                                             </td>
-                                            <td>{order.isPaid ? <>Paid</> : <>awaiting payment</>}</td>
+                                            <td>
+                                                {order.cancel != 1 ? (
+                                                    order.isPaid ? (
+                                                        <>Paid</>
+                                                    ) : (
+                                                        <>awaiting payment</>
+                                                    )
+                                                ) : (
+                                                    <span className="btn-dark">This Order has been cancelled</span>
+                                                )}
+                                            </td>
                                             <td>
                                                 {order.isPaid
                                                     ? moment(order.paidAt).calendar()

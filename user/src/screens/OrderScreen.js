@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Header from './../components/Header';
 import { PayPalButton } from 'react-paypal-button-v2';
 import { useDispatch, useSelector } from 'react-redux';
-import { getOrderDetails, payOrder } from '../Redux/Actions/OrderActions';
+import { cancelOrder, getOrderDetails, payOrder } from '../Redux/Actions/OrderActions';
 import Loading from './../components/LoadingError/Loading';
 import Message from './../components/LoadingError/Error';
 import moment from 'moment';
@@ -21,6 +21,13 @@ const OrderScreen = ({ match }) => {
     const orderPay = useSelector((state) => state.orderPay);
     const { loading: loadingPay, success: successPay } = orderPay;
 
+    const orderCancel = useSelector((state) => state.orderCancel);
+    const { loading: loadingCancel, success: successCancel } = orderCancel;
+    const cancelOrderHandler = () => {
+        if (window.confirm('Are you sure??')) {
+            dispatch(cancelOrder(order));
+        }
+    };
     //gọi thêm userLogin để lấy số điện thoại
     const userLogin = useSelector((state) => state.userLogin);
     const { userInfo } = userLogin;
@@ -33,7 +40,8 @@ const OrderScreen = ({ match }) => {
     }
     useEffect(() => {
         dispatch(getOrderDetails(orderId));
-    }, []);
+        console.log({ order });
+    }, [successCancel]);
     useEffect(() => {
         // const addPayPalScript = async () => {
         //   const { data: clientId } = await axios.get("/api/config/paypal");
@@ -74,6 +82,7 @@ const OrderScreen = ({ match }) => {
                     <Message variant="alert-danger">{error}</Message>
                 ) : (
                     <>
+                        <div className="content-header"></div>
                         <div className="row  order-detail">
                             <div className="col-lg-4 col-sm-4 mb-lg-4 mb-2 mb-sm-0 fix-bottom">
                                 <div className="row " style={{ display: 'flex', alignItems: 'center' }}>
@@ -226,12 +235,12 @@ const OrderScreen = ({ match }) => {
                                     //     )} */}
                                     //   </div>
                                     // )
-
-                                    !order.isPaid &&
+                                    order?.cancel != 1 ? (
+                                        !order.isPaid &&
                                         (!order.isDelivered ? (
-                                            <div className="col-12">
+                                            <div className="col-12 bg-warning ">
                                                 {loadingPay && <Loading />}
-                                                <span>Awaiting confirm</span>
+                                                <span className="">Awaiting confirm</span>
                                             </div>
                                         ) : (
                                             <div className="col-12">
@@ -243,6 +252,11 @@ const OrderScreen = ({ match }) => {
                                                 </div>
                                             </div>
                                         ))
+                                    ) : (
+                                        <div className="text-white bg-dark p-2 col-12">
+                                            This order has been cancelled
+                                        </div>
+                                    )
                                 }
                                 {order.isPaid && (
                                     <div className="col-12">
@@ -250,6 +264,18 @@ const OrderScreen = ({ match }) => {
                                         <div className="bg-success p-2 col-12">
                                             <p className="text-white text-center text-sm-start">Pay success</p>
                                         </div>
+                                    </div>
+                                )}
+                                {!order?.isDelivered && (
+                                    <div className="col-lg-12 " style={{ paddingTop: '25px' }}>
+                                        <button
+                                            onClick={cancelOrderHandler}
+                                            className="btn btn-dark col-12"
+                                            style={{ marginBottom: '15px' }}
+                                            disabled={order?.isPaid}
+                                        >
+                                            CANCEL THIS ORDER
+                                        </button>
                                     </div>
                                 )}
                             </div>
