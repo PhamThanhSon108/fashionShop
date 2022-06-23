@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { deleteSlider, ListSlider } from '../../Redux/Actions/SliderAction';
+import { createSlider, deleteSlider, ListSlider } from '../../Redux/Actions/SliderAction';
 import AddSlider from './AddSlider';
 
 export default function Slidermain() {
@@ -14,8 +14,12 @@ export default function Slidermain() {
     useEffect(() => {
         dispatch(ListSlider());
     }, [dispatch, successDelete]);
-    const handleEditSlide = (url) => {
-        window.prompt('Edit Slider', `${url}`);
+    const handleEditSlide = (url, id) => {
+        let newSlider = window.prompt('Edit Slider', `${url}`);
+        if (newSlider) {
+            dispatch(createSlider(newSlider, id));
+        }
+        console.log(newSlider);
     };
     const handleDeleteSlider = (id) => {
         if (window.confirm('Are you sure??')) {
@@ -51,7 +55,7 @@ export default function Slidermain() {
                             <td>{value.url}</td>
                             <td className="d-flex justify-content-end align-item-center">
                                 <button
-                                    onClick={() => handleEditSlide(value.url)}
+                                    onClick={() => handleEditSlide(value.url, value._id)}
                                     style={{ border: 'none', backgroundColor: '#f8f9fa' }}
                                 >
                                     <i className="fas fa-pen"></i>

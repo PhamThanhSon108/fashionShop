@@ -20,7 +20,7 @@ const CartScreen = ({ match, location, history }) => {
     const total = cartItems
         ? cartItems
               .filter((item) => item.isBuy == true)
-              .reduce((a, i) => a + i.qty * i.product.price, 0)
+              .reduce((a, i) => a + i.qty * i.product?.price, 0)
               .toFixed(2)
         : 0;
     const userLogin = useSelector((state) => state.userLogin);
@@ -86,7 +86,7 @@ const CartScreen = ({ match, location, history }) => {
                         <div className="cart-scroll">
                             {cartItems?.map((item) => (
                                 <div className="cart-iterm row">
-                                    {item.product.countInStock > 0 ? (
+                                    {item.product?.countInStock > 0 ? (
                                         <div className="col-md-1 cart-check">
                                             <input
                                                 type="checkbox"
@@ -116,23 +116,23 @@ const CartScreen = ({ match, location, history }) => {
                                         </div>
                                     )}
                                     <div className="cart-image col-md-2">
-                                        <img src={item.product.image} alt={item.product.name} />
+                                        <img src={item.product?.image} alt={item.product?.name} />
                                     </div>
                                     <div className="cart-text col-md-4 d-flex align-items-center">
-                                        <Link to={`/products/${item.product._id}`}>
-                                            <h4>{item.product.name}</h4>
+                                        <Link to={`/products/${item.product?._id}`}>
+                                            <h4>{item.product?.name}</h4>
                                         </Link>
                                     </div>
                                     <div className="cart-qty col-md-2 col-sm-5 mt-3 mt-md-0 d-flex flex-column justify-content-center quantity-css">
                                         <h6>QUANTITY</h6>
                                         <select
-                                            disabled={item.product.countInStock <= 0}
+                                            disabled={item.product?.countInStock <= 0}
                                             value={item.qty}
                                             onChange={(e) => {
                                                 dispatch(addToCart(item.product._id, e.target.value, userInfo._id));
                                             }}
                                         >
-                                            {[...Array(item.product.countInStock).keys()].map((x) => (
+                                            {[...Array(item.product?.countInStock).keys()].map((x) => (
                                                 <option key={x + 1} value={x + 1}>
                                                     {x + 1}
                                                 </option>
@@ -141,7 +141,7 @@ const CartScreen = ({ match, location, history }) => {
                                     </div>
                                     <div className="cart-price mt-3 mt-md-0 col-md-2 align-items-sm-end align-items-start  d-flex flex-column justify-content-center col-sm-7 quantity-css">
                                         <h6>PRICE</h6>
-                                        <h4>${item.product.price}</h4>
+                                        <h4>${item.product?.price}</h4>
                                     </div>
                                     <div
                                         className=" col-md-1 delete-cart"

@@ -7,10 +7,12 @@ import { ORDER_CREATE_RESET } from '../Redux/Constants/OrderConstants';
 import Header from './../components/Header';
 import Message from './../components/LoadingError/Error';
 import PayModal from '../components/Modal/PayModal';
+import { getUserDetails } from '../Redux/Actions/userActions';
 
 const PlaceOrderScreen = ({ history }) => {
     window.scrollTo(0, 0);
-
+    // const userDetails = useSelector((state) => state.userDetails);
+    // const { loading, user } = userDetails;
     const dispatch = useDispatch();
     const cart = useSelector((state) => state.cart);
     const { cartItems } = cart;
@@ -50,7 +52,8 @@ const PlaceOrderScreen = ({ history }) => {
     const orderCreate = useSelector((state) => state.orderCreate);
     const { order, success, error } = orderCreate;
     useEffect(() => {
-        // dispatch(listCart());
+        // dispatch(getUserDetails('profile'));
+        dispatch(listCart());
         if (success) {
             history.push(`/order/${order._id}`);
             dispatch({ type: ORDER_CREATE_RESET });
@@ -62,8 +65,15 @@ const PlaceOrderScreen = ({ history }) => {
         dispatch(
             createOrder({
                 orderItems: currenCartItems,
-                shippingAddress: cart.shippingAddress,
-                paymentMethod: cart.paymentMethod,
+                // shippingAddress: cart.shippingAddress,
+                shippingAddress: {
+                    address: userInfo.address,
+                    city: userInfo.city,
+                    postalCode: '',
+                    country: userInfo.country,
+                },
+                // paymentMethod: cart.paymentMethod,
+                paymentMethod: 'Payment in cash',
                 itemsPrice: cart.itemsPrice,
                 shippingPrice: cart.shippingPrice,
                 taxPrice: cart.taxPrice,
@@ -110,10 +120,7 @@ const PlaceOrderScreen = ({ history }) => {
                                 </div>
                             </div>
                             <div className="col-lg-9 col-sm-9 mb-lg-9">
-                                <p>
-                                    Address:{' '}
-                                    {`${cart.shippingAddress?.city}, ${cart.shippingAddress?.address}, ${cart.shippingAddress?.country}`}
-                                </p>
+                                <p>Address: {`${userInfo?.city}, ${userInfo?.address}, ${userInfo?.country}`}</p>
                             </div>
                         </div>
                     </div>
@@ -127,7 +134,7 @@ const PlaceOrderScreen = ({ history }) => {
                             </div>
                             <div className="col-lg-9 col-sm-9 mb-lg-9">
                                 <p>
-                                    <p>Pay method: {cart.paymentMethod}</p>
+                                    <p>Pay method: {'Payment in cash'}</p>
                                 </p>
                             </div>
                         </div>
@@ -154,11 +161,11 @@ const PlaceOrderScreen = ({ history }) => {
                                             </div>
                                             <div className="mt-3 mt-md-0 col-md-2 col-6  d-flex align-items-center flex-column justify-content-center ">
                                                 <h4>QUANTITY</h4>
-                                                <h6>{item.qty}</h6>
+                                                <h6>{item?.qty}</h6>
                                             </div>
                                             <div className="mt-3 mt-md-0 col-md-2 col-6 align-items-end  d-flex flex-column justify-content-center ">
                                                 <h4>SUBTOTAL</h4>
-                                                <h6>${item.qty * item.product.price}</h6>
+                                                <h6>${item?.qty * item?.product?.price}</h6>
                                             </div>
                                         </div>
                                     ))}

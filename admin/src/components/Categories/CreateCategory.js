@@ -16,7 +16,7 @@ const ToastObjects = {
 
 const CreateCategory = () => {
     const [name, setName] = useState('');
-    const [image, setImage] = useState('');
+    // const [image, setImage] = useState('');
     const [description, setDescription] = useState('');
 
     const [validate, setValidate] = useState({});
@@ -41,10 +41,10 @@ const CreateCategory = () => {
             msg.name = 'Plesae input your name';
             msg.borderRed1 = 'border-red';
         }
-        if (isEmpty(image)) {
-            msg.image = 'Please input your image';
-            msg.borderRed2 = 'border-red';
-        }
+        // if (isEmpty(image)) {
+        //     msg.image = 'Please input your image';
+        //     msg.borderRed2 = 'border-red';
+        // }
         if (isEmpty(description)) {
             msg.description = 'Plesae input your description';
             msg.borderRed3 = 'border-red';
@@ -57,9 +57,9 @@ const CreateCategory = () => {
         e.preventDefault();
         const isEmptyValidate = isEmptyCheckEdit();
         if (!isEmptyValidate) return;
-        dispatch(addCategory(name, image, description));
+        dispatch(addCategory(name, description));
         setName('');
-        setImage('');
+        // setImage('');
         setDescription('');
     };
     return (

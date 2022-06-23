@@ -44,7 +44,7 @@ CategoryRouter.post(
     '/',
     protect,
     asyncHandler(async (req, res) => {
-        const { name, image, description } = req.body;
+        const { name, description } = req.body;
         const category = await Category.findOne({ name: name.trim() });
 
         if (category) {
@@ -54,7 +54,7 @@ CategoryRouter.post(
 
         const newCategory = new Category({
             name: name.trim(),
-            image: image.trim(),
+            // image: image.trim(),
             description: description.trim(),
         });
         await newCategory.save();
@@ -65,12 +65,12 @@ CategoryRouter.put(
     '/',
     protect,
     asyncHandler(async (req, res) => {
-        const { idCategory, name, image, description } = req.body;
+        const { idCategory, name, description } = req.body;
         const exitCategory = await Category.findOne({ name: name.trim() });
         const oldCategory = await Category.findById(idCategory.trim());
         if (
             oldCategory.name === name.trim() &&
-            oldCategory.image === image.trim() &&
+            // oldCategory.image === image.trim() &&
             oldCategory.description === description.trim()
         ) {
             res.status(404);
@@ -82,7 +82,7 @@ CategoryRouter.put(
         }
         if (oldCategory) {
             oldCategory.name = name || oldCategory.name;
-            oldCategory.image = image || oldCategory.image;
+            // oldCategory.image = image || oldCategory.image;
             oldCategory.description = description || oldCategory.description;
             const updateCategory = await oldCategory.save();
 

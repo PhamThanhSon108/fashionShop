@@ -4,6 +4,7 @@ import Product from './../Models/ProductModel.js';
 import { admin, protect } from './../Middleware/AuthMiddleware.js';
 import Category from '../Models/CategoryModel.js';
 import Order from './../Models/OrderModel.js';
+import Cart from '../Models/CartModel.js';
 const productRoute = express.Router();
 
 // GET PRODUCT
@@ -160,10 +161,13 @@ productRoute.delete(
     admin,
     asyncHandler(async (req, res) => {
         const product = await Product.findById(req.params.id);
-        // const cart = await Product.ca.find(req.params.id);
+        // const cart = await Cart.find({ 'cartItems.product': req.params.id });
+
         if (product) {
+            await Cart.updateMany({}, { $pull: { cartItems: { product: req.params.id } } });
             await product.remove();
             res.json({ message: 'Product deleted' });
+            // res.json(newCart);
         } else {
             res.status(404);
             throw new Error('Product not Found');
