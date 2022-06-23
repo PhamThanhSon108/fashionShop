@@ -3,7 +3,7 @@ import OrderDetailProducts from './OrderDetailProducts';
 import OrderDetailInfo from './OrderDetailInfo';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { deliverOrder, getOrderDetails, paidOrder } from '../../Redux/Actions/OrderActions';
+import { cancelOrder, deliverOrder, getOrderDetails, paidOrder } from '../../Redux/Actions/OrderActions';
 import Loading from '../LoadingError/Loading';
 import Message from '../LoadingError/Error';
 import moment from 'moment';
@@ -21,15 +21,22 @@ const OrderDetailmain = (props) => {
     const { loading: loadingDelivered, success: successDelivered } = orderDeliver;
     const orderPaid = useSelector((state) => state.orderPaid);
     const { loading: loadingPaid, success: successPaid } = orderPaid;
-
+    const orderCancel = useSelector((state) => state.orderCancel);
+    const { loading: loadingCancel, success: successCancel } = orderCancel;
     useEffect(() => {
         dispatch(getOrderDetails(orderId));
         console.log(order);
-    }, [dispatch, orderId, successDelivered, successPaid]);
+    }, [dispatch, orderId, successDelivered, successPaid, successCancel]);
 
     const deliverHandler = () => {
         if (window.confirm('Are you sure??')) {
             dispatch(deliverOrder(order));
+        }
+    };
+
+    const cancelOrderHandler = () => {
+        if (window.confirm('Are you sure??')) {
+            dispatch(cancelOrder(order));
         }
     };
 
@@ -63,18 +70,20 @@ const OrderDetailmain = (props) => {
                                 <br />
                                 <small className="text-black mx-3 ">Order ID: {order._id}</small>
                             </div>
-                            {/* <div className="col-lg-6 col-md-6 ms-auto d-flex justify-content-end align-items-center">
-                                <select className="form-select d-inline-block" style={{ maxWidth: '200px' }}>
-                                    <option>Change status</option>
-                                    <option>Awaiting payment</option>
-                                    <option>Confirmed</option>
-                                    <option>Shipped</option>
-                                    <option>Delivered</option>
-                                </select>
-                                <Link className="btn btn-success ms-2" to="#">
-                                    <i className="fas fa-print"></i>
-                                </Link>
-                            </div> */}
+                            {order?.cancel != 1 && order?.isPaid != true ? (
+                                <div className="col-lg-3 col-md-6 ms-auto d-flex justify-content-end align-items-center">
+                                    <button
+                                        onClick={cancelOrderHandler}
+                                        className="btn btn-dark col-12"
+                                        style={{ marginBottom: '15px' }}
+                                        disabled={order?.isPaid}
+                                    >
+                                        CANCEL THIS ORDER
+                                    </button>
+                                </div>
+                            ) : (
+                                <></>
+                            )}
                         </div>
                     </header>
                     <div className="card-body">
@@ -99,8 +108,9 @@ const OrderDetailmain = (props) => {
                                             {loadingDelivered && <Loading />}
                                             <button
                                                 onClick={deliverHandler}
-                                                className="btn btn-dark col-12"
+                                                className="btn btn-danger col-12"
                                                 style={{ marginBottom: '15px' }}
+                                                disabled={order?.cancel}
                                             >
                                                 CONFIRM AND DELIVERY
                                             </button>
@@ -116,8 +126,8 @@ const OrderDetailmain = (props) => {
                                             {loadingDelivered && <Loading />}
                                             <button
                                                 onClick={paidHandler}
-                                                className="btn btn-dark col-12"
-                                                disabled={!order.isDelivered}
+                                                className="btn btn-danger col-12"
+                                                disabled={!order.isDelivered || order?.cancel}
                                             >
                                                 MARK AS PAID
                                             </button>

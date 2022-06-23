@@ -60,6 +60,10 @@ const orderSchema = mongoose.Schema(
         paidAt: {
             type: Date,
         },
+        cancel: {
+            type: Number,
+            default: 0,
+        },
         isDelivered: {
             type: Boolean,
             required: true,

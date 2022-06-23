@@ -9,7 +9,7 @@ export default function NavBar({ onRemove }) {
 
     const lcategories = useSelector((state) => state.CategoryList);
     const { categories } = lcategories;
-    
+
     useEffect(() => {
         dispatch(ListCategory());
     }, []);
