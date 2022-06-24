@@ -19,7 +19,6 @@ const ShopSection = (props) => {
     const [minPrice, setMinPrice] = useState('');
     const [maxPrice, setMaxPrice] = useState('');
     const [sortProducts, setSortProducts] = useState('1');
-
     useEffect(() => {
         dispatch(listCart());
         dispatch(listProduct(category, keyword, pageNumber, rating, minPrice, maxPrice, sortProducts));
@@ -39,7 +38,7 @@ const ShopSection = (props) => {
                                 }}
                             >
                                 <option value="1">Newest</option>
-                                <option value="2">Most prominent</option>
+                                {/* <option value="2">Most prominent</option> */}
                                 <option value="3">Prices gradually increase</option>
                                 <option value="4">Price descending</option>
                             </select>

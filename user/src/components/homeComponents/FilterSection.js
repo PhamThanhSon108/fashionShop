@@ -206,9 +206,6 @@ export default function FilterSection({ setRating, setMinPrice, setMaxPrice, rat
                                 <Rating value="1" text={'& up'}></Rating>
                             </label>
                         </div>
-                        <div className="assess-star">
-                            <p className="distance-price__p">Review</p>
-                        </div>
                     </div>
                 </div>
                 {/* <div className="assess-star">

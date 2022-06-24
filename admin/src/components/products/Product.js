@@ -18,11 +18,11 @@ const Product = (props) => {
         <>
             <div className="col-md-4 col-sm-4 col-lg-2-5 mb-5 fix-bottom">
                 <div className="card card-product-grid">
-                    <Link to="#" className="img-wrap">
+                    <Link to={`/product/${product._id}/edit`} className="img-wrap">
                         <img src={product.image} alt="Product" />
                     </Link>
                     <div className="info-wrap">
-                        <Link to="#" className="title text-truncate" style={{ color: 'black', padding: '5px 0' }}>
+                        <Link to={`/product/${product._id}/edit`} className="title text-truncate" style={{ color: 'black', padding: '5px 0' }}>
                             {product.name}
                         </Link>
                         <div
