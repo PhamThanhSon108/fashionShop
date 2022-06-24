@@ -162,7 +162,12 @@ orderRouter.put(
                 update_time: req.body.update_time,
                 email_address: req.body.email_address,
             };
-
+            // order.orderItems.map((orderItem)=>{
+            // const product = await Product.findById(orderItem.product);
+            // if(product){
+            //     product.numberOfOrder += orderItem.qty;
+            //     const updatedProduct = await Product.save();}
+            // })
             const updatedOrder = await order.save();
             res.json(updatedOrder);
         } else {
