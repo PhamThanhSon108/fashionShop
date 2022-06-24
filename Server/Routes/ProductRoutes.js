@@ -48,35 +48,35 @@ productRoute.get(
             .skip(pageSize * (page - 1))
             .sort(sort);
 
-            // const orders = await Order.find({});
-            // products.map((product) => {
-            //     let count = 0;
-            //     orders.map((order) => {
-            //         order.orderItems.map((item) => {
-            //             if (product.name == item.nam) {
-            //                 count += item.qty;
-            //             }
-            //         });
-            //     });
-            //     product.numberOfOrders = count;
-            // });
+        // const orders = await Order.find({});
+        // products.map((product) => {
+        //     let count = 0;
+        //     orders.map((order) => {
+        //         order.orderItems.map((item) => {
+        //             if (product.name == item.nam) {
+        //                 count += item.qty;
+        //             }
+        //         });
+        //     });
+        //     product.numberOfOrders = count;
+        // });
         // if (sortProducts == 2) {
-            // for (let product of products) {
-            //     let count = 0;
-            //     for (let order of orders) {
-            //         for (let item of order.orderItems) {
-            //             if (product._id === item.product) {
-            //                 count += item.qty;
-            //             }
-            //         }
-            //     }
-            //     product.numberOfOrders = count;
-            // }
-            // products.sort(function (a, b) {
-            //     return b.numberOfOrders - a.numberOfOrders;
-            // });
+        // for (let product of products) {
+        //     let count = 0;
+        //     for (let order of orders) {
+        //         for (let item of order.orderItems) {
+        //             if (product._id === item.product) {
+        //                 count += item.qty;
+        //             }
+        //         }
+        //     }
+        //     product.numberOfOrders = count;
         // }
-        res.json({ products, page, pages: Math.ceil(count / pageSize)});
+        // products.sort(function (a, b) {
+        //     return b.numberOfOrders - a.numberOfOrders;
+        // });
+        // }
+        res.json({ products, page, pages: Math.ceil(count / pageSize) });
     }),
 );
 
