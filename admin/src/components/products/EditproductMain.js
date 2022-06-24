@@ -83,13 +83,13 @@ const EditProductMain = (props) => {
                         <h2 className="content-title">Update Product</h2>
                         <div>
                             <button type="submit" className="btn btn-primary">
-                                Publish now
+                                Update now
                             </button>
                         </div>
                     </div>
 
                     <div className="row mb-4">
-                        <div className="col-xl-8 col-lg-8">
+                        <div className="col-xl-12 col-lg-12">
                             <div className="card mb-4 shadow-sm">
                                 <div className="card-body">
                                     {errorUpdate && <Message variant="alert-danger">{errorUpdate}</Message>}
