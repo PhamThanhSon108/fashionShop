@@ -42,7 +42,9 @@ const CartScreen = ({ match, location, history }) => {
     }, [suc, successCreate]);
 
     const removeFromCartHandle = (id) => {
-        dispatch(removefromcart(id));
+        if (window.confirm('Are you sure!')) {
+            dispatch(removefromcart(id));
+        }
     };
     return (
         <>

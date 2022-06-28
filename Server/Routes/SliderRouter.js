@@ -15,12 +15,17 @@ SliderRouter.delete(
     admin,
     asyncHandler(async (req, res) => {
         const Slider = await slider.findById(req.params.id);
+        const ListSlider = await slider.find({});
+        if (ListSlider.length <= 1) {
+            res.status(404);
+            throw new Error('Can delete slide');
+        }
         if (Slider) {
             await Slider.remove();
-            res.json({ message: 'Product deleted' });
+            res.json({ message: 'Slide deleted' });
         } else {
             res.status(404);
-            throw new Error('Product not Found');
+            throw new Error('Slide not Found');
         }
     }),
 );

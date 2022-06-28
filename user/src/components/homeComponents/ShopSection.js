@@ -28,7 +28,9 @@ const ShopSection = (props) => {
         <>
             <div className="container">
                 <div className="section">
-                    <div style={{ display: 'flex', justifyContent: 'left', marginBottom: '10px', width: '250px' }}>
+                    <div
+                        style={{ display: 'flex', justifyContent: 'right', marginBottom: '10px', marginRight: '20px' }}
+                    >
                         <div className="">
                             <select
                                 className="form-select"
