@@ -38,17 +38,44 @@ productRoute.get(
             };
         }
         if (sortProducts == 1) sort.createdAt = -1;
-        if (sortProducts == 2) {
-            sort.numReviews = -1;
-            sort.rating = -1;
-        }
+        // if (sortProducts == 2) sort.numberOfOrder =-1;
         if (sortProducts == 3) sort.price = 1;
         if (sortProducts == 4) sort.price = -1;
+
         const count = await Product.countDocuments({ ...search });
-        const products = await Product.find({ ...search })
+        let products = await Product.find({ ...search })
             .limit(pageSize)
             .skip(pageSize * (page - 1))
             .sort(sort);
+
+        // const orders = await Order.find({});
+        // products.map((product) => {
+        //     let count = 0;
+        //     orders.map((order) => {
+        //         order.orderItems.map((item) => {
+        //             if (product.name == item.nam) {
+        //                 count += item.qty;
+        //             }
+        //         });
+        //     });
+        //     product.numberOfOrders = count;
+        // });
+        // if (sortProducts == 2) {
+        // for (let product of products) {
+        //     let count = 0;
+        //     for (let order of orders) {
+        //         for (let item of order.orderItems) {
+        //             if (product._id === item.product) {
+        //                 count += item.qty;
+        //             }
+        //         }
+        //     }
+        //     product.numberOfOrders = count;
+        // }
+        // products.sort(function (a, b) {
+        //     return b.numberOfOrders - a.numberOfOrders;
+        // });
+        // }
         res.json({ products, page, pages: Math.ceil(count / pageSize) });
     }),
 );
@@ -71,9 +98,7 @@ productRoute.get(
     asyncHandler(async (req, res) => {
         const pageSize = 10;
         const page = Number(req.query.pageNumber) || 1;
-        const sortProducts = Number(req.query.sortProducts) || 1;
-        let search = {},
-            sort = {};
+        let search = {};
         if (req.query.keyword) {
             search.name = {
                 $regex: req.query.keyword,
@@ -89,7 +114,7 @@ productRoute.get(
             .limit(pageSize)
             .skip(pageSize * (page - 1))
             .sort({ createdAt: -1 });
-        res.json({ products, page, pages: Math.ceil(count / pageSize) });
+        res.json({ products, page, pages: Math.ceil(count / pageSize), countProducts: count });
     }),
 );
 

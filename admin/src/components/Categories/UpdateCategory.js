@@ -39,7 +39,6 @@ const UpdateCategory = ({ currentCategory }) => {
     useEffect(() => {
         setIdCategory(categories[currentCategory]?._id);
         setName(categories[currentCategory]?.name);
-        // setImage(categories[currentCategory]?.image)
         setDescription(categories[currentCategory]?.description);
     }, [currentCategory]);
     return (
